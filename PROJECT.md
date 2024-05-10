@@ -20,22 +20,22 @@ The `develop` branch contains the latest developments on the project that are ei
 
 ## Branch naming conventions for short-lived branches
 
-If a new feature or update is being developed then a new, short-lived branch is created from the `develop` branch. For example, if a new UI graphing component is being developed, then a new branch called `feature/ui/new-graphing-tool` is created and all work performed in that branch. Once development is complete, it is merged back into `develop`.
+If a new feature or update is being developed then a new, short-lived branch is created from the `develop` branch. For example, if a new UI graphing component is being developed, then a new branch called `feature-ui-graphing-tool` is created and all work performed in that branch. Once development is complete, it is merged back into `develop`.
 
 See [here](https://medium.com/@abhay.pixolo/naming-conventions-for-git-branches-a-cheatsheet-8549feca2534)
 
 Use prefixes in branches according to the following rules:
 
-- feature: a whole new feature is being developed e.g. `feature/analytics`
-- bugfix: fixing bugs e.g. `bugfix/responsive-styling`
-- hotfix: critical bug fixes that are branched directly from main e.g. `hotfix/security-issue`
-- docs: branch for documentation changes only e.g. `docs/command-examples`
+- feature: a whole new feature is being developed e.g. `feature-analytics`
+- bugfix: fixing bugs e.g. `bugfix-responsive-styling`
+- hotfix: critical bug fixes that are branched directly from main e.g. `hotfix-security-issue`
+- docs: branch for documentation changes only e.g. `docs-command-examples`
 
 Other possibilities:
 
-- update: a currently existing feature is being updated e.g. `update/graph-output`
+- update: a currently existing feature is being updated e.g. `update-graph-output`
 
-Could also add in the component that is being worked on e.g. `feature/fw/new-mode` to define a new branch where a new mode is being added to the firmware or `bugfix/ui/error-message` for a bugfix in the UI concerning the output of error messages.
+Could also add in the component that is being worked on e.g. `feature-fw-new-mode` to define a new branch where a new mode is being added to the firmware or `bugfix-ui-error-message` for a bugfix in the UI concerning the output of error messages.
 
 # JSON Communication
 

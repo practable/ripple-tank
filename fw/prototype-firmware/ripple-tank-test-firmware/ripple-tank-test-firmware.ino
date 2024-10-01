@@ -25,7 +25,7 @@ autoDelay rippleDelay;
 void setup() {
   Serial.begin(115200);
   Serial.println("\nRipple Tank - Prototype\n");
-  TCCR1B = TCCR1B & B11111000 | B00000001; // for PWM frequency of 31372.55 Hz
+  TCCR1B = TCCR1B & B11111000 | B00000001;  // for PWM frequency of 31372.55 Hz
   analogWrite(LED_PWM_PIN, 0);
   pinMode(LED_PWM_PIN, OUTPUT);
   pinMode(SPEAKER_PIN, OUTPUT);
@@ -33,17 +33,19 @@ void setup() {
 
 
 bool strobe_state = true;
-
 bool wave_state = false;
+int16_t amplitude = 255;
 
 void run_LFO(uint32_t period) {
   if (rippleDelay.microsDelay(period)) {
     if (wave_state) {
+      analogWrite(SPEAKER_PIN, amplitude);
       wave_state = false;
     } else {
+      analogWrite(SPEAKER_PIN, 0);
       wave_state = true;
     }
-    digitalWrite(SPEAKER_PIN, wave_state);
+    //  digitalWrite(SPEAKER_PIN, wave_state);  // commented out to test with analog driving signal
   }
 }
 
@@ -64,6 +66,8 @@ void loop() {
   //  }
 
   uint32_t period_uS = uint32_t((1000000 / Hz) + 1);
+
+  // If HZ > 0
 
   if (period_uS) {
     run_LFO(period_uS);

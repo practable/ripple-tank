@@ -11,10 +11,46 @@
 
         <div v-if='!isMobile' class='row' id='component-grid'>
 
+          <div class='d-flex' id='first-row'>
+            <div class='drop-area drop-area-one-quarter' id='drop_0_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><webcam-stream id='webcam-stream' /></div>
+            <div class='drop-area drop-area-three-quarters' id='drop_0_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><control-panel id="control-panel" /></div>
+          </div>
+
+          <div class='d-flex' id='second-row'>
+            <div class='drop-area drop-area-half' id='drop_1_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><video-capture id='video-capture' /></div>
+            <div class='drop-area drop-area-half' id='drop_1_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><image-capture id='image-capture' /></div>
+          </div>
+
+          <div class='d-flex' id='third-row'>
+            <div class='drop-area drop-area-half' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
+            <div class='drop-area drop-area-half' id='drop_2_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
+          </div>
+
+          <div class='d-flex' id='fourth-row'>
+            <div class='drop-area drop-area-half' id='drop_3_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
+            <div class='drop-area drop-area-half' id='drop_3_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
+          </div>
+
+
+        </div>
+
+        <div v-else class='d-flex flex-column' id='component-grid'>
+            <div class='drop-area drop-area-mobile' id='drop_0_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><webcam-stream id='webcam-stream' /></div>
+            <div class='drop-area drop-area-mobile' id='drop_1_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><control-panel id="control-panel" /></div>
+            <div class='drop-area drop-area-mobile' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><video-capture id='video-capture' /></div>
+            <div class='drop-area drop-area-mobile' id='drop_3_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><image-capture id='image-capture' /></div>
+            <div class='drop-area drop-area-mobile' id='drop_4_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
+            <div class='drop-area drop-area-mobile' id='drop_5_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
+            <div class='drop-area drop-area-mobile' id='drop_6_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
+            <div class='drop-area drop-area-mobile' id='drop_7_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
+        </div>
+
+        <!-- <div v-if='!isMobile' class='row' id='component-grid'>
+
             <div class='col-lg-6' id='left-screen'>
-                <div class='col drop-area' id='drop_0_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><webcam-stream id='webcam-stream' /></div>
-                <div class='col drop-area' id='drop_1_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><stream-information id="stream-information" /></div>
-                <div class='col drop-area' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><control-panel id="control-panel" /></div>
+                <div class='col drop-area' id='drop_0_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
+                <div class='col drop-area' id='drop_1_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
+                <div class='col drop-area' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
                 <div class='col drop-area' id='drop_3_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
                 <div class='col drop-area' id='drop_4_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
             </div>
@@ -22,8 +58,8 @@
             <div class='col-lg-6' id='right-screen'>
                 <div class='col drop-area' id='drop_0_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
                 <div class='col drop-area' id='drop_1_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><show-config-file id='show-config-file' /></div>
-                <div class='col drop-area' id='drop_2_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><video-capture id='video-capture' /></div>
-                <div class='col drop-area' id='drop_3_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><image-capture id='image-capture' /></div>
+                <div class='col drop-area' id='drop_2_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
+                <div class='col drop-area' id='drop_3_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
                 <div class='col drop-area' id='drop_4_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
             </div>
 
@@ -47,7 +83,7 @@
                 <div class='col drop-area' id='drop_4_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
             </div>
 
-        </div>
+        </div> -->
      
    
   </div>
@@ -124,6 +160,8 @@ export default {
     },
     dragComponent(event){
         event.dataTransfer.effectAllowed = 'move';
+         //console.log("Dragged event: ");
+         //console.log(event);
          let element = event.target;
          if(element.classList.contains('drop-area')){
            if(element.childNodes[0] != null){
@@ -135,6 +173,7 @@ export default {
          } else{
            while(element.parentNode){
               element = element.parentNode;
+              //console.log(element.id);
               if(element.classList.contains('drop-area')){
                 if(element.childNodes[0] != null){
                   event.dataTransfer.setData("text/html", element.id + "|" + element.childNodes[0].id);
@@ -161,6 +200,7 @@ export default {
             if(event.target.childNodes.length > 0){
               draggedZone.appendChild(event.target.childNodes[0]);
             }
+            //console.log(draggedID);
             droppedElement.appendChild(document.getElementById(draggedID));
             droppedElement.classList.remove('drop-area-highlighted');
         } 
@@ -169,6 +209,7 @@ export default {
           while(element.parentNode){
             element = element.parentNode;
             if(element.classList.contains('drop-area')){
+              //console.log(element.childNodes[0]);
               draggedZone.appendChild(element.childNodes[0]);
               element.appendChild(document.getElementById(draggedID));
               element.classList.remove('drop-area-highlighted');
@@ -176,22 +217,20 @@ export default {
             }
           }
         }
+      } else{
+        if(droppedElement != null){
+          droppedElement.classList.remove('drop-area-highlighted');
+        }
+        
       }
       
       return false;
     },
     dragEnter(event){
-      let dropData = event.dataTransfer.getData('text/html');
-      let dropItems = dropData.split("|");
-      let draggedID = dropItems[1];
-      if(draggedID != 'empty' && document.getElementById(draggedID) != null){
-        let element = document.getElementById(event.target.id);
-        if(element != null && element.classList.contains('drop-area')){
-          element.classList.add('drop-area-highlighted');
+    //console.log(event)
+    if(event.target.classList.contains('drop-area')){
+          event.target.classList.add('drop-area-highlighted');
         }
-        
-      }
-      
     },
     dragLeave(event){
       let element = document.getElementById(event.target.id);
@@ -200,7 +239,6 @@ export default {
       }
       
     },
-  
     // loading and saving data for logging consent and uuid etc.
     hasStorage(){
         try {

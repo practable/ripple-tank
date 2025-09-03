@@ -1,7 +1,7 @@
 
 <template>
 
-    <nav :class="getDarkTheme ? 'navbar navbar-light fixed-top navbar-expand-lg navbar-background' : 'navbar navbar-dark fixed-top navbar-expand-lg  navbar-background'" id='navbar'>
+    <nav :class="getDarkTheme ? 'navbar navbar-dark fixed-top navbar-expand-lg navbar-background' : 'navbar navbar-light fixed-top navbar-expand-lg  navbar-background'" id='navbar'>
     <div class="container-fluid">
       <div class="navbar-brand">
           <img src="/images/practable-icon.png" width="30" height="30" alt="practable.io logo">

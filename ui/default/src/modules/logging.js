@@ -1,65 +1,69 @@
-
+// 17/09/24 Updated for use with new analytics server
 
 const loggingStore = {
     state: () => ({
-        uuid: '',                      //set from App.vue
-        hardware: '',                       //will be set from the LoggingStream.vue component
-        exp: '',                     
-        course: '',                    //set in Streams.vue from query param
-
+        uuid: '',                           //will be set from App.vue from localStorage
+        isLoggingOn: false,                  //hard coded here
+        logging_consent_given: false,       //User set in Consent.vue component
+        hardware: '',           //will be set from the Logging.vue component - the general experiment name e.g. spinner or pendulum
+        experiment: '',         //will be set from the Logging.vue component - the specific code for a single kit e.g. spin30
+        course: '',      //will be set from the Logging.vue component - a course code, e.g. ed1 or cie3
        }),
        mutations:{
+            SET_LOGGING_CONSENT(state, consent){
+                state.logging_consent_given = consent;
+            },
             SET_UUID(state, uuid){
                 state.uuid = uuid;
             },
-            SET_EXPERIMENT(state, exp){
-                state.exp = exp;
+            SET_EXPERIMENT(state, experiment){
+                state.experiment = experiment;
             },
             SET_HARDWARE(state, hardware){
                 state.hardware = hardware;
             },
             SET_COURSE(state, course){
                 state.course = course;
-            },
-
+            }
        },
        actions:{
+            setLoggingConsent(context, consent){
+                context.commit('SET_LOGGING_CONSENT', consent);
+            },
             setUUID(context, uuid){
                 context.commit('SET_UUID', uuid);
             },
-            setExperiment(context, exp){
-                context.commit('SET_EXPERIMENT', exp);
+            setExperiment(context, experiment){
+                context.commit('SET_EXPERIMENT', experiment)
             },
             setHardware(context, hardware){
-                context.commit('SET_HARDWARE', hardware);
+                context.commit('SET_HARDWARE', hardware)
             },
             setCourse(context, course){
-                context.commit('SET_COURSE', course);
+                context.commit('SET_COURSE', course)
             },
-
        },
        getters:{
+           getLogConsent(state){
+            return state.logging_consent_given;
+            },
             getLogUUID(state){
                 return state.uuid;
             },
             getExperiment(state){
-                return state.exp
+                return state.experiment;
             },
             getHardware(state){
-                return state.hardware
+                return state.hardware;
             },
             getCourse(state){
-                return state.course
+                return state.course;
+            },
+            getIsLoggingOn(state){
+                return state.isLoggingOn;
             }
-          
        },  
   
-  }
-
-  let helpers = {
-    delay(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    },
   }
 
   export default loggingStore;

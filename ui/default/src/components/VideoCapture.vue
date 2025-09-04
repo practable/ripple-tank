@@ -4,50 +4,41 @@
   <div class='container-fluid practable-component'>
 
     <div class="row">
-        <div class="col-lg-8">
-            <div class="input-group mb-3" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
-                <label for="recording-length-slider">Record Time: {{ this.captureInterval/1000 }} s</label>
-                <input type="range" id="recording-length-slider" class="slider" step="100" min="100" max="3000" v-model="captureInterval">
-            </div>
-            <div class="input-group mb-3" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
-                <label for="recording-fps-slider">FPS: {{ this.framerate }}</label>
-                <input type="range" id="recording-fps-slider" class="slider" step="1" min="1" max="24" v-model="framerate">
-            </div>
+        <button v-if="!isRecording" id='recordButton' class="button-lg button-primary" @click="capture">Record</button>
+        <div v-if="isRecording" class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div class="d-flex flex-row">
+      
+        <div class="input-group mb-3 align-items-center" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
+            <label class='flex-fill me-2' for="recording-length-slider">Record Time: {{ this.captureInterval/1000 }} s</label>
+            <input type="range" id="recording-length-slider" class="slider" step="100" min="100" max="3000" v-model="captureInterval">
+        </div>
+        <div class="input-group mb-3 align-items-center" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
+            <label class='flex-fill me-2' for="recording-fps-slider">FPS: {{ this.framerate }}</label>
+            <input type="range" id="recording-fps-slider" class="slider" step="1" min="1" max="24" v-model="framerate">
         </div>
 
-        <div class="col-lg-4 d-flex align-items-center justify-content-center">
-            <button v-if="!isRecording" id='recordButton' class="button-lg button-primary" @click="capture">Record</button>
-            <div v-if="isRecording" class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div>
-        
     </div>
     
     
-    <div class="row">
-        <div class="video-container col-12" @mouseenter="setDraggable(false)" @mouseleave="setDraggable(true)">
+    <div class="row align-items-center justify-content-center">
+        <div class="video-container col-10" @mouseenter="setDraggable(false)" @mouseleave="setDraggable(true)">
             <video id="recording" controls></video>
         </div>
         
     </div>
 
-    <div class="d-flex align-items-center justify-content-center">
+    <div class="d-flex flex-row align-items-center justify-content-center">
         <button id="frameBackwardButton" class="button-sm button-primary" @click="frameBackward">Step Backward</button>
         <button id="frameForwardButton" class="button-sm button-primary" @click="frameForward">Step Forward</button>
+        <button id="downloadButton" class="button-sm button-primary" @click="download">Download</button>
         <!-- <label for="frameForwardButton">Video time: {{ frame_time.toFixed(3) }}</label> -->
         <!-- <label v-if="video != null" for="frameForwardButton">Video time: {{ getCurrentVideoTime }}</label> -->
     </div>
 
-    <div class="d-flex justify-content-center">
-        <button id="downloadButton" class="button-sm button-primary" @click="download">Download</button>
-    </div>
-    
-    
-    
-    
-
-      
   </div>
 </template>
 

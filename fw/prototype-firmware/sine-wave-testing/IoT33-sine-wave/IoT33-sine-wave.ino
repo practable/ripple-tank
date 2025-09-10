@@ -9,6 +9,7 @@
 */
 
 #include "sine.h"
+#include <autoDelay.h>
 
 // Constants
 const int dacPin = A0;        // DAC0
@@ -16,16 +17,36 @@ const int tableSize = 256;    // Number of samples in the sine wave table
 const int sampleRate = 1000;  // How many samples per second
 
 // Variables for sine wave control
-float frequency = 1000.0;  // Frequency of the sine wave in Hz
-int amplitude = 128;       // Amplitude of the sine wave (0 to 255)
-int offset = 128;          // Offset for DAC midpoint (0-255)
+float frequency = 1.0;  // Frequency of the sine wave in Hz
+// One complete cycle of wave = 256 samples
+//-> for 1Hz operation, 1,000,000 uS / 256 = 3906.25 uS of delay between each sample
+//-> in mS              1000 / 256 = 3.90625 mS
+//-> // Divide this by frequency for higher values
 
-// Lookup table for sine wave (values 0 to 255)
-
+autoDelay waveTableDelay;
 
 // Timing variables
 unsigned long previousMicros = 0;
-int tableIndex = 0;
+uint8_t table_index = 0;
+
+uint32_t calcDelay(float frequency = 1) {
+  uint32_t delayTime_uS = uint32_t((3906 / frequency) + 1);
+  return delayTime_uS;
+}
+
+
+void set_frequency(float frequency = 1) {
+  uint32_t delay;
+  delay = calcDelay(frequency);
+  if (waveTableDelay.microsDelay(delay)) {
+    analogWrite(dacPin, pgm_read_word(&sineTable[table_index]));
+    table_index++;
+  }
+}
+
+
+
+
 
 void setup() {
   Serial.begin(115200);
@@ -39,27 +60,30 @@ void setup() {
 //int DAC_val = 0;
 //int dac_modifyer = 1;
 
-uint8_t table_index = 0;
+
+
 
 
 void loop() {
 
 
+  set_frequency(440);
 
- // analogWrite(dacPin, DAC_val);
- analogWrite(dacPin,  pgm_read_word(&sineTable[table_index]));
- table_index++;
 
-  delayMicroseconds(160);
+  // analogWrite(dacPin, DAC_val);
+  // analogWrite(dacPin,  pgm_read_word(&sineTable[table_index]));
+  //table_index++;
 
- // DAC_val += dac_modifyer;
+  // delayMicroseconds(160);
 
- // if (DAC_val >= 1024) {
-    //dac_modifyer = -1;
+  // DAC_val += dac_modifyer;
+
+  // if (DAC_val >= 1024) {
+  //dac_modifyer = -1;
   //  DAC_val = 0;
- // } else if (DAC_val <= 0) {
- //   dac_modifyer = 1;
- // }
+  // } else if (DAC_val <= 0) {
+  //   dac_modifyer = 1;
+  // }
 
   // Calculate the time between samples
   // unsigned long currentMicros = micros();

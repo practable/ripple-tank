@@ -18,6 +18,8 @@
   less samples than this are more accurate for timing but
   start introducing additional harmonics, I would call it unuseable by 120 samples
 
+  To expand this to other frequences, the wavetable should use less samples as frequency increases.
+
 */
 
 #include "sine.h"
@@ -88,6 +90,7 @@ void setup() {
   calc_wave_baseDelay(tableSize);
   analogWriteResolution(10);
   set_frequency(0.1);
+  set_frequency(2);
 }
 
 //int DAC_val = 0;
@@ -104,7 +107,7 @@ void loop() {
 
   if (demoDelay.secondsDelay(8)) {
     frequency = frequency + 0.5;
-    set_frequency(frequency);
+   // set_frequency(frequency);
     Serial.println(frequency);
   }
   //

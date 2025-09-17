@@ -78,9 +78,9 @@ void run_wavetable() {
 
 void setup() {
   Serial.begin(115200);
-  while (!Serial) {
-    delay(1);
-  }
+
+  delay(2000);
+
   Serial.print("Wavetable Testing");
   // Fill the sine lookup table with values from 0 to 255
   // for (int i = 0; i < tableSize; i++) {
@@ -90,7 +90,7 @@ void setup() {
   calc_wave_baseDelay(tableSize);
   analogWriteResolution(10);
   set_frequency(0.1);
-  set_frequency(2);
+  set_frequency(100);
 }
 
 //int DAC_val = 0;
@@ -107,7 +107,7 @@ void loop() {
 
   if (demoDelay.secondsDelay(8)) {
     frequency = frequency + 0.5;
-   // set_frequency(frequency);
+    // set_frequency(frequency);
     Serial.println(frequency);
   }
   //

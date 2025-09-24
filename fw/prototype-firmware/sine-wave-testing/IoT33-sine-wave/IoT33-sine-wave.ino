@@ -90,7 +90,7 @@ void setup() {
   calc_wave_baseDelay(tableSize);
   analogWriteResolution(10);
   set_frequency(0.1);
-  set_frequency(100);
+  set_frequency(30);
 }
 
 //int DAC_val = 0;

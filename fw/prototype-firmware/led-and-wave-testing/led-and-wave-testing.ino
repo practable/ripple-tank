@@ -51,7 +51,8 @@ uint16_t table_index = 0;
 
 
 //LED Variables
-
+const int ledCtrl = 3;
+int16_t ledPWM = 10;
 
 
 void calc_wave_baseDelay(uint16_t num_entries) {
@@ -90,11 +91,12 @@ void setup() {
   // for (int i = 0; i < tableSize; i++) {
   //   sineTable[i] = (uint8_t)(amplitude * sin(2 * PI * i / tableSize) + offset);
   //  }
-
+  pinMode(ledCtrl, OUTPUT);
   calc_wave_baseDelay(tableSize);
   analogWriteResolution(10);
   set_frequency(0.1);
   set_frequency(3);
+  analogWrite(ledCtrl, ledPWM);
 }
 
 //int DAC_val = 0;

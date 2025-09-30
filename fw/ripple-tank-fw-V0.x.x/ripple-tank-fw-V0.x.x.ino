@@ -204,19 +204,20 @@ void loop() {
 
 
   // Timeouts & stall check for running state
-
+if (waveOutput){
   if (millis() - last_command_rx_mS >= WAVE_TIMEOUT_S * 1000) {  // running mode timeout
     Serial.println(F("{\"WARNING\":\"Wave - Time Out\"}"));
     beacon.callBlink(8, 500, 500);
     smState = STATE_STOP;
   }
+}
 
 
-  if (millis() - last_command_rx_mS >= LAMP_TIMEOUT_S * 1000) {  // running mode timeout
-    Serial.println(F("{\"WARNING\":\"Lamp - Time Out\"}"));
-    beacon.callBlink(8, 500, 500);
-    smState = STATE_STOP;
-  }
+ // if (millis() - last_command_rx_mS >= LAMP_TIMEOUT_S * 1000) {  // running mode timeout
+ //   Serial.println(F("{\"WARNING\":\"Lamp - Time Out\"}"));
+ //   beacon.callBlink(8, 500, 500);
+ //   smState = STATE_STOP;
+//  }
 
   beacon.performBlink();  // loop function for the LED beacon
 }

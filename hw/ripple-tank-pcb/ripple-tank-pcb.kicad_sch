@@ -2526,6 +2526,183 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "000_IC_immo:AL8860"
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U"
+				(at -4.064 5.588 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "AL8860"
+				(at 0 5.588 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_TO_SOT_SMD:TSOT-23-5"
+				(at 39.624 10.668 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+						(italic yes)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://cdn.sparkfun.com/assets/5/9/8/e/4/AL8860.pdf"
+				(at 52.324 7.874 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "hysteresis mode DC-DC step-down converter, designed for driving single or multiple series connected LED"
+				(at 87.884 -12.7 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "LED driver"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "TSOT?23*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "AL8860_0_1"
+				(rectangle
+					(start -5.08 4.445)
+					(end 5.08 -10.16)
+					(stroke
+						(width 0.254)
+						(type solid)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "AL8860_1_1"
+				(pin input line
+					(at -21.59 15.24 0)
+					(length 2.54)
+					(name "INH"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -7.62 0 0)
+					(length 2.54)
+					(name "SW"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -6.35 16.51 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_out line
+					(at 11.43 15.24 180)
+					(length 2.54)
+					(name "VOUT"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at 11.43 12.7 180)
+					(length 2.54)
+					(name "BYP"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "000_IC_immo:AMS1117-3.3"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -3762,6 +3939,205 @@
 						)
 					)
 					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "000_Modules_Immo:femtoBuck_LED_driver"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "U?"
+				(at -6.35 10.16 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "femtoBuck_LED_driver"
+				(at 1.27 7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "000_Modules_Immo:femtoBuck"
+				(at 1.27 3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "https://github.com/sparkfun/FemtoBuck"
+				(at 1.27 13.97 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "JLCpart" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "supplier" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "cost" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "femtoBuck_LED_driver_0_0"
+				(rectangle
+					(start -10.16 5.08)
+					(end 15.24 -5.08)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(symbol "femtoBuck_LED_driver_1_1"
+				(pin power_in line
+					(at -12.7 3.81 0)
+					(length 2.54)
+					(name "PGND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -12.7 1.27 0)
+					(length 2.54)
+					(name "VIN"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin power_in line
+					(at -12.7 -1.27 0)
+					(length 2.54)
+					(name "DGND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -12.7 -3.81 0)
+					(length 2.54)
+					(name "CTRL"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 17.78 2.54 180)
+					(length 2.54)
+					(name "LED+"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 17.78 -2.54 180)
+					(length 2.54)
+					(name "LED-"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -6776,7 +7152,7 @@
 	)
 	(text "the first stage's gain is externally configurable, while the\nsecond stage's is internally fixed.\nThe closed-loop gain of the first stage is set\n by selecting the ratio of RF to RI "
 		(exclude_from_sim no)
-		(at 318.516 168.91 0)
+		(at 327.406 173.99 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6807,7 +7183,7 @@
 	)
 	(text "datasheet is not forthcoming about where these should go.\nDoes not show a feedback loop in typical application.\nNo feedback loop implemented in existing implementation"
 		(exclude_from_sim no)
-		(at 320.802 149.098 0)
+		(at 325.882 154.178 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6815,6 +7191,16 @@
 			(justify left)
 		)
 		(uuid "d68760b1-b23b-434c-a497-008c1946c317")
+	)
+	(text "MEASURE THIS CURRENT BEFORE COMMITTING PLZ!"
+		(exclude_from_sim no)
+		(at 161.29 60.452 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "f9b3f361-bd42-4701-8e62-1503ec5c96bd")
 	)
 	(junction
 		(at 335.28 184.15)
@@ -6841,6 +7227,12 @@
 		(uuid "1021869d-4270-4958-8e0f-56947d8899ef")
 	)
 	(junction
+		(at 107.95 33.02)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "104b24f1-47ef-4c00-9287-e22b97b2c820")
+	)
+	(junction
 		(at 340.36 236.22)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6851,6 +7243,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "11e9560a-1354-448c-9e94-3414409e7b3b")
+	)
+	(junction
+		(at 331.47 83.82)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "14f47525-c867-46d7-b3c3-40a2138e6d92")
 	)
 	(junction
 		(at 330.2 24.13)
@@ -7872,6 +8270,16 @@
 	)
 	(wire
 		(pts
+			(xy 107.95 33.02) (xy 163.83 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "33c0d157-ed7b-4a4c-86f4-9bfe5dc58bc6")
+	)
+	(wire
+		(pts
 			(xy 312.42 236.22) (xy 312.42 218.44)
 		)
 		(stroke
@@ -7899,6 +8307,16 @@
 			(type default)
 		)
 		(uuid "3632e313-7b74-4778-81dd-d6c1cfe0b477")
+	)
+	(wire
+		(pts
+			(xy 327.66 86.36) (xy 334.01 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "37195bc2-f303-4d6a-bf34-2dac19a169de")
 	)
 	(wire
 		(pts
@@ -7932,6 +8350,16 @@
 	)
 	(wire
 		(pts
+			(xy 107.95 33.02) (xy 107.95 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3b127b9e-9c9a-4895-bf86-86580dafa2ec")
+	)
+	(wire
+		(pts
 			(xy 365.76 46.99) (xy 370.84 46.99)
 		)
 		(stroke
@@ -7959,6 +8387,16 @@
 			(type default)
 		)
 		(uuid "3eaab60f-2e4a-4826-814b-9e7553def134")
+	)
+	(wire
+		(pts
+			(xy 91.44 33.02) (xy 86.36 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4151a690-3fee-4f01-b456-c6b432d7d616")
 	)
 	(wire
 		(pts
@@ -8232,6 +8670,16 @@
 	)
 	(wire
 		(pts
+			(xy 367.03 83.82) (xy 369.57 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5bcac4c8-8205-4dbf-aff9-894348d8a826")
+	)
+	(wire
+		(pts
 			(xy 368.3 226.06) (xy 367.03 226.06)
 		)
 		(stroke
@@ -8309,6 +8757,16 @@
 			(type default)
 		)
 		(uuid "637de194-9d65-4409-b956-f354da33160f")
+	)
+	(wire
+		(pts
+			(xy 367.03 85.09) (xy 367.03 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "642f53ac-0900-472f-af23-34526974a3f9")
 	)
 	(polyline
 		(pts
@@ -8419,6 +8877,16 @@
 			(type default)
 		)
 		(uuid "6b5c5565-2b7f-44f3-8c3b-8ffbceababe9")
+	)
+	(wire
+		(pts
+			(xy 331.47 83.82) (xy 331.47 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6bc3a737-045a-42ee-aad8-776ce0f72127")
 	)
 	(wire
 		(pts
@@ -8560,6 +9028,16 @@
 		)
 		(uuid "7bd07ebd-e929-4c98-b603-4118ccffd9c9")
 	)
+	(wire
+		(pts
+			(xy 107.95 33.02) (xy 91.44 33.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7c02f0b9-672f-4610-9f17-8cdd53da5cd5")
+	)
 	(polyline
 		(pts
 			(xy 391.16 221.615) (xy 393.7 224.155)
@@ -8632,6 +9110,16 @@
 	)
 	(wire
 		(pts
+			(xy 364.49 80.01) (xy 367.03 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "83943300-9000-4b8a-b9db-650baad92549")
+	)
+	(wire
+		(pts
 			(xy 91.44 19.05) (xy 91.44 27.94)
 		)
 		(stroke
@@ -8669,6 +9157,16 @@
 			(type default)
 		)
 		(uuid "85e9d8b7-e964-4903-954a-53f0bc839974")
+	)
+	(wire
+		(pts
+			(xy 331.47 83.82) (xy 327.66 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "86230a68-0935-44af-ae86-a948cdcdf63f")
 	)
 	(wire
 		(pts
@@ -8760,6 +9258,16 @@
 		)
 		(uuid "8de9fe4b-5a86-40a8-a70c-cc5474a50f26")
 	)
+	(wire
+		(pts
+			(xy 367.03 81.28) (xy 369.57 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8df3db85-cd8f-46ab-bd71-aea4cf3722bd")
+	)
 	(polyline
 		(pts
 			(xy 391.16 221.615) (xy 391.16 217.805)
@@ -8789,16 +9297,6 @@
 			(type default)
 		)
 		(uuid "8e8aa390-0189-4f17-9103-f21b95099dc8")
-	)
-	(wire
-		(pts
-			(xy 86.36 33.02) (xy 91.44 33.02)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8ee6481e-b3bc-4f37-8a7d-fe5dfe7080a8")
 	)
 	(wire
 		(pts
@@ -8839,6 +9337,16 @@
 			(type default)
 		)
 		(uuid "92b10738-d2b8-46a1-92b5-1deaf687a01e")
+	)
+	(wire
+		(pts
+			(xy 334.01 83.82) (xy 331.47 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "92c9e075-865f-45ad-8463-d4a40c7b13dc")
 	)
 	(wire
 		(pts
@@ -9169,6 +9677,16 @@
 			(type default)
 		)
 		(uuid "b07670b8-3cf4-49ea-9323-840e2b7b8f39")
+	)
+	(wire
+		(pts
+			(xy 107.95 45.72) (xy 107.95 52.07)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b14ea5b6-1d8a-4471-8afe-0e69285e5da4")
 	)
 	(wire
 		(pts
@@ -9662,6 +10180,16 @@
 	)
 	(wire
 		(pts
+			(xy 331.47 78.74) (xy 334.01 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e3cd2f38-2a0c-43ee-9bce-f3348e0046ab")
+	)
+	(wire
+		(pts
 			(xy 290.83 217.17) (xy 298.45 217.17)
 		)
 		(stroke
@@ -9729,6 +10257,16 @@
 			(type default)
 		)
 		(uuid "eb339504-fd80-4e73-ab32-53cb7905ee91")
+	)
+	(wire
+		(pts
+			(xy 367.03 80.01) (xy 367.03 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eb64f104-1e44-457e-b587-82ff2dbd5953")
 	)
 	(wire
 		(pts
@@ -9809,6 +10347,16 @@
 			(type default)
 		)
 		(uuid "eee12fc8-13b9-4cfc-8714-a6a01761e2a1")
+	)
+	(wire
+		(pts
+			(xy 364.49 85.09) (xy 367.03 85.09)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f0396acb-7f4d-4f85-b1ca-f05575a11da1")
 	)
 	(wire
 		(pts
@@ -9912,6 +10460,16 @@
 	)
 	(wire
 		(pts
+			(xy 334.01 81.28) (xy 309.88 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f9b2637b-1b1f-447f-a292-1a5fc0f76fc1")
+	)
+	(wire
+		(pts
 			(xy 184.15 209.55) (xy 187.96 209.55)
 		)
 		(stroke
@@ -9971,7 +10529,7 @@
 		(uuid "ffa13be7-63ea-47f7-9788-d3445381931e")
 	)
 	(image
-		(at 257.048 98.806)
+		(at 245.618 56.388)
 		(scale 0.385991)
 		(uuid "56f4b213-c9a8-4c18-9f95-f02d76768307")
 		(data "iVBORw0KGgoAAAANSUhEUgAABGwAAAI7CAIAAAA2yZp+AAAAA3NCSVQICAjb4U/gAAAACXBIWXMA"
@@ -12088,12 +12646,22 @@
 		(uuid "72ddc9ef-0fc4-4da3-9d40-21c18cdf6e99")
 	)
 	(label "12V_HIGH_CURRENT"
-		(at 62.23 33.02 0)
+		(at 309.88 81.28 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
+		)
+		(uuid "7ccf8bcb-9ed2-4440-9dc4-aa54ae249ca7")
+	)
+	(label "12V_HIGH_CURRENT"
+		(at 163.83 33.02 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
 		)
 		(uuid "8f8b28a4-9705-448a-b306-5dac6fcff2bf")
 	)
@@ -12314,6 +12882,28 @@
 		(uuid "4f1595bb-dc74-45fc-bba1-ad23f701f8dd")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 285.4863 242.57 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "LED_CTRL"
+		(shape input)
+		(at 327.66 86.36 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6432e9b7-8bad-4670-a8b3-452d8f0edc23")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 315.7244 86.36 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12952,6 +13542,71 @@
 			(project "ripple-tank-pcb"
 				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
 					(reference "C13")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_name "GNDPWR_3")
+		(lib_id "power:GNDPWR")
+		(at 107.95 52.07 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "0774f882-0e98-42fd-a4bd-d8d6289c2063")
+		(property "Reference" "#PWR027"
+			(at 107.95 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GNDPWR"
+			(at 107.696 55.626 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 107.95 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 107.95 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 107.95 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6fd28cda-78e1-4420-9a17-cea3c61136e6")
+		)
+		(instances
+			(project "ripple-tank-pcb"
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "#PWR027")
 					(unit 1)
 				)
 			)
@@ -14754,6 +15409,71 @@
 			(project "ripple-tank-pcb"
 				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
 					(reference "D3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_name "GNDPWR_4")
+		(lib_id "power:GNDPWR")
+		(at 327.66 83.82 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4f24e7c9-9ec6-40d1-b24c-e31ea9d12d7d")
+		(property "Reference" "#PWR028"
+			(at 322.58 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GNDPWR"
+			(at 320.802 83.82 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 326.39 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 326.39 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 327.66 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "457b7768-e6bc-40c1-a01f-6432c36a211f")
+		)
+		(instances
+			(project "ripple-tank-pcb"
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "#PWR028")
 					(unit 1)
 				)
 			)
@@ -17799,6 +18519,136 @@
 		)
 	)
 	(symbol
+		(lib_name "Screw_Terminal_medium_01x02_1")
+		(lib_id "000-screw-terminals-immo:Screw_Terminal_medium_01x02")
+		(at 374.65 83.82 0)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a9b40acf-b35b-4130-83ef-bef3f7cb7a90")
+		(property "Reference" "J8"
+			(at 375.158 75.438 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "LED 660mA"
+			(at 375.92 78.232 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "000-screw-terminals-immo:TerminalBlock_medium_5.008mm"
+			(at 373.126 93.218 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 374.65 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic screw terminal, single row, 01x02, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 372.618 92.456 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "PIN_A" "-"
+			(at 377.19 83.312 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "PIN_B" "+"
+			(at 376.936 80.518 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MFid" ""
+			(at 374.65 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCpart" ""
+			(at 374.65 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "RSpart" "790-1064"
+			(at 374.142 91.694 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "supplier" "https://uk.rs-online.com/web/p/pcb-terminal-blocks/7901064?gb=s"
+			(at 373.126 90.424 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cost" "£0.52"
+			(at 373.38 91.186 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "afbccde0-8bea-4f99-b793-449cdf8a83b2")
+		)
+		(pin "2"
+			(uuid "649a70da-f63b-4d17-81fc-3276f2b9cedc")
+		)
+		(instances
+			(project "ripple-tank-pcb"
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "J8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "000_Diodes_Immo:LED_0805_Blue")
 		(at 137.16 133.35 90)
 		(unit 1)
@@ -17880,6 +18730,112 @@
 			(project "ripple-tank-pcb"
 				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
 					(reference "D5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "000_Capacitor_Electrolytic_Immo:220u")
+		(at 107.95 41.91 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "acdb9092-bb7b-4b5b-af90-c95de265b496")
+		(property "Reference" "EC6"
+			(at 111.76 39.7509 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "220uF"
+			(at 111.76 42.2909 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:CP_Elec_6.3x7.7"
+			(at 108.9152 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 107.95 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Polarized capacitor"
+			(at 107.95 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCpart" "C3342"
+			(at 107.95 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "RSpart" ""
+			(at 107.95 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "supplier" ""
+			(at 107.95 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cost" "0.0315"
+			(at 107.95 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "c5e235eb-ebef-4078-acb5-22b036ea3b75")
+		)
+		(pin "1"
+			(uuid "87ba405f-92d8-4258-8b0c-251c8e23f58f")
+		)
+		(instances
+			(project "ripple-tank-pcb"
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "EC6")
 					(unit 1)
 				)
 			)
@@ -18009,6 +18965,84 @@
 			(project "ripple-tank-pcb"
 				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
 					(reference "#PWR05")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "000_IC_immo:AL8860")
+		(at 259.08 144.78 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "b4731dfa-5569-4729-b489-e8d195897428")
+		(property "Reference" "U9"
+			(at 254 120.65 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "AL8860"
+			(at 254 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:TSOT-23-5"
+			(at 298.704 134.112 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://cdn.sparkfun.com/assets/5/9/8/e/4/AL8860.pdf"
+			(at 311.404 136.906 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "hysteresis mode DC-DC step-down converter, designed for driving single or multiple series connected LED"
+			(at 346.964 157.48 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "35917864-d5f5-4720-9ca0-cb094c9fcff9")
+		)
+		(pin "3"
+			(uuid "231c0d19-6127-4c13-bf50-b167be319e61")
+		)
+		(pin "5"
+			(uuid "ad4a105c-81ff-4691-8bd0-1700e6267ebd")
+		)
+		(pin "1"
+			(uuid "01c35343-edb3-4bdb-a269-b923a2d6eaf3")
+		)
+		(pin "4"
+			(uuid "4c586be8-2bdb-4ea7-a067-f2dc4b556d6f")
+		)
+		(instances
+			(project ""
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "U9")
 					(unit 1)
 				)
 			)
@@ -19018,7 +20052,7 @@
 	)
 	(symbol
 		(lib_id "000_Resistors_Immo:Resistor_0805")
-		(at 350.52 161.29 0)
+		(at 355.6 166.37 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -19026,7 +20060,7 @@
 		(dnp no)
 		(uuid "e25f46e5-9c65-469a-8e7c-fe758622d54d")
 		(property "Reference" "R10"
-			(at 350.52 154.94 0)
+			(at 355.6 160.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19034,7 +20068,7 @@
 			)
 		)
 		(property "Value" "Rf_{R}"
-			(at 350.012 158.242 0)
+			(at 355.092 163.322 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19042,7 +20076,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
-			(at 350.52 163.068 0)
+			(at 355.6 168.148 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19051,7 +20085,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 350.52 161.29 90)
+			(at 355.6 166.37 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19060,7 +20094,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 350.52 161.29 0)
+			(at 355.6 166.37 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19235,7 +20269,7 @@
 	)
 	(symbol
 		(lib_id "000_Resistors_Immo:Resistor_0805")
-		(at 332.74 161.29 0)
+		(at 337.82 166.37 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -19243,7 +20277,7 @@
 		(dnp no)
 		(uuid "e75541f9-53f7-4ea5-ab16-6f5682f28e28")
 		(property "Reference" "R9"
-			(at 332.74 154.94 0)
+			(at 337.82 160.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19251,7 +20285,7 @@
 			)
 		)
 		(property "Value" "Rf_{L}"
-			(at 332.232 158.242 0)
+			(at 337.312 163.322 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19259,7 +20293,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
-			(at 332.74 163.068 0)
+			(at 337.82 168.148 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19268,7 +20302,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 332.74 161.29 90)
+			(at 337.82 166.37 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19277,7 +20311,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 332.74 161.29 0)
+			(at 337.82 166.37 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -20129,6 +21163,114 @@
 			(project "ripple-tank-pcb"
 				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
 					(reference "#PWR06")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "000_Modules_Immo:femtoBuck_LED_driver")
+		(at 346.71 82.55 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f98f0937-fabc-450d-868f-531274d51f4c")
+		(property "Reference" "U6"
+			(at 341.63 74.168 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "femtoBuck_LED_driver"
+			(at 359.41 75.946 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "000_Modules_Immo:femtoBuck"
+			(at 347.98 78.74 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://github.com/sparkfun/FemtoBuck"
+			(at 347.98 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 346.71 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "JLCpart" ""
+			(at 346.71 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "supplier" ""
+			(at 346.71 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cost" ""
+			(at 346.71 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "d4e68bf4-f08a-44d8-8203-d3e9cc08c662")
+		)
+		(pin "4"
+			(uuid "f41b09db-052a-48df-88f5-abdd67c77d85")
+		)
+		(pin "2"
+			(uuid "707458a6-e861-4931-a72e-3f5e2f417fe9")
+		)
+		(pin "5"
+			(uuid "6c399f6a-9768-40f6-a246-9d848d8e8d89")
+		)
+		(pin "6"
+			(uuid "b8419ee9-1a7f-46c5-a48f-c477489d44c8")
+		)
+		(pin "1"
+			(uuid "5a670bba-d8e1-4e4f-9c24-cd25c9ebc7e0")
+		)
+		(instances
+			(project ""
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "U6")
 					(unit 1)
 				)
 			)

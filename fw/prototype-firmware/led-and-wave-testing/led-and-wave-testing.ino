@@ -25,9 +25,44 @@
 #include "sine.h"
 #include <autoDelay.h>
 
+// Digital Pot Stuff
+#include <SPI.h>
+
+#include <MCP4151.h>
+
+#define CS 10
+#define MOSI 11
+#define MISO 12
+#define SCK 13
+
+//MCP4151 pot(CS, MOSI, MISO, SCK);
+// MCP4151 pot(CS, MOSI, MISO, SCK, 4000000, 250000, SPI_MODE0);
+
+
+
+
+
+
+uint8_t volume = 10;
+float frequency = 40;
+uint16_t brightness = 100;
+
 // Constants
-const int dacPin = A0;      // DAC0
+const int dacPin = A0;  // DAC0
+
+const int digiPotSelectPin = 10;
+
 const int tableSize = 240;  // Number of samples in the sine wave table
+// constants for different sine tables
+const int low_table_size = 240;  // up to 30 Hz
+const int mid_table_size = 120;  // 30 - 60 Hz
+const int high_table_size = 60;  // 60 to 120 Hz
+
+typedef uint8_t enum {
+  LOW_HZ_TABLE,
+  MID_HZ_TABLE,
+  HIGH_HZ_TABLE
+} activeTable;
 
 
 // Variables for sine wave control
@@ -42,24 +77,36 @@ autoDelay demoDelay;
 
 float waveBaseDelay_uS = 0;    // delay for 1Hz
 int16_t waveDelayTime_uS = 0;  // calculated delay for {frequency}
+uint16_t table_index = 0;
 
 
 
 // Timing variables
 unsigned long previousMicros = 0;
-uint16_t table_index = 0;
+
 
 
 //LED Variables
 const int ledCtrl = 3;
-int16_t ledPWM = 10;
+//int16_t ledPWM = 10;
 
 
-void calc_wave_baseDelay(uint16_t num_entries) {
-  waveBaseDelay_uS = 1000000.0 / float(num_entries);
-  Serial.print("Base Delay uS: ");
-  Serial.println(waveBaseDelay_uS);
+
+
+
+
+void setVolume(const uint8_t &volume) {
+  digitalWrite(digiPotSelectPin, LOW);
+  unsigned char MSb = 0x0;
+  unsigned char LSb = volume & 0xFF;  // no value greater than 255, else send 0x00
+  uint16_t transmission = MSb << 8 | LSb;
+  SPI.transfer16(transmission);
+  digitalWrite(digiPotSelectPin, HIGH);
 }
+
+
+
+
 
 uint32_t set_frequency(float frequency = 1) {
   waveDelayTime_uS = uint32_t((waveBaseDelay_uS / frequency) + 0.5);  // waveBaseDelay_uS = 3906 previously
@@ -67,8 +114,18 @@ uint32_t set_frequency(float frequency = 1) {
 }
 
 
+// Used at startup to calculate the delay time between samples at 1Hz
+void calc_wave_baseDelay(uint16_t num_entries) {
+  waveBaseDelay_uS = 1000000.0 / float(num_entries);
+  Serial.print("Base Delay uS: ");
+  Serial.println(waveBaseDelay_uS);
+}
+
+
+
 void run_wavetable() {
   if (waveTableDelay.microsDelay(waveDelayTime_uS)) {
+    Serial.println(waveDelayTime_uS);
     uint16_t tableVal = pgm_read_word(&sineTable[table_index]);
     analogWrite(dacPin, tableVal);
     // Serial.println(tableVal);
@@ -86,6 +143,10 @@ void setup() {
 
   delay(2000);
 
+  // Set Up SPI for digital pot volume control
+  pinMode(digiPotSelectPin, OUTPUT);
+  SPI.begin();
+
   Serial.print("Wavetable Testing");
   // Fill the sine lookup table with values from 0 to 255
   // for (int i = 0; i < tableSize; i++) {
@@ -95,8 +156,11 @@ void setup() {
   calc_wave_baseDelay(tableSize);
   analogWriteResolution(10);
   set_frequency(0.1);
-  set_frequency(3);
-  analogWrite(ledCtrl, ledPWM);
+  delay(10);
+  set_frequency(frequency);
+  setVolume(volume);
+  //pot.writeValue(volume);
+  analogWrite(ledCtrl, brightness);
 }
 
 //int DAC_val = 0;
@@ -104,18 +168,14 @@ void setup() {
 
 
 
-float frequency = 0;
+
 
 void loop() {
 
   run_wavetable();
 
 
-  if (demoDelay.secondsDelay(8)) {
-    frequency = frequency + 0.5;
-    // set_frequency(frequency);
-    Serial.println(frequency);
-  }
+
   //
 
   // analogWrite(dacPin, DAC_val);

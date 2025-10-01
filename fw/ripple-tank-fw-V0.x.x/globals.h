@@ -5,6 +5,14 @@
       25/01/2025
 */
 
+/*  Changelog
+
+V0.0.0
+Sketch uses 48544 bytes (18%) of program storage space. Maximum is 262144 bytes.
+Global variables use 6100 bytes (18%) of dynamic memory, leaving 26668 bytes for local variables. Maximum is 32768 bytes.
+
+*/
+
 #pragma once
 
 // Add included external libraries here (at the top of globals.h)
@@ -50,17 +58,19 @@ int tableSize = 240;  // Number of samples in the sine wave table
 const int low_table_size = 240;  // up to 30 Hz  (aprox-> defined below)
 const int mid_table_size = 120;  // 30 - 60 Hz
 const int high_table_size = 60;  // 60 to 120 Hz
-
+const int VH_table_size = 30;  // 60 to 120 Hz
 
 const int low_table_Hz = 20;    // frequences under this limit will use the low table   
 const int mid_table_Hz = 40;     // frequences between low and mid will use mid table
-const int high_table_Hz = 40;    // frequencies above this limit will use the high table
+const int high_table_Hz = 80;    // frequencies between mid and high limit will use the high table
+const int VH_table_Hz = 80;      // frequencies above high will use the Very High table
 
 
 typedef enum {
   LOW_HZ_TABLE,
   MID_HZ_TABLE,
-  HIGH_HZ_TABLE
+  HIGH_HZ_TABLE,
+  VH_HZ_TABLE
 } activeTable;
 
 activeTable currentTable;
@@ -94,8 +104,8 @@ const int SETTINGS_DEFAULT_TIMEOUT_S = 3600;   // Times out any changes to setti
 
 
 // Debugging Options
-#define DEBUG_STATES true        // not JSON safe
-#define DEBUG_STATE_MACHINE false  // JSON safe
+#define DEBUG_STATES false       // not JSON safe
+#define DEBUG_STATE_MACHINE true  // JSON safe
 #define COMMAND_HINTS false
 
 // Physics Constants

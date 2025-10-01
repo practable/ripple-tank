@@ -315,7 +315,7 @@ void sm_state_lamp(jsonStateData stateData) {
   }
   brightness = stateData.numeric;
   set_brightness(brightness);
-  smState = STATE_STOP;
+  smState = STATE_WAIT;
 }
 
 

@@ -474,10 +474,22 @@
         "wire_width": 8
       },
       {
+        "name": "apwr",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 0,
+        "schematic_color": "rgb(45, 176, 172)"
+      },
+      {
+        "name": "led-power",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 1,
+        "schematic_color": "rgb(255, 78, 234)"
+      },
+      {
         "clearance": 0.15,
         "name": "mcu-power",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 0,
+        "priority": 2,
         "schematic_color": "rgb(63, 145, 84)",
         "track_width": 0.8,
         "via_diameter": 0.8,
@@ -489,7 +501,7 @@
         "diff_pair_width": 0.2,
         "name": "power",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 2,
+        "priority": 4,
         "schematic_color": "rgb(255, 113, 23)",
         "track_width": 1.9,
         "via_diameter": 1.0,
@@ -502,7 +514,7 @@
         "diff_pair_width": 0.2,
         "name": "power_gnd",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 1,
+        "priority": 3,
         "schematic_color": "rgb(164, 55, 18)",
         "track_width": 2.1,
         "via_diameter": 1.0,
@@ -518,13 +530,34 @@
       "/12V_HIGH_CURRENT": [
         "power"
       ],
+      "/5V_AUDIO_PWR": [
+        "apwr"
+      ],
       "GNDPWR": [
         "power_gnd"
       ],
       "Net-(D2-A)": [
         "power"
       ],
+      "Net-(D7-A)": [
+        "led-power"
+      ],
       "Net-(J1-V+)": [
+        "power"
+      ],
+      "Net-(J5-Pin_1)": [
+        "apwr"
+      ],
+      "Net-(J8-Pin_1)": [
+        "led-power"
+      ],
+      "Net-(J8-Pin_2)": [
+        "led-power"
+      ],
+      "Net-(JP6-B)": [
+        "power"
+      ],
+      "Net-(JP7-B)": [
         "power"
       ],
       "Net-(Q1-D)": [

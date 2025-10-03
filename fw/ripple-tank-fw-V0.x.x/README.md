@@ -11,6 +11,7 @@ _Verbose Command Structure_
    {"set":"hz","to": 0 to 600 }      -> Set Wave Frequency
    {"set":"lamp","to": 0 or 1024 }   -> Set LED Brightness
    {"set":"amp","to": 0 to 255 }     -> Set wave amplitude
+   {"set":"pulse","to": 0 to {uint32} } -> Pulse output for {_} mS
    {"set":"stream"}                  -> Start Data Streaming    
    {"set":"endst"}                   -> End Data Streaming      
    {"set":"snap"}                    -> Take Data Snapshot       
@@ -23,28 +24,11 @@ _Verbose Command Structure_
 
 
 _Succinct Command Structure_
+- Follow the same structure as above, but does not require the "set" and "to" keywords. For singe word commands with no data passed, dummy value must be passed to ensure valid JSON structure eg:
+- `{"start":"0"}` and `{"start":1}` are equivilent and will both function correctly
+- `{"pulse":1000}` will pulse the wave output for 1 second
 ```
-{"start":0}          -> Start/Update Motor Speed"));
-{"stop":0}           -> Stop Motor              "));
-{"hz": -20 to 20}    -> Set Motor Speed in Hz   "));
-{"rpm": -200 to 200} -> Set Motor Speed in RPM  "));
-{"home":" "}        -> Move Motor to home pos (test) "));
-{"cal":" "}         -> DEPRECIATED for now "));
-{"free":" "}        -> Set freewheel brake mode (test)"));
-{"brake":" "}       -> Set coolbrake brake mode (test)"));
-{"goto": -360 to 360}-> Goto Angle (test)              "));
-{"sample": 1 to 200} -> Set Samplerate in Hz (dflt: 200)"));  // Note, when changing print & sample rates, the size of the JSON doc may not be able to handle additional data. Max number of samples is governed by JSON doc size
-{"print": 1 to 50}   -> Set Print Rate in Hz (dflt: 50)"));
-{"stream":" "}      -> Start Data Streaming    "));
-{"endst":" "}       -> End Data Streaming      "));
-{"snap":" "}        -> Take Data Snapshot       "));          // Take a Snapshot of data
-{"time": 1 - 250000 }-> Set Time for Data Snapshot (mS)  "));  // Change the time over which the data snapshot is taken
-{"ping":" "}        -> Ping Servo               "));          // Ping the wobble-shaft with the servo
-{"offset":"-32768 to 32768"} -> NOT CURRENTLY USED"));       // Print commands list
-{"secret":"XXXXXXXX"-> Set 8 character secret     "));
-{"setcal":"0 - 32768", "auth":"XXXXXXXX"} -> Set calibration offset"));
-{"getcal":"XXXXXXXX"-> Get calibration offset (requires secret) "));
-{"help":""}        -> Print Commands to Serial Monitor    "));  // Print commands list
+
 ```
 
 

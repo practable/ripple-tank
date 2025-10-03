@@ -26,6 +26,7 @@ typedef enum {
   STATE_SET_HZ,
   STATE_LAMP,
   STATE_AMP,
+  STATE_PULSE,
   STATE_SAMPLERATE,
   STATE_PRINTRATE,
   STATE_STARTSTREAM,
@@ -59,6 +60,7 @@ char stateNames[][20] = {
   "STATE_SET_HZ",
   "STATE_LAMP",
   "STATE_AMP",
+  "STATE_PULSE",
   "STATE_SAMPLERATE",
   "STATE_PRINTRATE",
   "STATE_STARTSTREAM",
@@ -75,6 +77,7 @@ char stateNames[][20] = {
 
 // 4. Define the state machine function prototypes.
 //    Any function that will be passed data from a user input will be passed the same jsonStateData structure as an argument.
+// Experiment Specific states
 void sm_state_init(void);
 void sm_state_wait(void);
 void sm_state_stop(void);
@@ -82,6 +85,8 @@ void sm_state_start(void);
 void sm_state_set_hz(jsonStateData stateData);
 void sm_state_lamp(jsonStateData stateData);
 void sm_state_amp(jsonStateData stateData);
+void sm_state_pulse(jsonStateData stateData);
+// Generic, Common & Utility states
 void sm_state_samplerate(jsonStateData stateData);
 void sm_state_printrate(jsonStateData stateData);
 void sm_state_start_stream(jsonStateData stateData);
@@ -334,6 +339,24 @@ void sm_state_amp(jsonStateData stateData) {
 
 
 
+// Run motor home position calibration and homing scripts
+void sm_state_pulse(jsonStateData stateData) {
+  if (lastState != smState) {
+#if DEBUG_STATES == true
+    Serial.println(F("state: PULSE"));
+#endif
+    lastState = smState;
+    pulseActive = true;
+    pulseTime_mS = stateData.numeric;
+    waveOutput = true;
+    pulseStartTime_mS = millis();
+  }
+
+  smState = STATE_WAIT;
+}
+
+
+
 
 // Change the samplerate of streamed or snapshotted data (Init at 10 Hz)
 void sm_state_samplerate(jsonStateData stateData) {
@@ -515,6 +538,9 @@ void sm_Run(jsonStateData stateData) {
         break;
       case STATE_AMP:
         sm_state_amp(stateData);
+        break;
+      case STATE_PULSE:
+        sm_state_pulse(stateData);
         break;
       case STATE_SAMPLERATE:
         sm_state_samplerate(stateData);

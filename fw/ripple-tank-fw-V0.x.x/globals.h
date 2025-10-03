@@ -27,14 +27,14 @@ Global variables use 6100 bytes (18%) of dynamic memory, leaving 26668 bytes for
 // Program Attributes
 #define EXPERIMENT_NAME "ripple-tank"
 #define FIRMWARE_VERSION "V0.0.0"
-#define DEVELOPER   "Imogen Heard"
+#define DEVELOPER "Imogen Heard"
 
 
 // Hardware Definitions
-const int dacPin = A0;      // DAC
+const int dacPin = A0;  // DAC
 const int digiPotSelectPin = 10;
 const int lampCtrlPin = 3;
-const int beaconPin = 5;    // user interface LED
+const int beaconPin = 5;  // user interface LED
 
 
 // User Runtime Adjustable Variables -> These are the variables the user will direct interact with as part of the experiment
@@ -47,7 +47,7 @@ bool lampOutput = false;
 
 // User Runtime Defaults -> Default values for the runtime variables (if required) for the program to default to after some set time
 // -> This can be useful so the equipment can be assumed to be in some defined state if not running for a period of time. Will also be used as the startup variables
-uint8_t amplitudeDefault = 10;
+uint8_t amplitudeDefault = 30;
 float frequencyDefault = 20;
 uint16_t brightnessDefault = 100;
 
@@ -58,12 +58,12 @@ int tableSize = 240;  // Number of samples in the sine wave table
 const int low_table_size = 240;  // up to 30 Hz  (aprox-> defined below)
 const int mid_table_size = 120;  // 30 - 60 Hz
 const int high_table_size = 60;  // 60 to 120 Hz
-const int VH_table_size = 30;  // 60 to 120 Hz
+const int VH_table_size = 30;    // 60 to 120 Hz
 
-const int low_table_Hz = 20;    // frequences under this limit will use the low table   
-const int mid_table_Hz = 40;     // frequences between low and mid will use mid table
-const int high_table_Hz = 80;    // frequencies between mid and high limit will use the high table
-const int VH_table_Hz = 80;      // frequencies above high will use the Very High table
+const int low_table_Hz = 20;   // frequences under this limit will use the low table
+const int mid_table_Hz = 40;   // frequences between low and mid will use mid table
+const int high_table_Hz = 80;  // frequencies between mid and high limit will use the high table
+const int VH_table_Hz = 80;    // frequencies above high will use the Very High table
 
 
 typedef enum {
@@ -77,16 +77,22 @@ activeTable currentTable;
 
 float waveBaseDelay_uS = 0;    // delay for 1Hz
 int16_t waveDelayTime_uS = 0;  // calculated delay for {frequency}
-uint16_t table_index = 0;       //  sample index for the wavetable
+uint16_t table_index = 0;      //  sample index for the wavetable
 
+
+
+// pulse timing variables
+uint32_t pulseTime_mS = 0;
+uint32_t pulseStartTime_mS;
+bool pulseActive = false;
 
 
 // User Options & program config
 #define INIT_SAMPLE_RATE_Hz 2
 #define INIT_PRINT_RATE_Hz 2
-const int WAVE_TIMEOUT_S = 300;     // Times out running mode/movement after time delay from recieving last command
-const int LAMP_TIMEOUT_S = 300;     // Times out running mode/movement after time delay from recieving last command
-const int SETTINGS_DEFAULT_TIMEOUT_S = 3600;   // Times out any changes to settings and goes to defaults
+const int WAVE_TIMEOUT_S = 300;               // Times out running mode/movement after time delay from recieving last command
+const int LAMP_TIMEOUT_S = 300;               // Times out running mode/movement after time delay from recieving last command
+const int SETTINGS_DEFAULT_TIMEOUT_S = 3600;  // Times out any changes to settings and goes to defaults
 
 #define JSON_TX_BUFFER_SIZE 100
 #define STREAMING_DEFAULT_ACTIVE false
@@ -104,7 +110,7 @@ const int SETTINGS_DEFAULT_TIMEOUT_S = 3600;   // Times out any changes to setti
 
 
 // Debugging Options
-#define DEBUG_STATES false       // not JSON safe
+#define DEBUG_STATES false        // not JSON safe
 #define DEBUG_STATE_MACHINE true  // JSON safe
 #define COMMAND_HINTS false
 
@@ -178,7 +184,7 @@ uint8_t num_samples_req = uint8_t(sampleRate_Hz / print_rate_Hz);  // Number of 
 #define DATA_ARRAY_SIZE 200
 
 uint32_t timestamp_array[DATA_ARRAY_SIZE];
-float encode_array[DATA_ARRAY_SIZE];    // named as such and left here incase needed later
+float encode_array[DATA_ARRAY_SIZE];  // named as such and left here incase needed later
 
 
 int16_t samples_written = 0;
@@ -200,4 +206,3 @@ void switchVariables(float &varA, float &varB) {
 #include "demo.h"
 #include "stateConfig.h"
 #include "jsonReporter.h"
-

@@ -59,7 +59,7 @@ void setup() {
   //  }
 
 
-  beacon.begin(true);          // blink beacon to show ready for use
+  beacon.begin(true);  // blink beacon to show ready for use
   beacon.setDefault(true);
   beacon.callBlink();
 }
@@ -75,13 +75,13 @@ void loop() {
 
   if (nextState_data.cmd_received) {  // If command is receive   //delay(10);
 
-    if (smState == STATE_DEMO) {         // if command is received and program is in demo state, immediatly end
+    if (smState == STATE_DEMO) {  // if command is received and program is in demo state, immediatly end
       end_demo();
     }
 
-    beacon.callBlink(4);                  // blink beacon to show command RXed
+    beacon.callBlink(4);  // blink beacon to show command RXed
 
-    last_command_rx_mS = millis();        // record time cmd last RXed
+    last_command_rx_mS = millis();  // record time cmd last RXed
 
     const char* cmd = jsonRX.getCMDkey(nextState_data.cmdState);  // I feel like the entire point of using ENUMs is being totally lost by doing this, but it is working
 
@@ -115,7 +115,10 @@ void loop() {
         break;
       case SET_AMP:
         smState = STATE_AMP;
-        break;      
+        break;
+      case PULSE:
+        smState = STATE_PULSE;
+        break;
       case SAMPLERATE:
         smState = STATE_SAMPLERATE;
         break;
@@ -133,7 +136,7 @@ void loop() {
         break;
       case SNAPTIME:
         smState = STATE_SNAPTIME;
-        break; 
+        break;
       case SETSECRET:
         smState = STATE_SETSECRET;
         break;
@@ -161,7 +164,7 @@ void loop() {
   sm_Run(nextState_data);  // This Runs the state machine in the correct state, and is passed all of the data sent by the last command
 
 
-  run_wavetable();         // runs the hardware output that requires periodic updates
+  run_wavetable();  // runs the hardware output that requires periodic updates
 
 
 
@@ -204,20 +207,29 @@ void loop() {
 
 
   // Timeouts & stall check for running state
-if (waveOutput){
-  if (millis() - last_command_rx_mS >= WAVE_TIMEOUT_S * 1000) {  // running mode timeout
-    Serial.println(F("{\"WARNING\":\"Wave - Time Out\"}"));
-    beacon.callBlink(8, 500, 500);
-    smState = STATE_STOP;
+
+  if (pulseActive) {
+    if (millis() - pulseStartTime_mS >= pulseTime_mS) {
+      pulseActive = false;
+      smState = STATE_STOP;
+    }
   }
-}
 
 
- // if (millis() - last_command_rx_mS >= LAMP_TIMEOUT_S * 1000) {  // running mode timeout
- //   Serial.println(F("{\"WARNING\":\"Lamp - Time Out\"}"));
- //   beacon.callBlink(8, 500, 500);
- //   smState = STATE_STOP;
-//  }
+  if (waveOutput) {
+    if (millis() - last_command_rx_mS >= WAVE_TIMEOUT_S * 1000) {  // running mode timeout
+      Serial.println(F("{\"WARNING\":\"Wave - Time Out\"}"));
+      beacon.callBlink(8, 500, 500);
+      smState = STATE_STOP;
+    }
+  }
+
+
+  // if (millis() - last_command_rx_mS >= LAMP_TIMEOUT_S * 1000) {  // running mode timeout
+  //   Serial.println(F("{\"WARNING\":\"Lamp - Time Out\"}"));
+  //   beacon.callBlink(8, 500, 500);
+  //   smState = STATE_STOP;
+  //  }
 
   beacon.performBlink();  // loop function for the LED beacon
 }

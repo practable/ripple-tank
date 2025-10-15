@@ -58,7 +58,7 @@ body.dark-theme {
 @media only screen and (min-width: 992px){
     #first-row{
         overflow: auto;
-        height: 35dvh;
+        height: 50dvh;
         max-height: 100dvh;
         min-height: 20dvh;
         max-width: 100dvw;
@@ -67,7 +67,7 @@ body.dark-theme {
 
     #second-row{
         overflow: auto;
-        height: 60dvh;
+        height: 50dvh;
         max-height: 100dvh;
         min-height: 20dvh;
         max-width: 100dvw;
@@ -145,7 +145,7 @@ body.dark-theme {
 
 .drop-area-three-quarters{
     width: 75dvw;
-    min-width: 30dvw;
+    min-width: 50dvw;
 }
 
 .drop-area-one-quarter{

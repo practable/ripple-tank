@@ -7,15 +7,15 @@ const commandStore = {
         currentMode: 'stop',     //'start', 'pulse'
         currentState: 'STATE_WAIT',      //reported state from hardware, do I need this in the UI?
         driver: {
-            'hz': 1, 
-            'from_hardware_hz': 1, 
-            'max':100, 
+            'hz': 24, 
+            'from_hardware_hz': 24, 
+            'max':99, 
             'min':1, 
             'step':1,       //for the input slider only, buttons can make the step smaller
             'pulse': 100,    //pulse time in ms, only applied in pulse mode
             'pulse_min': 1,
-            'pulse_max': 1000,   //ms
-            'pulse_step': 10    //ms, for slider input only
+            'pulse_max': 999,   //ms
+            'pulse_step': 1    //ms, for slider input only
         },   
        }),
        mutations:{
@@ -23,15 +23,19 @@ const commandStore = {
             state.dataSocket = socket;
         },
         SET_STOP(state){
+            console.log('STOP MODE SET');
             state.currentMode = 'stop';
         },
         SET_START(state){
+            console.log('START MODE SET');
             state.currentMode = 'start';
         },
         SET_PULSE(state){
+             console.log('PULSE MODE SET');
             state.currentMode = 'pulse';
         },
         COMMAND_STOP(state){
+            console.log('STOP COMMAND SENT');
             if(state.dataSocket != null){
                 state.dataSocket.send(JSON.stringify({
                     set: "stop"
@@ -39,6 +43,7 @@ const commandStore = {
             }
         },
         COMMAND_START(state){
+            console.log('START COMMAND SENT');
             if(state.dataSocket != null){
                 state.dataSocket.send(JSON.stringify({
                     set: "start"
@@ -46,6 +51,7 @@ const commandStore = {
             }
         },
         COMMAND_PULSE(state){
+            console.log('PULSE COMMAND SENT = ' + state.driver.pulse);
             if(state.dataSocket != null){
                 state.dataSocket.send(JSON.stringify({
                     set: "pulse",
@@ -60,6 +66,7 @@ const commandStore = {
             state.driver.pulse = Number(val);
         },
         COMMAND_UPDATE_DRIVING_FREQUENCY(state){
+            console.log('sending command to update freq = ' + state.driver.hz)
             if(state.dataSocket != null){
                 state.dataSocket.send(JSON.stringify({
                     set: "hz",
@@ -114,6 +121,7 @@ const commandStore = {
         },
         sendCommandUpdateDrivingFrequency(context){
             context.commit('COMMAND_UPDATE_DRIVING_FREQUENCY');
+            context.commit('SET_REPORTED_DRIVING_FREQUENCY', context.getters.getDrivingFrequency)   //TEMP for setting a value from hardware
         },
         setReportedDrivingFrequency(context, val_object){
             context.commit('SET_REPORTED_DRIVING_FREQUENCY', val_object);
@@ -140,8 +148,8 @@ const commandStore = {
         getDrivingFrequency(state){
             return state.driver.hz;
         },
-        getReportedDrivingFrequencyHz(state){
-            return state.driver['from_hardware'].hz;
+        getReportedDrivingFrequency(state){
+            return state.driver['from_hardware_hz'];
         },
         getPulseLength(state){
             return state.driver.pulse;

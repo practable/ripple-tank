@@ -2,48 +2,21 @@
 
 <template>
 <div class='container-fluid m-2 practable-component'>
+  <div class="d-flex flex-row align-items-start justify-content-start">
+      <popup-help class="me-2" id="popup-help-control-panel">
+            <template v-slot:header>
+                <h5> Control Panel Help </h5>
+            </template>
+            <template v-slot:body>
+                Control panel help
+            </template>
+        </popup-help>
+  </div>
 
   <div class="row">
-      <!-- LEFT PANEL-->
-      <div class="d-flex flex-column col-lg-6 align-items-start justify-content-end">
-        <!-- TOGGLE FOR MODE START/STOP -->
-        <div class="input-group align-items-center justify-content-center">
-          <label class="control-toggle-label-before" id="toggle-off-text">Off</label>
-          <div class="form-check form-switch control-toggle-container">
-              <input class="form-check-input" type="checkbox" id="toggle-start-button" name="toggle-start" v-model="toggleStart">
-          </div> 
-          <label class="control-toggle-label-after" id="toggle-on-text">On</label>
-        </div>
-
-        <!-- TOGGLE FOR MODE START/PULSE -->
-        <div class="input-group align-items-center justify-content-center">
-          <label class="control-toggle-label-before" id="toggle-continuous-text">Continuous</label>
-          <div class="form-check form-switch control-toggle-container">
-              <input class="form-check-input" type="checkbox" id="toggle-pulse-button" name="toggle-pulse" v-model="togglePulse">
-          </div> 
-          <label class="control-toggle-label-after" id="toggle-pulse-text">Pulse</label>
-        </div>
-           
-
-          <div>Amplitude control slider</div>
-          <div>brightness control slider</div>
-
-          <div class="mt-auto">
-            <popup-help class="me-2" id="popup-help-control-panel">
-                  <template v-slot:header>
-                      <h5> Control Panel Help </h5>
-                  </template>
-                  <template v-slot:body>
-                      Control panel help
-                  </template>
-              </popup-help>
-          </div>
-        
-      </div>
-
-
-      <!-- RIGHT PANEL-->
-      <div class="d-flex flex-column col-lg-6 align-items-center justify-content-center">
+    <!-- LEFT PANEL-->
+      <div class="d-flex flex-column col-lg-4 align-items-center justify-content-center">
+          <h5>Wave Frequency</h5>
 
         <div class="d-flex flex-row">
             <div class="d-flex flex-column">
@@ -51,37 +24,17 @@
               <button id="frequency-step-negative-1" class="button-control-panel" aria-label="reduce frequency by 1 hertz" @click="() => {driving_frequency -= 1; sendCommandUpdateDrivingFrequency()}">-1</button>
             </div>
 
-           <div class="seven-segment-display align-items-center justify-content-center">
-          <h2 class="seven-segment-display-unit me-1">Hz</h2>
-          <div class="d-flex flex-row mt-0">
-              <div class="seven-segment-digit" id="seven-segment-digit-one" :style="displayColour">
-              <svg xmlns="http://www.w3.org/2000/svg" class="digit" viewBox="0 -1 12 20">
-                  <g class="digit">
-                    <polygon id="a" :class="[2,3,5,6,7,8,9].includes(Math.floor(getDrivingFrequency/10)) ? 'on' : 'off'" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2"/>
-                    <polygon id="b" :class="[1,2,3,4,7,8,9].includes(Math.floor(getDrivingFrequency/10)) ? 'on' : 'off'" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2"/>
-                    <polygon id="c" :class="[1,3,4,5,6,7,8,9].includes(Math.floor(getDrivingFrequency/10)) ? 'on' : 'off'" points=" 9, 9 10,10 10,16  9,17  8,16  8,10"/>
-                    <polygon id="d" :class="[2,3,5,6,8,9].includes(Math.floor(getDrivingFrequency/10)) ? 'on' : 'off'" points=" 9,17  8,18  2,18  1,17  2,16  8,16"/>
-                    <polygon id="e" :class="[2,6,8].includes(Math.floor(getDrivingFrequency/10)) ? 'on' : 'off'" points=" 1,17  0,16  0,10  1, 9  2,10  2,16"/>
-                    <polygon id="f" :class="[4,5,6,8,9].includes(Math.floor(getDrivingFrequency/10)) ? 'on' : 'off'" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8"/>
-                    <polygon id="g" :class="[2,3,4,5,6,8,9].includes(Math.floor(getDrivingFrequency/10)) ? 'on' : 'off'" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10"/>
-                  </g>
-              </svg>
-            </div>
-            <div class="seven-segment-digit" id="seven-segment-digit-two" :style="displayColour">
-              <svg xmlns="http://www.w3.org/2000/svg" class="digit" viewBox="0 -1 12 20">
-                  <g class="digit">
-                    <polygon id="a" :class="[0,2,3,5,6,7,8,9].includes(getDrivingFrequency % 10) ? 'on' : 'off'" points=" 1, 1  2, 0  8, 0  9, 1  8, 2  2, 2"/>
-                    <polygon id="b" :class="[0,1,2,3,4,7,8,9].includes(getDrivingFrequency % 10) ? 'on' : 'off'" points=" 9, 1 10, 2 10, 8  9, 9  8, 8  8, 2"/>
-                    <polygon id="c" :class="[0,1,3,4,5,6,7,8,9].includes(getDrivingFrequency % 10) ? 'on' : 'off'" points=" 9, 9 10,10 10,16  9,17  8,16  8,10"/>
-                    <polygon id="d" :class="[0,2,3,5,6,8,9].includes(getDrivingFrequency % 10) ? 'on' : 'off'" points=" 9,17  8,18  2,18  1,17  2,16  8,16"/>
-                    <polygon id="e" :class="[0,2,6,8].includes(getDrivingFrequency % 10) ? 'on' : 'off'" points=" 1,17  0,16  0,10  1, 9  2,10  2,16"/>
-                    <polygon id="f" :class="[0,4,5,6,8,9].includes(getDrivingFrequency % 10) ? 'on' : 'off'" points=" 1, 9  0, 8  0, 2  1, 1  2, 2  2, 8"/>
-                    <polygon id="g" :class="[2,3,4,5,6,8,9].includes(getDrivingFrequency % 10) ? 'on' : 'off'" points=" 1, 9  2, 8  8, 8  9, 9  8,10  2,10"/>
-                  </g>
-              </svg>
-            </div>
-          </div>
-          </div>
+            <seven-segment-display id="seven-segment-display-frequency" class="mb-2"
+                  :value="getDrivingFrequency"
+                  :reportedValue="getReportedDrivingFrequency"
+                  unit="Hz"
+                  fontSize="2em"
+                  width="220"
+                  height="220"
+                  digitWidth="100"
+                  digitHeight="150"
+                  NDigits="2"
+            />
 
             <div class="d-flex flex-column">
               <button id="frequency-step-positive-10" class="button-control-panel" aria-label="increase frequency by 10 hertz" @click="() => {driving_frequency += 10; sendCommandUpdateDrivingFrequency()}">+10</button>
@@ -101,29 +54,160 @@
                 @mouseup="setDraggable(true); sendCommandUpdateDrivingFrequency()" 
                 @mouseleave="setDraggable(true)">
           </div>
-          
-          
-          <div v-if="getCurrentMode == 'pulse'" class="col-12">
-         
-              <input class="" type="range" id="pulse-length-slider" style="width: 75%;"
-                :min="getPulseLengthMin" 
-                :max="getPulseLengthMax" 
-                :step="getPulseLengthStep" 
-                v-model="pulse_length" 
-                @mousedown="setDraggable(false)" 
-                @mouseup="setDraggable(true)" 
-                @mouseleave="setDraggable(true)">
-          
-              {{ pulse_length }}
 
-               <button id="run-pulse-button" class="button-sm button-primary" aria-label="run pulse command" @click="sendCommandPulse">Pulse</button>
+          
+      </div>
+
+      <!-- MIDDLE PANEL-->
+      <div class="d-flex flex-column col-lg-4 align-items-center justify-content-center">
+          <!-- TOGGLE FOR MODE START/STOP -->
+        <div class="input-group align-items-center justify-content-center">
+          <label class="control-toggle-label-before" id="toggle-off-text">Off</label>
+          <div class="form-check form-switch control-toggle-container">
+              <input class="form-check-input" type="checkbox" id="toggle-start-button" name="toggle-start" v-model="toggleStart">
+          </div> 
+          <label class="control-toggle-label-after" id="toggle-on-text">On</label>
+        </div>
+
+        <!-- TOGGLE FOR MODE START/PULSE -->
+        <div class="input-group align-items-center justify-content-center">
+          <label class="control-toggle-label-before" id="toggle-continuous-text">Continuous</label>
+          <div class="form-check form-switch control-toggle-container">
+              <input class="form-check-input" type="checkbox" id="toggle-pulse-button" name="toggle-pulse" v-model="togglePulse">
+          </div> 
+          <label class="control-toggle-label-after" id="toggle-pulse-text">Pulse</label>
+        </div>
+
+        <button id="run-pulse-button" class="button-sm button-primary ms-2" aria-label="run pulse command" @click="sendCommandPulse">Start</button>
+      
+      </div>
+
+
+
+      <!-- RIGHT PANEL-->
+      <div class="d-flex flex-column col-lg-4 align-items-center justify-content-start">
+      
+        <div class="d-flex flex-row align-items-center justify-content-center">
+          <div class="col">
+               <label class="control-toggle-label-before">Amplitude</label>
+              <div class="">
+                <input class="" type="range" id="amplitude-slider" style="width: 75%;"
+                    :min="getAmplitudeMin" 
+                    :max="getAmplitudeMax" 
+                    :step="getAmplitudeStep" 
+                    v-model="amplitude" 
+                    @mousedown="setDraggable(false)" 
+                    @mouseup="setDraggable(true); sendCommandUpdateAmplitude()" 
+                    @mouseleave="setDraggable(true)">
+              </div>
+          </div>
+             
+
+              <div class="d-flex flex-column mt-2">
+                <button id="amplitude-step-positive-1" class="button-control-panel-small" aria-label="increase amplitude by 1 percent" @click="() => {amplitude += Math.floor(getAmplitudeMax/100); sendCommandUpdateAmplitude()}">+</button>
+                <button id="amplitude-step-negative-1" class="button-control-panel-small" aria-label="decrease amplitude by 1 percent" @click="() => {amplitude -= Math.floor(getAmplitudeMax/100); sendCommandUpdateAmplitude()}">-</button>
+              </div>
+
+              <seven-segment-display id="seven-segment-display-amplitude" 
+                  :value="100*getAmplitude/getAmplitudeMax"
+                  :reportedValue="100*getReportedAmplitude/getAmplitudeMax"
+                  unit="%"
+                  fontSize="1em"
+                  width="100"
+                  height="90"
+                  digitWidth="25"
+                  digitHeight="60"
+                  NDigits="3"
+            />
+        </div>
+          
+
+        <div class="d-flex flex-row align-items-center justify-content-center mt-2">
+          <div class="col">
+              <label class="control-toggle-label-before">Brightness</label>
+              <div class="">
+                <input class="" type="range" id="brightness-slider" style="width: 75%;"
+                    :min="getBrightnessMin" 
+                    :max="getBrightnessMax" 
+                    :step="getBrightnessStep" 
+                    v-model="brightness" 
+                    @mousedown="setDraggable(false)" 
+                    @mouseup="setDraggable(true); sendCommandUpdateBrightness()" 
+                    @mouseleave="setDraggable(true)">
+              </div>
+          </div>
               
-       
-            
+
+              <div class="d-flex flex-column mt-2">
+                <button id="brightness-step-positive-1" class="button-control-panel-small" aria-label="increase brightness by 1 percent" @click="() => {brightness += Math.floor(getBrightnessMax/100); sendCommandUpdateBrightness()}">+</button>
+                <button id="brightness-step-negative-1" class="button-control-panel-small" aria-label="decrease brightness by 1 percent" @click="() => {brightness -= Math.floor(getBrightnessMax/100); sendCommandUpdateBrightness()}">-</button>
+              </div>
+
+              <seven-segment-display id="seven-segment-display-brightness" 
+                  :value="100*getBrightness/getBrightnessMax"
+                  :reportedValue="100*getReportedBrightness/getBrightnessMax"
+                  unit="%"
+                  fontSize="1em"
+                  width="100"
+                  height="90"
+                  digitWidth="25"
+                  digitHeight="60"
+                  NDigits="3"
+            />
+        </div>
+
+        <div v-if="getCurrentMode == 'pulse'" >
+                  <div class="d-flex flex-row align-items-center justify-content-center mt-2">
+                    <div class="col">
+                      <label class="control-toggle-label-before">Pulse Length</label>
+                      <div class="">
+                        <input class="" type="range" id="pulse-length-slider" style="width: 75%;"
+                          :min="getPulseLengthMin" 
+                          :max="getPulseLengthMax" 
+                          :step="getPulseLengthStep" 
+                          v-model="pulse_length" 
+                          @mousedown="setDraggable(false)" 
+                          @mouseup="setDraggable(true)" 
+                          @mouseleave="setDraggable(true)">
+                      </div>
+                    </div>
+                      
+                      
+                      <div v-if="isMobile" class="d-flex flex-column mt-2">
+                        <button id="pulse-step-negative-10" class="button-control-panel-small" aria-label="decrease pulse by 10 ms" @click="pulse_length -= 10">-10</button>
+                        <button id="pulse-step-negative-1" class="button-control-panel-small" aria-label="decrease pulse by 1 ms" @click="pulse_length -= 1">-1</button>
+                      </div>
+                      <div v-else class="d-flex flex-column mt-2">
+                        <button id="pulse-step-positive-1" class="button-control-panel-small" aria-label="increase pulse by 1 ms" @click="pulse_length += 1">+</button>
+                        <button id="pulse-step-negative-1" class="button-control-panel-small" aria-label="decrease pulse by 1 ms" @click="pulse_length -= 1">-</button>
+                      </div>
+                      
+
+                      <seven-segment-display id="seven-segment-display-pulse" 
+                          :value="getPulseLength"
+                          :reportedValue="getPulseLength"
+                          unit="ms"
+                          fontSize="1em"
+                          width="100"
+                          height="90"
+                          digitWidth="25"
+                          digitHeight="60"
+                          NDigits="3"
+                      />
+
+                      <div v-if="isMobile" class="d-flex flex-column mt-2">
+                        <button id="pulse-step-positive-10" class="button-control-panel-small" aria-label="increase pulse by 10 ms" @click="pulse_length += 10">+10</button>
+                        <button id="pulse-step-positive-1" class="button-control-panel-small" aria-label="increase pulse by 1 ms" @click="pulse_length += 1">+1</button>
+                      </div>
+
+                  </div>
+
           </div>
 
-
       </div>
+
+
+      
 
   </div>
 
@@ -133,6 +217,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import PopupHelp from './elements/PopupHelp.vue';
+import SevenSegmentDisplay from './elements/SevenSegmentDisplay.vue';
 
 export default {
 
@@ -144,7 +229,8 @@ export default {
     }
   },
   components: {
-    PopupHelp
+    PopupHelp,
+    SevenSegmentDisplay
   },
   computed:{
     ...mapGetters([
@@ -160,13 +246,19 @@ export default {
       'getPulseLength',
       'getPulseLengthMin',
       'getPulseLengthMax',
-      'getPulseLengthStep'
+      'getPulseLengthStep',
+      'getAmplitude',
+      'getAmplitudeMin',
+      'getAmplitudeMax',
+      'getAmplitudeStep',
+      'getReportedAmplitude',
+      'getBrightness',
+      'getBrightnessMin',
+      'getBrightnessMax',
+      'getBrightnessStep',
+      'getReportedBrightness',
+      'isMobile'
     ]),
-    displayColour(){
-      return{
-        '--on-colour': this.getDrivingFrequency == this.getReportedDrivingFrequency ? 'lightgreen' : 'orange'
-      }
-    },
     driving_frequency: {
 			get(){
 				return this.getDrivingFrequency;
@@ -181,6 +273,22 @@ export default {
 			},
 			set(val){
 				this.updatePulseLength(val);
+			}
+		},
+    amplitude: {
+			get(){
+				return this.getAmplitude;
+			},
+			set(val){
+				this.updateAmplitude(val);
+			}
+		},
+    brightness: {
+			get(){
+				return this.getBrightness;
+			},
+			set(val){
+				this.updateBrightness(val);
 			}
 		},
     toggleStart: {
@@ -247,7 +355,11 @@ export default {
         'sendCommandStart',
         'sendCommandStop',
         'sendCommandPulse',
-        'updatePulseLength'
+        'updatePulseLength',
+        'updateAmplitude',
+        'sendCommandUpdateAmplitude',
+        'updateBrightness',
+        'sendCommandUpdateBrightness'
         
     ]),
       sendMessage(){
@@ -295,15 +407,15 @@ export default {
 }
 
 .control-toggle-label-before{
-  font-size: 1.5em;
+  font-size: 1.25em;
   width: 10ch;
   padding-right: 0.5em;
   text-align: right;
 }
 
 .control-toggle-label-after{
-  font-size: 1.5em;
-  width: 10ch;
+  font-size: 1.25em;
+  width: 8ch;
   padding-left: 0.5em;
   text-align: left;
 }
@@ -345,27 +457,32 @@ export default {
     color: var(--text-color-hover);
 }
 
-.seven-segment-display{
-  /* margin-top: 2em; */
-  /* margin-bottom: 2em; */
-  padding-left: 1em;
-  width: 220px;
-  height: 220px;
-  background-color : #6d6b6b;
-  border-style: dashed;
-  border-color: darkgray;
+.button-control-panel-small{
+    background-color: var(--background-color-secondary);
+    color: var(--text-color);
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--button-color-secondary);
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    margin: 4px 4px;
+    padding: 0px 0px;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    max-height: 60px;
+    max-width: 60px;
 }
 
-.seven-segment-display-unit{
-  font-size: 2em;
-  color : #3a3636;
-  font-style: italic;
-  text-align: right;
-}
-
-.digit{
-  width:100px;
-  height:150px;
+.button-control-panel-small:hover{
+    background-color: var(--button-color-hover);
+    color: var(--text-color-hover);
 }
 
 }
@@ -376,6 +493,18 @@ export default {
 
   /* No slider on mobile screens, just buttons to change freq*/
 #driving-frequency-slider{
+  display: none;
+}
+
+#pulse-length-slider{
+  display: none;
+}
+
+#amplitude-slider{
+  display: none;
+}
+
+#brightness-slider{
   display: none;
 }
 
@@ -393,7 +522,7 @@ export default {
 
 .control-toggle-label-after{
   font-size: 1em;
-  width: 10ch;
+  width: 8ch;
   padding-left: 0.5em;
   text-align: left;
 }
@@ -436,38 +565,38 @@ export default {
     color: var(--text-color-hover);
 }
 
-.seven-segment-display{
-  /* margin-top: 2em; */
-  /* margin-bottom: 2em; */
-  padding-left: 1em;
-  width: 150px;
-  height: 150px;
-  background-color : #6d6b6b;
-  border-style: dashed;
-  border-color: darkgray;
+.button-control-panel-small{
+    background-color: var(--background-color-secondary);
+    color: var(--text-color);
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--button-color-secondary);
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem;
+    margin: 4px 4px;
+    padding: 0px 0px;
+    transition-duration: 0.2s;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    min-width: 30px;
+    min-height: 30px;
+    max-height: 60px;
+    max-width: 60px;
 }
 
-.seven-segment-display-unit{
-  font-size: 1em;
-  color : #3a3636;
-  font-style: italic;
-  text-align: right;
+.button-control-panel-small:hover{
+    background-color: var(--button-color-hover);
+    color: var(--text-color-hover);
 }
 
-.digit{
-  width:66px;
-  height:100px;
-}
 }
 
 
-.off{
-    fill: #6d6b6b;
-}
 
-.on{
-    fill: var(--on-colour);
-}
 
 
 

@@ -76,7 +76,7 @@ body.dark-theme {
 
     #third-row{
         overflow: auto;
-        height: 40dvh;
+        height: 50dvh;
         max-height: 100dvh;
         min-height: 20dvh;
         max-width: 100dvw;

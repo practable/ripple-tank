@@ -12,24 +12,24 @@
         <div v-if='!isMobile' class='row' id='component-grid'>
 
           <div class='d-flex' id='first-row'>
-            <div class='drop-area drop-area-one-quarter' id='drop_0_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><webcam-stream id='webcam-stream' /></div>
-            <div class='drop-area drop-area-three-quarters' id='drop_0_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><control-panel id="control-panel" /></div>
+            <div class='drop-area drop-area-two-fifths' id='drop_0_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><webcam-stream id='webcam-stream' /></div>
+            <div class='drop-area drop-area-three-fifths' id='drop_0_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><image-capture id='image-capture' /></div>
           </div>
 
           <div class='d-flex' id='second-row'>
-            <div class='drop-area drop-area-half' id='drop_1_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><video-capture id='video-capture' /></div>
-            <div class='drop-area drop-area-half' id='drop_1_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><image-capture id='image-capture' /></div>
+            <div class='drop-area drop-area-full' id='drop_1_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><control-panel id="control-panel" /></div>
+            <!-- <div class='drop-area drop-area-half' id='drop_1_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div> -->
           </div>
 
           <div class='d-flex' id='third-row'>
-            <div class='drop-area drop-area-half' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
+            <div class='drop-area drop-area-half' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><video-capture id='video-capture' /></div>
             <div class='drop-area drop-area-half' id='drop_2_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
           </div>
 
-          <div class='d-flex' id='fourth-row'>
+          <!-- <div class='d-flex' id='fourth-row'>
             <div class='drop-area drop-area-half' id='drop_3_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
             <div class='drop-area drop-area-half' id='drop_3_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
-          </div>
+          </div> -->
 
 
         </div>
@@ -90,6 +90,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
+
 import ImageCapture from "./components/ImageCapture.vue";
 import VideoCapture from "./components/VideoCapture.vue";
 import WebcamStream from "./components/WebcamStream.vue";
@@ -100,10 +102,6 @@ import ControlPanel from "./components/ControlPanel.vue"
 import StreamInformation from "./components/StreamInformation.vue";
 import ShowConfigFile from "./components/ShowConfigFile.vue";
 import Workspace from "./components/Workspace.vue";
-
-
-
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'App',
@@ -125,6 +123,7 @@ export default {
   },
   data() {
     return {
+      // windowWidth: window.innerWidth,
       isWorkspaceOn: false,
       protractorAdded: false,
       rulerAdded: false,
@@ -135,21 +134,20 @@ export default {
   },
   mounted(){
     this.updateUUID();
+
+    window.onresize = () => {this.setWindowWidth(window.innerWidth)};
   },
   computed:{
     ...mapGetters([
       'getDraggable',
       'getUsesLocalStorage',
+      'isMobile'
     ]),
-    isMobile(){
-      if(window.screen.width < 992){
-        return true;
-      } else{
-        return false;
-      }
-    }
   },
   methods:{
+    ...mapActions([
+        'setWindowWidth'
+    ]),
     clearWorkspace(){
       this.isWorkspaceOn = false;
       this.protractorAdded = false;

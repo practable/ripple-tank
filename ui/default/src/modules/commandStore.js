@@ -15,8 +15,20 @@ const commandStore = {
             'pulse': 100,    //pulse time in ms, only applied in pulse mode
             'pulse_min': 1,
             'pulse_max': 999,   //ms
-            'pulse_step': 1    //ms, for slider input only
-        },   
+            'pulse_step': 1,    //ms, for slider input only
+            'amplitude': 101,   //absolute value between 0 - 255 for hardware
+            'from_hardware_amplitude': 101,
+            'amplitude_step': 1,    //for input slider only
+            'amplitude_min': 0,
+            'amplitude_max': 255
+        },
+        lamp: {
+            'brightness': 101,          //absolute value between 0 - 1024 for hardware
+            'from_hardware_brightness': 101,
+            'brightness-step': 1,
+            'brightness_min': 0,
+            'brightness_max': 1024     
+        }
        }),
        mutations:{
         SET_DATA_SOCKET(state, socket){
@@ -65,6 +77,12 @@ const commandStore = {
         UPDATE_PULSE_LENGTH(state, val){
             state.driver.pulse = Number(val);
         },
+        UPDATE_AMPLITUDE(state, val){
+            state.driver.amplitude = Number(val);
+        },
+        UPDATE_BRIGHTNESS(state, val){
+            state.lamp.brightness = Number(val);
+        },
         COMMAND_UPDATE_DRIVING_FREQUENCY(state){
             console.log('sending command to update freq = ' + state.driver.hz)
             if(state.dataSocket != null){
@@ -74,8 +92,32 @@ const commandStore = {
                 }));
             }
         },
+        COMMAND_UPDATE_AMPLITUDE(state){
+            console.log('sending command to update amplitude = ' + state.driver.amplitude)
+            if(state.dataSocket != null){
+                state.dataSocket.send(JSON.stringify({
+                    set: "amp",
+                    to: state.driver.amplitude
+                }));
+            }
+        },
+        COMMAND_UPDATE_BRIGHTNESS(state){
+            console.log('sending command to update brightness = ' + state.lamp.brightness)
+            if(state.dataSocket != null){
+                state.dataSocket.send(JSON.stringify({
+                    set: "lamp",
+                    to: state.lamp.brightness
+                }));
+            }
+        },
         SET_REPORTED_DRIVING_FREQUENCY(state, val){
             state.driver['from_hardware_hz'] = val;
+        },
+        SET_REPORTED_AMPLITUDE(state, val){
+            state.driver['from_hardware_amplitude'] = val;
+        },
+        SET_REPORTED_BRIGHTNESS(state, val){
+            state.lamp['from_hardware_brightness'] = val;
         },
 
        },
@@ -119,12 +161,44 @@ const commandStore = {
             }
             context.commit('UPDATE_PULSE_LENGTH', to_set);
         },
+        updateAmplitude(context, val){
+            let to_set = val;
+            if(val < context.getters.getAmplitudeMin){
+                to_set = context.getters.getAmplitudeMin;
+            } else if(val > context.getters.getAmplitudeMax){
+                to_set = context.getters.getAmplitudeMax;
+            }
+            context.commit('UPDATE_AMPLITUDE', to_set);
+        },
+        updateBrightness(context, val){
+            let to_set = val;
+            if(val < context.getters.getBrightnessMin){
+                to_set = context.getters.getBrightnessMin;
+            } else if(val > context.getters.getBrightnessMax){
+                to_set = context.getters.getBrightnessMax;
+            }
+            context.commit('UPDATE_BRIGHTNESS', to_set);
+        },
         sendCommandUpdateDrivingFrequency(context){
             context.commit('COMMAND_UPDATE_DRIVING_FREQUENCY');
             context.commit('SET_REPORTED_DRIVING_FREQUENCY', context.getters.getDrivingFrequency)   //TEMP for setting a value from hardware
         },
-        setReportedDrivingFrequency(context, val_object){
-            context.commit('SET_REPORTED_DRIVING_FREQUENCY', val_object);
+        sendCommandUpdateAmplitude(context){
+            context.commit('COMMAND_UPDATE_AMPLITUDE');
+            context.commit('SET_REPORTED_AMPLITUDE', context.getters.getAmplitude)   //TEMP for setting a value from hardware
+        },
+        sendCommandUpdateBrightness(context){
+            context.commit('COMMAND_UPDATE_BRIGHTNESS');
+            context.commit('SET_REPORTED_BRIGHTNESS', context.getters.getBrightness)   //TEMP for setting a value from hardware
+        },
+        setReportedDrivingFrequency(context, val){
+            context.commit('SET_REPORTED_DRIVING_FREQUENCY', val);
+        },
+        setReportedAmplitude(context, val){
+            context.commit('SET_REPORTED_AMPLITUDE', val);
+        },
+        setReportedBrightness(context, val){
+            context.commit('SET_REPORTED_BRIGHTNESS', val);
         },
         
 
@@ -162,6 +236,36 @@ const commandStore = {
         },
         getPulseLengthStep(state){
             return state.driver['pulse_step'];
+        },
+        getAmplitudeMin(state){
+            return state.driver['amplitude_min'];
+        },
+        getAmplitudeMax(state){
+            return state.driver['amplitude_max'];
+        },
+        getAmplitudeStep(state){
+            return state.driver['amplitude_step'];
+        },
+        getAmplitude(state){
+            return state.driver.amplitude;
+        },
+        getReportedAmplitude(state){
+            return state.driver['from_hardware_amplitude'];
+        },
+        getBrightnessMin(state){
+            return state.lamp['brightness_min'];
+        },
+        getBrightnessMax(state){
+            return state.lamp['brightness_max'];
+        },
+        getBrightnessStep(state){
+            return state.lamp['brightness_step'];
+        },
+        getBrightness(state){
+            return state.lamp.brightness;
+        },
+        getReportedBrightness(state){
+            return state.lamp['from_hardware_brightness'];
         },
           
        },  

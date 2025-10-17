@@ -2,20 +2,10 @@
 
 <template>
 <div class='container-fluid m-2 practable-component'>
-  <div class="d-flex flex-row align-items-start justify-content-start">
-      <popup-help class="me-2" id="popup-help-control-panel">
-            <template v-slot:header>
-                <h5> Control Panel Help </h5>
-            </template>
-            <template v-slot:body>
-                Control panel help
-            </template>
-        </popup-help>
-  </div>
-
+ 
   <div class="row">
     <!-- LEFT PANEL-->
-      <div class="d-flex flex-column col-lg-4 align-items-center justify-content-center">
+      <div class="d-flex flex-column col-lg-4 align-items-center justify-content-start">
           <h5>Wave Frequency</h5>
 
         <div class="d-flex flex-row">
@@ -59,9 +49,9 @@
       </div>
 
       <!-- MIDDLE PANEL-->
-      <div class="d-flex flex-column col-lg-4 align-items-center justify-content-center">
+      <div class="d-flex flex-column col-lg-4 align-items-center justify-content-start">
           <!-- TOGGLE FOR MODE START/STOP -->
-        <div class="input-group align-items-center justify-content-center">
+        <div class="input-group align-items-center justify-content-center mt-lg-3 mb-lg-3">
           <label class="control-toggle-label-before" id="toggle-off-text">Off</label>
           <div class="form-check form-switch control-toggle-container">
               <input class="form-check-input" type="checkbox" id="toggle-start-button" name="toggle-start" v-model="toggleStart">
@@ -70,15 +60,16 @@
         </div>
 
         <!-- TOGGLE FOR MODE START/PULSE -->
-        <div class="input-group align-items-center justify-content-center">
-          <label class="control-toggle-label-before" id="toggle-continuous-text">Continuous</label>
+        <div class="input-group align-items-center justify-content-center mt-lg-3 mb-lg-3">
+          <label class="control-toggle-label-before" id="toggle-continuous-text">Steady</label>
           <div class="form-check form-switch control-toggle-container">
               <input class="form-check-input" type="checkbox" id="toggle-pulse-button" name="toggle-pulse" v-model="togglePulse">
           </div> 
           <label class="control-toggle-label-after" id="toggle-pulse-text">Pulse</label>
         </div>
 
-        <button id="run-pulse-button" class="button-sm button-primary ms-2" aria-label="run pulse command" @click="sendCommandPulse">Start</button>
+        
+        <button v-if="getCurrentMode == 'pulse'" id="run-pulse-button" class="button-lg button-primary mt-lg-3 mb-lg-3" aria-label="run pulse command" @click="sendCommandPulse">Start</button>
       
       </div>
 
@@ -89,7 +80,7 @@
       
         <div class="d-flex flex-row align-items-center justify-content-center">
           <div class="col">
-               <label class="control-toggle-label-before">Amplitude</label>
+               <label class="control-toggle-label-before me-2">Amplitude</label>
               <div class="">
                 <input class="" type="range" id="amplitude-slider" style="width: 75%;"
                     :min="getAmplitudeMin" 
@@ -102,8 +93,11 @@
               </div>
           </div>
              
-
-              <div class="d-flex flex-column mt-2">
+              <div v-if="isMobile" class="d-flex flex-column mt-2">
+                <button id="amplitude-step-negative-10" class="button-control-panel-small" aria-label="decrease amplitude by 10 percent" @click="() => {amplitude -= Math.floor(10*getAmplitudeMax/100); sendCommandUpdateAmplitude()}">-10</button>
+                <button id="amplitude-step-negative-1" class="button-control-panel-small" aria-label="decrease amplitude by 1 percent" @click="() => {amplitude -= Math.floor(getAmplitudeMax/100); sendCommandUpdateAmplitude()}">-1</button>
+              </div>
+              <div v-else class="d-flex flex-column mt-2">
                 <button id="amplitude-step-positive-1" class="button-control-panel-small" aria-label="increase amplitude by 1 percent" @click="() => {amplitude += Math.floor(getAmplitudeMax/100); sendCommandUpdateAmplitude()}">+</button>
                 <button id="amplitude-step-negative-1" class="button-control-panel-small" aria-label="decrease amplitude by 1 percent" @click="() => {amplitude -= Math.floor(getAmplitudeMax/100); sendCommandUpdateAmplitude()}">-</button>
               </div>
@@ -118,13 +112,18 @@
                   digitWidth="25"
                   digitHeight="60"
                   NDigits="3"
-            />
+                />
+
+                <div v-if="isMobile" class="d-flex flex-column mt-2">
+                <button id="amplitude-step-positive-10" class="button-control-panel-small" aria-label="increase amplitude by 10 percent" @click="() => {amplitude += Math.floor(10*getAmplitudeMax/100); sendCommandUpdateAmplitude()}">+10</button>
+                <button id="amplitude-step-positive-1" class="button-control-panel-small" aria-label="increase amplitude by 1 percent" @click="() => {amplitude += Math.floor(getAmplitudeMax/100); sendCommandUpdateAmplitude()}">+1</button>
+              </div>
         </div>
           
 
         <div class="d-flex flex-row align-items-center justify-content-center mt-2">
           <div class="col">
-              <label class="control-toggle-label-before">Brightness</label>
+              <label class="control-toggle-label-before me-2">Brightness</label>
               <div class="">
                 <input class="" type="range" id="brightness-slider" style="width: 75%;"
                     :min="getBrightnessMin" 
@@ -137,8 +136,11 @@
               </div>
           </div>
               
-
-              <div class="d-flex flex-column mt-2">
+              <div v-if='isMobile' class="d-flex flex-column mt-2">
+                <button id="brightness-step-negative-10" class="button-control-panel-small" aria-label="decrease brightness by 10 percent" @click="() => {brightness -= Math.floor(10*getBrightnessMax/100); sendCommandUpdateBrightness()}">-10</button>
+                <button id="brightness-step-negative-1" class="button-control-panel-small" aria-label="decrease brightness by 1 percent" @click="() => {brightness -= Math.floor(getBrightnessMax/100); sendCommandUpdateBrightness()}">-1</button>
+              </div>
+              <div v-else class="d-flex flex-column mt-2">
                 <button id="brightness-step-positive-1" class="button-control-panel-small" aria-label="increase brightness by 1 percent" @click="() => {brightness += Math.floor(getBrightnessMax/100); sendCommandUpdateBrightness()}">+</button>
                 <button id="brightness-step-negative-1" class="button-control-panel-small" aria-label="decrease brightness by 1 percent" @click="() => {brightness -= Math.floor(getBrightnessMax/100); sendCommandUpdateBrightness()}">-</button>
               </div>
@@ -153,7 +155,12 @@
                   digitWidth="25"
                   digitHeight="60"
                   NDigits="3"
-            />
+                />
+
+                <div v-if='isMobile' class="d-flex flex-column mt-2">
+                <button id="brightness-step-positive-10" class="button-control-panel-small" aria-label="increase brightness by 10 percent" @click="() => {brightness += Math.floor(10*getBrightnessMax/100); sendCommandUpdateBrightness()}">+10</button>
+                <button id="brightness-step-positive-1" class="button-control-panel-small" aria-label="increase brightness by 1 percent" @click="() => {brightness += Math.floor(getBrightnessMax/100); sendCommandUpdateBrightness()}">+1</button>
+              </div>
         </div>
 
         <div v-if="getCurrentMode == 'pulse'" >
@@ -206,9 +213,17 @@
 
       </div>
 
+  </div>
 
-      
-
+   <div class="d-flex flex-row align-items-start justify-content-start">
+      <popup-help class="me-2" id="popup-help-control-panel">
+            <template v-slot:header>
+                <h5> Control Panel Help </h5>
+            </template>
+            <template v-slot:body>
+                Control panel help
+            </template>
+        </popup-help>
   </div>
 
 </div>
@@ -408,7 +423,7 @@ export default {
 
 .control-toggle-label-before{
   font-size: 1.25em;
-  width: 10ch;
+  width: 8ch;
   padding-right: 0.5em;
   text-align: right;
 }
@@ -515,7 +530,7 @@ export default {
 
 .control-toggle-label-before{
   font-size: 1em;
-  width: 10ch;
+  width: 8ch;
   padding-right: 0.5em;
   text-align: right;
 }
@@ -592,6 +607,7 @@ export default {
     background-color: var(--button-color-hover);
     color: var(--text-color-hover);
 }
+
 
 }
 

@@ -545,7 +545,16 @@
       "Net-(J1-V+)": [
         "power"
       ],
+      "Net-(J2-Pin_1)": [
+        "apwr"
+      ],
+      "Net-(J2-Pin_2)": [
+        "apwr"
+      ],
       "Net-(J5-Pin_1)": [
+        "apwr"
+      ],
+      "Net-(J5-Pin_2)": [
         "apwr"
       ],
       "Net-(J8-Pin_1)": [
@@ -562,6 +571,18 @@
       ],
       "Net-(Q1-D)": [
         "power"
+      ],
+      "Net-(U2-+OUT_{L})": [
+        "apwr"
+      ],
+      "Net-(U2-+OUT_{R})": [
+        "apwr"
+      ],
+      "Net-(U2--OUT_{L})": [
+        "apwr"
+      ],
+      "Net-(U2--OUT_{R})": [
+        "apwr"
       ]
     },
     "netclass_patterns": []

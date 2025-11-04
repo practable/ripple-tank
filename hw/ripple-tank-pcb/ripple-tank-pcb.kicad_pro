@@ -542,6 +542,9 @@
       "Net-(D7-A)": [
         "led-power"
       ],
+      "Net-(D9-K)": [
+        "apwr"
+      ],
       "Net-(J1-V+)": [
         "power"
       ],
@@ -555,6 +558,12 @@
         "apwr"
       ],
       "Net-(J5-Pin_2)": [
+        "apwr"
+      ],
+      "Net-(J7-Pin_1)": [
+        "apwr"
+      ],
+      "Net-(J7-Pin_2)": [
         "apwr"
       ],
       "Net-(J8-Pin_1)": [

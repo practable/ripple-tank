@@ -6729,7 +6729,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "000_Utility_Immo:Net_Tie"
+		(symbol "000_Utility_Immo:pwr_tie"
 			(pin_numbers
 				(hide yes)
 			)
@@ -6748,7 +6748,7 @@
 					)
 				)
 			)
-			(property "Value" "Net_Tie"
+			(property "Value" "pwr_tie"
 				(at 0 2.794 0)
 				(effects
 					(font
@@ -6756,7 +6756,7 @@
 					)
 				)
 			)
-			(property "Footprint" "NetTie:NetTie-2_SMD_Pad0.5mm"
+			(property "Footprint" "000-utilities-immo:net-tie-15A"
 				(at 0 -2.54 0)
 				(effects
 					(font
@@ -6801,7 +6801,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "Net_Tie_1_1"
+			(symbol "pwr_tie_1_1"
 				(pin passive line
 					(at -1.27 0 0)
 					(length 1.27)
@@ -9633,18 +9633,6 @@
 		(uuid "1021869d-4270-4958-8e0f-56947d8899ef")
 	)
 	(junction
-		(at 340.36 236.22)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "1085f4a9-9ce4-47d7-a7c2-44fbae459b80")
-	)
-	(junction
-		(at 331.47 83.82)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "14f47525-c867-46d7-b3c3-40a2138e6d92")
-	)
-	(junction
 		(at 330.2 24.13)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -9687,10 +9675,10 @@
 		(uuid "21a9e5ef-8108-4800-a99c-cc86ce6c4f24")
 	)
 	(junction
-		(at 326.39 236.22)
+		(at 328.93 191.77)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "24bfca2a-cb0a-4533-a349-1fd2e7801873")
+		(uuid "2e0b705b-25f7-4cb8-bc2a-880bea3aad30")
 	)
 	(junction
 		(at 326.39 184.15)
@@ -9709,6 +9697,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "34c505b7-75d4-4efc-b1e9-6e8fa06a0be9")
+	)
+	(junction
+		(at 326.39 236.22)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "363f4ffb-18ae-4e95-870b-b0e34cf9aa91")
 	)
 	(junction
 		(at 295.91 97.79)
@@ -9807,6 +9801,12 @@
 		(uuid "5dcf28a5-fa8a-4baf-8535-5cd21fd77d77")
 	)
 	(junction
+		(at 330.2 236.22)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "60470d0b-1c0c-44cd-baa9-ddd1e1806916")
+	)
+	(junction
 		(at 367.03 226.06)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -9829,12 +9829,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "69dfaf09-1a8a-45dd-97f5-8d03ab34764f")
-	)
-	(junction
-		(at 328.93 191.77)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "7013025e-a0a5-4224-80b1-39d0ad19ce5f")
 	)
 	(junction
 		(at 337.82 128.27)
@@ -9927,6 +9921,12 @@
 		(uuid "9d421f28-a71b-42f9-883b-b5770de67b1c")
 	)
 	(junction
+		(at 331.47 78.74)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9eeb37f3-f63b-4eaf-8b41-23f089d81199")
+	)
+	(junction
 		(at 91.44 90.17)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -10017,6 +10017,12 @@
 		(uuid "cbc049b4-c73b-4e3b-8ab9-ae2c117411d1")
 	)
 	(junction
+		(at 335.28 236.22)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ded6fe27-0c83-48bc-a638-26c267d8a858")
+	)
+	(junction
 		(at 325.12 24.13)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -10093,16 +10099,6 @@
 			(type default)
 		)
 		(uuid "00a5b129-b123-4725-82db-92165c863648")
-	)
-	(wire
-		(pts
-			(xy 340.36 236.22) (xy 340.36 237.49)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "00bfdd94-895f-4f5e-87b1-fb4c82141a2c")
 	)
 	(wire
 		(pts
@@ -10576,16 +10572,6 @@
 	)
 	(wire
 		(pts
-			(xy 316.23 187.96) (xy 316.23 189.23)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "166095bc-2cde-457c-8589-6a6e30987b9d")
-	)
-	(wire
-		(pts
 			(xy 342.9 189.23) (xy 345.44 189.23)
 		)
 		(stroke
@@ -10603,6 +10589,16 @@
 			(type default)
 		)
 		(uuid "16843a7f-1a3d-4a82-bf4b-ce7157877b98")
+	)
+	(wire
+		(pts
+			(xy 34.29 100.33) (xy 36.83 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "17031fad-ed83-4e88-a1ab-4b594227f8f5")
 	)
 	(polyline
 		(pts
@@ -10723,16 +10719,6 @@
 			(type default)
 		)
 		(uuid "1d1079b2-45ad-4dff-b32d-ece1f3fbc112")
-	)
-	(wire
-		(pts
-			(xy 179.07 271.78) (xy 179.07 269.24)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "1d41af9f-1836-4013-9801-a980894cd742")
 	)
 	(wire
 		(pts
@@ -10906,6 +10892,16 @@
 	)
 	(wire
 		(pts
+			(xy 27.94 100.33) (xy 31.75 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "23876276-2ec7-48f0-9d19-4a096c9a7957")
+	)
+	(wire
+		(pts
 			(xy 64.77 223.52) (xy 64.77 224.79)
 		)
 		(stroke
@@ -11013,16 +11009,6 @@
 			(type default)
 		)
 		(uuid "2a5271c0-41e0-42ec-ae52-585ec896a023")
-	)
-	(wire
-		(pts
-			(xy 326.39 236.22) (xy 326.39 237.49)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2aaae923-491f-4fdc-8adf-a2894a56a10b")
 	)
 	(wire
 		(pts
@@ -11286,6 +11272,16 @@
 	)
 	(wire
 		(pts
+			(xy 316.23 187.96) (xy 316.23 189.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "385feee6-be32-46ef-b808-ce40040b8a82")
+	)
+	(wire
+		(pts
 			(xy 138.43 55.88) (xy 154.94 55.88)
 		)
 		(stroke
@@ -11293,6 +11289,16 @@
 			(type default)
 		)
 		(uuid "3a22bbdd-fdf7-454a-bb38-ba583c90e095")
+	)
+	(wire
+		(pts
+			(xy 330.2 78.74) (xy 331.47 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3a284c71-5cdb-4898-9f77-fe4cf8901c1c")
 	)
 	(wire
 		(pts
@@ -11466,6 +11472,16 @@
 	)
 	(wire
 		(pts
+			(xy 36.83 100.33) (xy 36.83 101.6)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "43321add-fc89-4957-9520-32d9ccd5d54f")
+	)
+	(wire
+		(pts
 			(xy 186.69 242.57) (xy 176.53 242.57)
 		)
 		(stroke
@@ -11526,6 +11542,16 @@
 	)
 	(wire
 		(pts
+			(xy 330.2 77.47) (xy 330.2 78.74)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4bcc5138-28f8-41b8-b36b-d97f5d119bfd")
+	)
+	(wire
+		(pts
 			(xy 358.14 46.99) (xy 342.9 46.99)
 		)
 		(stroke
@@ -11563,16 +11589,6 @@
 			(type default)
 		)
 		(uuid "4dc2b154-6977-4841-aeaf-f3eef078ebaf")
-	)
-	(wire
-		(pts
-			(xy 330.2 236.22) (xy 326.39 236.22)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4f0f3cca-f557-4239-ac7f-0e3affcaf881")
 	)
 	(wire
 		(pts
@@ -11643,6 +11659,16 @@
 			(type default)
 		)
 		(uuid "562253a4-e5d7-4351-b6f0-873f008a4096")
+	)
+	(wire
+		(pts
+			(xy 330.2 236.22) (xy 335.28 236.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5671529f-aa9f-4dd0-b597-120d93561f48")
 	)
 	(wire
 		(pts
@@ -11836,6 +11862,16 @@
 	)
 	(wire
 		(pts
+			(xy 179.07 269.24) (xy 179.07 270.51)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5d8d4d3b-cadf-41b1-9fc0-55f3be93f0c1")
+	)
+	(wire
+		(pts
 			(xy 49.53 208.28) (xy 52.07 208.28)
 		)
 		(stroke
@@ -12003,16 +12039,6 @@
 			(type default)
 		)
 		(uuid "688cf7f2-3974-40d6-96a7-42b91b9869c4")
-	)
-	(wire
-		(pts
-			(xy 330.2 234.95) (xy 330.2 236.22)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "68953403-c3f6-47ed-bf11-d5205814656b")
 	)
 	(wire
 		(pts
@@ -12326,6 +12352,16 @@
 	)
 	(wire
 		(pts
+			(xy 326.39 236.22) (xy 330.2 236.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "81e8e98e-d091-405e-86e1-91b01e6a0a21")
+	)
+	(wire
+		(pts
 			(xy 364.49 115.57) (xy 379.73 115.57)
 		)
 		(stroke
@@ -12366,16 +12402,6 @@
 	)
 	(wire
 		(pts
-			(xy 91.44 16.51) (xy 91.44 27.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "83f6c66a-79be-4055-a272-e6be0daabad3")
-	)
-	(wire
-		(pts
 			(xy 383.54 205.74) (xy 386.08 205.74)
 		)
 		(stroke
@@ -12403,16 +12429,6 @@
 			(type default)
 		)
 		(uuid "85e9d8b7-e964-4903-954a-53f0bc839974")
-	)
-	(wire
-		(pts
-			(xy 331.47 83.82) (xy 327.66 83.82)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "86230a68-0935-44af-ae86-a948cdcdf63f")
 	)
 	(wire
 		(pts
@@ -13866,6 +13882,16 @@
 	)
 	(wire
 		(pts
+			(xy 330.2 234.95) (xy 330.2 236.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dfdb3e9b-4a07-4ca9-a699-9572d5514cba")
+	)
+	(wire
+		(pts
 			(xy 77.47 198.12) (xy 80.01 198.12)
 		)
 		(stroke
@@ -14096,6 +14122,16 @@
 	)
 	(wire
 		(pts
+			(xy 326.39 236.22) (xy 326.39 237.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ede84d1c-4f37-4e51-b303-98089864ff33")
+	)
+	(wire
+		(pts
 			(xy 307.34 212.09) (xy 307.34 217.17)
 		)
 		(stroke
@@ -14153,16 +14189,6 @@
 			(type default)
 		)
 		(uuid "f04dbeb4-32eb-4805-86d8-02446eac7806")
-	)
-	(wire
-		(pts
-			(xy 91.44 30.48) (xy 91.44 33.02)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f0fbde8f-6851-4a68-a5a6-f147e70b9bd9")
 	)
 	(wire
 		(pts
@@ -14266,7 +14292,7 @@
 	)
 	(wire
 		(pts
-			(xy 367.03 226.06) (xy 367.03 227.33)
+			(xy 367.03 226.06) (xy 367.03 228.6)
 		)
 		(stroke
 			(width 0)
@@ -14444,16 +14470,6 @@
 		)
 		(uuid "ff440016-0605-4625-ae7f-7f7aef811e0a")
 	)
-	(wire
-		(pts
-			(xy 367.03 213.36) (xy 367.03 212.09)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ffa13be7-63ea-47f7-9788-d3445381931e")
-	)
 	(label "3V3_BUS"
 		(at 307.34 24.13 0)
 		(effects
@@ -14563,16 +14579,6 @@
 			(justify right bottom)
 		)
 		(uuid "9331dfab-c817-4d90-834b-d1fd3b75d610")
-	)
-	(label "12V_LC"
-		(at 91.44 16.51 270)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "a678e130-a3ca-4b2e-b77e-5b32c3f2c6e4")
 	)
 	(label "3V3_BUS"
 		(at 236.22 24.13 0)
@@ -17596,17 +17602,17 @@
 		)
 	)
 	(symbol
-		(lib_name "GNDPWR_4")
-		(lib_id "power:GNDPWR")
-		(at 345.44 190.5 0)
+		(lib_name "GND_1")
+		(lib_id "power:GND")
+		(at 326.39 237.49 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "20776a88-b7a2-415c-bf62-e0b71ad44afc")
-		(property "Reference" "#PWR018"
-			(at 345.44 195.58 0)
+		(uuid "20542fc3-6a76-4693-914d-aca233c37cdd")
+		(property "Reference" "#PWR043"
+			(at 326.39 243.84 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17614,8 +17620,8 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "GNDPWR"
-			(at 350.52 192.024 0)
+		(property "Value" "GND"
+			(at 326.39 241.046 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17623,7 +17629,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 345.44 191.77 0)
+			(at 326.39 237.49 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17632,7 +17638,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 345.44 191.77 0)
+			(at 326.39 237.49 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17640,21 +17646,22 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
-			(at 345.44 190.5 0)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 326.39 237.49 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
 		(pin "1"
-			(uuid "7e43c384-53f8-4088-947a-09c57743c016")
+			(uuid "19c6f217-01d1-4bce-b48f-13f6e7d52506")
 		)
 		(instances
 			(project "ripple-tank-pcb"
 				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
-					(reference "#PWR018")
+					(reference "#PWR043")
 					(unit 1)
 				)
 			)
@@ -18168,6 +18175,74 @@
 			(project "ripple-tank-pcb"
 				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
 					(reference "#PWR032")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "000_Utility_Immo:pwr_tie")
+		(at 33.02 100.33 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2974e85f-ceb6-4b86-81af-58540fa7a9cb")
+		(property "Reference" "N1"
+			(at 33.02 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "gnd"
+			(at 33.02 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "000-utilities-immo:net-tie-15A"
+			(at 33.02 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 33.02 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Utility part to allow joining of nets with different properties."
+			(at 33.02 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "be922e34-e0bd-4fc2-871c-46ffb3824fa6")
+		)
+		(pin "2"
+			(uuid "c3418626-6312-4568-b21c-945cc827ccb4")
+		)
+		(instances
+			(project ""
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "N1")
 					(unit 1)
 				)
 			)
@@ -19443,6 +19518,71 @@
 		)
 	)
 	(symbol
+		(lib_name "GNDPWR_7")
+		(lib_id "power:GNDPWR")
+		(at 27.94 100.33 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "4ca39380-fcc2-4a20-8c82-048c2593370d")
+		(property "Reference" "#PWR041"
+			(at 27.94 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GNDPWR"
+			(at 27.686 103.886 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 27.94 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 27.94 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 27.94 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6cdb6724-1674-45ba-9ce0-12afe105b907")
+		)
+		(instances
+			(project "ripple-tank-pcb"
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "#PWR041")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "000_Diodes_Immo:LED_0805_Blue")
 		(at 167.64 60.96 90)
 		(unit 1)
@@ -19532,7 +19672,7 @@
 	(symbol
 		(lib_name "GNDPWR_4")
 		(lib_id "power:GNDPWR")
-		(at 327.66 83.82 270)
+		(at 330.2 77.47 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -19540,7 +19680,7 @@
 		(dnp no)
 		(uuid "4f24e7c9-9ec6-40d1-b24c-e31ea9d12d7d")
 		(property "Reference" "#PWR028"
-			(at 322.58 83.82 0)
+			(at 325.12 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19549,7 +19689,7 @@
 			)
 		)
 		(property "Value" "GNDPWR"
-			(at 320.802 83.82 90)
+			(at 323.342 77.47 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19557,7 +19697,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 326.39 83.82 0)
+			(at 328.93 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19566,7 +19706,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 326.39 83.82 0)
+			(at 328.93 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19575,7 +19715,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 327.66 83.82 0)
+			(at 330.2 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -20172,136 +20312,6 @@
 			(project "ripple-tank-pcb"
 				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
 					(reference "#PWR023")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_name "GNDPWR_4")
-		(lib_id "power:GNDPWR")
-		(at 340.36 237.49 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "615feefb-6396-4b2d-91fb-56ba03786144")
-		(property "Reference" "#PWR011"
-			(at 340.36 242.57 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GNDPWR"
-			(at 340.106 241.046 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 340.36 238.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 340.36 238.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 340.36 237.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "4e29fcc3-0b39-4fde-a0f2-cd166e355aa6")
-		)
-		(instances
-			(project "ripple-tank-pcb"
-				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
-					(reference "#PWR011")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_name "GNDPWR_4")
-		(lib_id "power:GNDPWR")
-		(at 367.03 213.36 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "62d8d6ad-bfe0-48d8-91da-260175be60e9")
-		(property "Reference" "#PWR04"
-			(at 367.03 218.44 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GNDPWR"
-			(at 372.11 215.138 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 367.03 214.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 367.03 214.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 367.03 213.36 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "7574a708-ed34-4b59-8ad5-2e2fc1dac0c7")
-		)
-		(instances
-			(project "ripple-tank-pcb"
-				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
-					(reference "#PWR04")
 					(unit 1)
 				)
 			)
@@ -21286,76 +21296,6 @@
 		)
 	)
 	(symbol
-		(lib_id "000_Utility_Immo:Net_Tie")
-		(at 91.44 29.21 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "78b79789-343b-4112-9cf4-1ca4256862ed")
-		(property "Reference" "N2"
-			(at 92.71 27.9399 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "12v"
-			(at 92.71 30.4799 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "NetTie:NetTie-2_SMD_Pad0.5mm"
-			(at 93.98 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 90.17 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Utility part to allow joining of nets with different properties."
-			(at 91.44 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "2da45ca7-b7c4-4127-ad23-4b6d7e298cfd")
-		)
-		(pin "1"
-			(uuid "5cae7622-9b60-4c72-b7df-bbbae299d663")
-		)
-		(instances
-			(project "ripple-tank-pcb"
-				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
-					(reference "N2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "000_Capacitor_Electrolytic_Immo:220u")
 		(at 107.95 97.79 0)
 		(unit 1)
@@ -21807,6 +21747,72 @@
 		)
 	)
 	(symbol
+		(lib_name "GND_1")
+		(lib_id "power:GND")
+		(at 345.44 190.5 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "7d56db63-6180-49bf-8e62-35ac65d25527")
+		(property "Reference" "#PWR017"
+			(at 345.44 196.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 345.44 194.056 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 345.44 190.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 345.44 190.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 345.44 190.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c18f32ff-f0f3-4794-92d0-60ce465f5cd1")
+		)
+		(instances
+			(project "ripple-tank-pcb"
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "#PWR017")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "000-jumpers-immo:Jumper_2_Open")
 		(at 213.36 146.05 0)
 		(unit 1)
@@ -22136,6 +22142,72 @@
 	(symbol
 		(lib_name "GND_1")
 		(lib_id "power:GND")
+		(at 367.03 228.6 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "85bc8e74-6580-4bae-9693-43c6bcc63502")
+		(property "Reference" "#PWR06"
+			(at 367.03 234.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 367.03 232.156 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 367.03 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 367.03 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 367.03 228.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a2b98486-4c3d-4ab5-bd19-643b13aaa3d1")
+		)
+		(instances
+			(project "ripple-tank-pcb"
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "#PWR06")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_name "GND_1")
+		(lib_id "power:GND")
 		(at 384.81 44.45 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -22261,6 +22333,72 @@
 			(project "ripple-tank-pcb"
 				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
 					(reference "R8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_name "GND_1")
+		(lib_id "power:GND")
+		(at 36.83 101.6 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "8b2f1ebc-ec3f-4614-b9ce-b4840812009a")
+		(property "Reference" "#PWR042"
+			(at 36.83 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 36.83 105.156 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 36.83 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 36.83 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 36.83 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "f2d20d66-326e-4983-980f-5ffd2ae98da8")
+		)
+		(instances
+			(project "ripple-tank-pcb"
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "#PWR042")
 					(unit 1)
 				)
 			)
@@ -22942,72 +23080,6 @@
 			(project "ripple-tank-pcb"
 				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
 					(reference "U5")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_name "GND_1")
-		(lib_id "power:GND")
-		(at 179.07 271.78 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "969deb0d-396f-450a-973a-2dce482887ff")
-		(property "Reference" "#PWR041"
-			(at 179.07 278.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 179.07 275.336 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 179.07 271.78 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 179.07 271.78 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 179.07 271.78 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "98c13f2c-4a31-4103-b631-e9f476b36d7d")
-		)
-		(instances
-			(project "ripple-tank-pcb"
-				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
-					(reference "#PWR041")
 					(unit 1)
 				)
 			)
@@ -23879,72 +23951,6 @@
 		)
 	)
 	(symbol
-		(lib_name "GND_1")
-		(lib_id "power:GND")
-		(at 326.39 237.49 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "b065be3d-9d6e-4edc-9969-1f84275071b0")
-		(property "Reference" "#PWR05"
-			(at 326.39 243.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 326.39 241.046 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 326.39 237.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 326.39 237.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 326.39 237.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "bc753655-262f-4ee8-871a-133c99411b1f")
-		)
-		(instances
-			(project "ripple-tank-pcb"
-				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
-					(reference "#PWR05")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "000_Connectors_Immo:XT60_60A_male")
 		(at 21.59 52.07 0)
 		(unit 1)
@@ -24209,71 +24215,6 @@
 		)
 	)
 	(symbol
-		(lib_name "GNDPWR_4")
-		(lib_id "power:GNDPWR")
-		(at 328.93 191.77 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "b6c489b8-fb41-4722-935e-9f2aeebe2170")
-		(property "Reference" "#PWR017"
-			(at 328.93 196.85 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GNDPWR"
-			(at 323.596 193.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 328.93 193.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 328.93 193.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 328.93 191.77 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "8d68faf7-0d88-4fae-b48e-b9a1fe5b9b65")
-		)
-		(instances
-			(project "ripple-tank-pcb"
-				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
-					(reference "#PWR017")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "000-jumpers-immo:Jumper_2_Open")
 		(at 356.87 97.79 0)
 		(unit 1)
@@ -24403,6 +24344,72 @@
 			(project "ripple-tank-pcb"
 				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
 					(reference "R20")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_name "GND_1")
+		(lib_id "power:GND")
+		(at 316.23 189.23 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "b8891f30-3b81-4845-80a2-b9b0709e3ac6")
+		(property "Reference" "#PWR05"
+			(at 316.23 195.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 316.23 192.786 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 316.23 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 316.23 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 316.23 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2d1c38a7-d593-46ad-b7f3-965eeb7422d7")
+		)
+		(instances
+			(project "ripple-tank-pcb"
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "#PWR05")
 					(unit 1)
 				)
 			)
@@ -25049,6 +25056,72 @@
 		)
 	)
 	(symbol
+		(lib_name "GND_1")
+		(lib_id "power:GND")
+		(at 328.93 191.77 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "cd167565-2ca1-448a-8ea1-585c508c31a1")
+		(property "Reference" "#PWR011"
+			(at 328.93 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 328.93 195.326 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 328.93 191.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 328.93 191.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 328.93 191.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2dacd51b-204e-48a9-acce-5c5b125b4132")
+		)
+		(instances
+			(project "ripple-tank-pcb"
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "#PWR011")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "000_Capacitor_Film_Immo:cap_film_0805_mini")
 		(at 368.3 210.82 0)
 		(unit 1)
@@ -25178,6 +25251,72 @@
 			(project "ripple-tank-pcb"
 				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
 					(reference "#PWR02")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_name "GND_1")
+		(lib_id "power:GND")
+		(at 367.03 212.09 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "ce0715f0-60a9-4e0f-a710-bba73852e581")
+		(property "Reference" "#PWR04"
+			(at 367.03 218.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 367.03 215.646 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 367.03 212.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 367.03 212.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 367.03 212.09 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5e4149a3-8c9f-422d-b1e4-6fd417f047da")
+		)
+		(instances
+			(project "ripple-tank-pcb"
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "#PWR04")
 					(unit 1)
 				)
 			)
@@ -26068,6 +26207,72 @@
 	(symbol
 		(lib_name "GND_1")
 		(lib_id "power:GND")
+		(at 179.07 270.51 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e7387fe0-7bd7-47fc-a447-8940f9eb5d76")
+		(property "Reference" "#PWR015"
+			(at 179.07 276.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 179.07 274.066 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 179.07 270.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 179.07 270.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 179.07 270.51 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6ac876e8-dd9e-40a4-92bf-ca1b5df3d189")
+		)
+		(instances
+			(project "ripple-tank-pcb"
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "#PWR015")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_name "GND_1")
+		(lib_id "power:GND")
 		(at 327.66 62.23 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -26641,72 +26846,6 @@
 		)
 	)
 	(symbol
-		(lib_name "GND_1")
-		(lib_id "power:GND")
-		(at 316.23 189.23 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "eeac1193-68bf-4352-b007-213ee5717619")
-		(property "Reference" "#PWR015"
-			(at 316.23 195.58 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 316.23 192.786 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 316.23 189.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 316.23 189.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 316.23 189.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "e6518e76-1681-41f0-be23-0d8ae69203e6")
-		)
-		(instances
-			(project "ripple-tank-pcb"
-				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
-					(reference "#PWR015")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "000-audio-ic-immo:MCP4151-xxxx-ML")
 		(at 214.63 179.07 0)
 		(unit 1)
@@ -27188,71 +27327,6 @@
 			(project ""
 				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
 					(reference "J10")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_name "GNDPWR_4")
-		(lib_id "power:GNDPWR")
-		(at 367.03 227.33 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "f8a8be60-9170-4752-b7c8-56be1dcb84d3")
-		(property "Reference" "#PWR06"
-			(at 367.03 232.41 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GNDPWR"
-			(at 361.696 228.854 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 367.03 228.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 367.03 228.6 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" ""
-			(at 367.03 227.33 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "600ca30c-5568-4c3d-b897-d9a150119fd2")
-		)
-		(instances
-			(project "ripple-tank-pcb"
-				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
-					(reference "#PWR06")
 					(unit 1)
 				)
 			)

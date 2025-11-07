@@ -5696,6 +5696,242 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "000_Pin_Headers_Immo:i2c-header-A"
+			(pin_names
+				(offset 1.016)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "J"
+				(at 0 5.08 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "i2c-header-A"
+				(at 0 -7.62 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "000_Pin_Headers_Immo:i2c-pin-header-A"
+				(at 2.54 -10.795 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+				(at 1.778 -13.208 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "connector"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "i2c-header-A_1_1"
+				(rectangle
+					(start 0.8636 2.667)
+					(end 0 2.413)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 0.127)
+					(end 0 -0.127)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 -2.413)
+					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 0.8636 -4.953)
+					(end 0 -5.207)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 2.54) (xy 0.8636 2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0) (xy 0.8636 0)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -2.54) (xy 0.8636 -2.54)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 -5.08) (xy 0.8636 -5.08)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(pin passive line
+					(at 5.08 2.54 180)
+					(length 3.81)
+					(name "gnd"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 0 180)
+					(length 3.81)
+					(name "sda"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -2.54 180)
+					(length 3.81)
+					(name "scl"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 5.08 -5.08 180)
+					(length 3.81)
+					(name "Vcc"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "000_Protection_Immo:littelfuse_smd"
 			(pin_numbers
 				(hide yes)
@@ -10882,6 +11118,16 @@
 	)
 	(wire
 		(pts
+			(xy 236.22 38.1) (xy 246.38 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "225e9f68-7599-45db-95d4-cfbc2ffc135a")
+	)
+	(wire
+		(pts
 			(xy 228.6 166.37) (xy 228.6 168.91)
 		)
 		(stroke
@@ -11502,6 +11748,16 @@
 	)
 	(wire
 		(pts
+			(xy 243.84 45.72) (xy 246.38 45.72)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "463f216d-3fff-45c0-ba20-064e5494551f")
+	)
+	(wire
+		(pts
 			(xy 288.29 191.77) (xy 290.83 191.77)
 		)
 		(stroke
@@ -11649,6 +11905,16 @@
 			(type default)
 		)
 		(uuid "54167016-c410-4fb8-915f-4cd6a6d00979")
+	)
+	(wire
+		(pts
+			(xy 241.3 40.64) (xy 246.38 40.64)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "55300c92-b8c2-4319-9af5-694a9179d9ce")
 	)
 	(wire
 		(pts
@@ -12649,6 +12915,16 @@
 			(type default)
 		)
 		(uuid "8fbd2df5-9e50-4878-b361-868f878daa38")
+	)
+	(wire
+		(pts
+			(xy 241.3 43.18) (xy 246.38 43.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "90785453-8bb4-4746-bae9-2214250d35c0")
 	)
 	(wire
 		(pts
@@ -14581,6 +14857,16 @@
 		(uuid "9331dfab-c817-4d90-834b-d1fd3b75d610")
 	)
 	(label "3V3_BUS"
+		(at 236.22 38.1 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "9d34d8bd-23a1-4a1e-b65a-49643f90593d")
+	)
+	(label "3V3_BUS"
 		(at 236.22 24.13 0)
 		(effects
 			(font
@@ -15016,6 +15302,28 @@
 			)
 		)
 	)
+	(global_label "SDA"
+		(shape bidirectional)
+		(at 241.3 43.18 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "5ff9c5a7-da66-4e4f-afe6-664e4cb6108a")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 233.6354 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "LED_CTRL"
 		(shape input)
 		(at 327.66 86.36 180)
@@ -15403,6 +15711,28 @@
 		(uuid "d80c9215-f115-4cf7-a4e8-5395c1deb3c3")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 41.6463 198.12 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "SCL"
+		(shape input)
+		(at 241.3 40.64 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "deacf63c-9533-40c2-8da5-8c43cdaac034")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 234.8072 40.64 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -20186,6 +20516,72 @@
 		)
 	)
 	(symbol
+		(lib_name "GND_1")
+		(lib_id "power:GND")
+		(at 243.84 45.72 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "5b8ecd8a-495f-4487-b876-f2cdefe8f4d5")
+		(property "Reference" "#PWR018"
+			(at 237.49 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 239.014 45.72 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 243.84 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 243.84 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 243.84 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "73da38a9-068e-4f48-88c1-b42f42775900")
+		)
+		(instances
+			(project "ripple-tank-pcb"
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "#PWR018")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_name "GNDPWR_1")
 		(lib_id "power:GNDPWR")
 		(at 142.24 71.12 0)
@@ -23404,6 +23800,81 @@
 			(project "ripple-tank-pcb"
 				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
 					(reference "EC9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "000_Pin_Headers_Immo:i2c-header-A")
+		(at 251.46 43.18 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a3475c55-e3c1-4cde-83ec-a7d95831c2eb")
+		(property "Reference" "J15"
+			(at 245.618 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "i2c-header-A"
+			(at 245.364 35.306 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "000_Pin_Headers_Immo:i2c-pin-header-A"
+			(at 248.92 32.385 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 251.46 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 249.682 29.972 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "6fe3b9d9-e095-4d2b-8783-27974c4c295d")
+		)
+		(pin "1"
+			(uuid "dbcc06aa-50e3-4c1f-a066-cb332fad19f8")
+		)
+		(pin "3"
+			(uuid "b14eb83e-12b4-40e9-b375-e9a6c19c10c9")
+		)
+		(pin "4"
+			(uuid "9d9ff834-c053-433c-9e2e-dbffb07b7178")
+		)
+		(instances
+			(project ""
+				(path "/8f435209-8024-4100-8cb6-c146a3680e0c"
+					(reference "J15")
 					(unit 1)
 				)
 			)

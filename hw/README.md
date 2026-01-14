@@ -4,7 +4,7 @@
 ### PCB Render
 <img width="1116" height="926" alt="image" src="https://github.com/user-attachments/assets/bbc12293-0b87-4599-856c-aa604db60807" />
 
-## BOM (not including pre-fabbed items)
+## BOM / Parts to populate (not including pre-fabbed items)
 
 | ID               | Component                       | Supplier Code | Supplier LInk                                               |
 |---               |---                              |---            |---                                                          |

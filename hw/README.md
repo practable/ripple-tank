@@ -22,3 +22,14 @@
 
 ## Jumper Settings
 
+| ID  | Action  | Condition | Purpose |
+|---  |---       |---      |---        |
+| JP3 | Short 2 & 3 | Always | Set I2c Addr for BME280 |
+| JP6 | Short       | IF LED does not achieve nessissary brightness | set LED Imax to 660mA   |
+| JP7 | Short        | IF LED still does not acheive nessissary brightness | set LED Imax to 990mA  |
+| JP9 | Short 2 & 3  | Always |  enable audio input CH1 to class D amp IC |
+| JP1 | Short 1 & 2  | Always | ground CH2 of Class D amp IC | 
+| JP13 | Short       | Always  |   Set voltage to MCU to 3v3  |
+
+
+All other jumpers remain in initial state

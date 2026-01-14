@@ -647,7 +647,7 @@
       "plot": "",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "ripple-tank-pcb.step",
       "svg": "",
       "vrml": ""
     },

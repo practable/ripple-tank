@@ -24362,7 +24362,7 @@
 		(dnp no)
 		(uuid "8c00a336-1c70-4e74-a37b-bf39ed7b0157")
 		(property "Reference" "JP12"
-			(at 54.864 157.988 0)
+			(at 57.15 156.972 0)
 			(effects
 				(font
 					(size 1.27 1.27)

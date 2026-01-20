@@ -55,7 +55,9 @@ void setup() {
 
   print_info();  // print the program info -> enables identification of current loaded firmware
 
-
+  if (bme.begin()) {
+    Serial.println("{\"info\":\"Environment sensor found\"}");
+  }
 
 
   // get settings and cal data from memory
@@ -102,11 +104,16 @@ void loop() {
   if (sampleDelay.millisDelay(sampleDelay_mS)) {
     if (samples_written < num_samples_req && samples_written < DATA_ARRAY_SIZE) {  // check to make sure collecting the correct number of samples for the samplerate, and smaller than the
       timestamp_array[samples_written] = millis();
-      data_array_one[samples_written] = arbitaryData;
-      data_array_two[samples_written] = arbitaryData + 1;  // encoder.getEncoderPos();
-      data_array_three[samples_written] = arbitaryData + 2;
-      arbitaryData++;  // just a placeholder to generate moving data
+      sensors_event_t temp_event, pressure_event, humidity_event;
+      bme_temp->getEvent(&temp_event);
+      bme_pressure->getEvent(&pressure_event);
+      bme_humidity->getEvent(&humidity_event);
+      ambient_temp[samples_written] = temp_event.temperature;
+      ambient_press[samples_written] = pressure_event.pressure;
+      ambient_humid[samples_written] = humidity_event.relative_humidity;
+      //arbitaryData++;  // just a placeholder to generate moving data
       samples_written++;
+      //Serial.println(humidity_event.relative_humidity);
     }
   }
 
@@ -149,11 +156,11 @@ void loop() {
 
   if (samples_written >= num_samples_req) {  // REMOVED PRINT TIMER because the number of samples taken is already calculated to meet the printing time   // if (printDelay.millisDelay(print_delay_mS)) {
     sampleDelay.resetDelayTime_mS();         // makes sure that the sample loop is synced to the printing loop //moved to try and improve timings (doing this first so next sample is sooner)
-    samples_written = 0;
     if (streaming_active || snapshop_active) {
       //print the sampled data
       update_json(samples_written);
     }
+    samples_written = 0;
   }
 
 

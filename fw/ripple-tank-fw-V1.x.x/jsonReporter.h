@@ -13,7 +13,7 @@
 
 // rounds a number to 2 decimal places
 // example: round(3.14159) -> 3.14
-double round2(double value) {
+float round2(double value) {
   return (int)(value * 100 + 0.5) / 100.0;
 }
 
@@ -25,12 +25,13 @@ void formatFloat(float value, char *buffer, size_t length, int decimalPlaces = 2
     return;
   }
 
-  char temp[16];  // Temporary buffer
-  
+  char temp[10];  // Temporary buffer
+
 #if !defined(ARDUINO_ARCH_SAMD)
   dtostrf(value, length - 1, decimalPlaces, temp);
 #else
-  snprintf(temp, sizeof(temp), "%.2f", value);
+  snprintf(temp, length - 1, "%.2f", value);  //sizeof(temp
+                                              // sprintf(temp, "%.3f", value);
 #endif
 
 
@@ -45,8 +46,9 @@ void formatFloat(float value, char *buffer, size_t length, int decimalPlaces = 2
     memset(buffer, ' ', padding);
   } else {
     strncpy(buffer, temp, length - 1);
-    buffer[length - 1] = '\0';  // Ensure null termination
+    // buffer[length - 1] = '\0';  // Ensure null termination
   }
+  buffer[length - 1] = '\0';  // Ensure null termination
 }
 
 
@@ -57,7 +59,8 @@ void update_json(int16_t num_samples) {
   StaticJsonDocument<JSON_TX_BUFFER_SIZE> jsonTX;
 
 
-  char float_buffer[10];  // buffer to hold fixed length floats
+
+  // char float_buffer[8];  // buffer to hold fixed length floats
   //freeRAM = ram.getPrintStats("update_json");
   // Header
   jsonTX[F("timestamp")].set(millis());  //Message Timestamp set this last before printing
@@ -70,7 +73,9 @@ void update_json(int16_t num_samples) {
   char buffer[14];
   strcpy_P(buffer, (char *)pgm_read_ptr(&(stateNames[smState])));  // Necessary casts and dereferencing, just copy.
   jsonTX[F("payload")][F("state")].set(buffer);
-
+  jsonTX[F("payload")][F("freq")].set(frequency);
+jsonTX[F("payload")][F("amp")].set(amplitude);
+jsonTX[F("payload")][F("light")].set(led_power);
 
   //char buffer[13];
   //const char *ptr = (const char *)pgm_read_word(&stateNames[smState]);
@@ -82,33 +87,34 @@ void update_json(int16_t num_samples) {
 
 
   // Output Data
-  jsonTX[F("payload")][F("servo")].set(arbitaryData);
+  // jsonTX[F("payload")][F("servo")].set(arbitaryData);
 
 
 
 
   // For Arrays
   // create all the JSONarrays
-  JsonArray jsonArrayOne = jsonTX[F("payload")][F("encode")].createNestedArray("pos");
-  JsonArray jsonArrayTwo = jsonTX[F("payload")][F("encode")].createNestedArray("angle");
-  JsonArray jsonArrayThree = jsonTX[F("payload")][F("loadcell")].createNestedArray("force");
+  JsonArray jsonArrayOne = jsonTX[F("payload")][F("sensors")].createNestedArray("temp");
+  JsonArray jsonArrayTwo = jsonTX[F("payload")][F("sensors")].createNestedArray("press");
+  JsonArray jsonArrayThree = jsonTX[F("payload")][F("sensors")].createNestedArray("humid");
   jsonTX[F("payload")][("meta")][F("samples")].set(num_samples);
   JsonArray timeArray = jsonTX[F("payload")][F("meta")].createNestedArray("time");
 
   // for loop to place data into arrays (is it possible to just pass whole string without looping up to 200 times!?)
   for (int i = 0; i < num_samples; i++) {
 
-    // Serial.print("i: ");
-    // Serial.print(i);
-    // Serial.print(", ");
+    char float_buffer_one[8];  // issues caused by reusing buffer
+    formatFloat(ambient_temp[i], float_buffer_one, sizeof(float_buffer_one), 2);
+    jsonArrayOne.add(float_buffer_one);
 
-    jsonArrayOne.add(data_array_one[i]);
+    char float_buffer_two[8];
+    formatFloat(ambient_press[i], float_buffer_two, sizeof(float_buffer_two), 2);
+    jsonArrayTwo.add(float_buffer_two);
 
-    formatFloat(data_array_two[i], float_buffer, sizeof(float_buffer), 3);
-    jsonArrayTwo.add(float_buffer);
-
-    formatFloat(data_array_three[i], float_buffer, sizeof(float_buffer), 3);
-    jsonArrayThree.add(float_buffer);
+ 
+    char float_buffer_three[8];
+    formatFloat(ambient_humid[i], float_buffer_three, sizeof(float_buffer_three), 2);
+    jsonArrayThree.add(float_buffer_three);
 
     timeArray.add(timestamp_array[i]);
   }

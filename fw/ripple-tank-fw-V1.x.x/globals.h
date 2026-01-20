@@ -12,6 +12,8 @@
 #include <ledObject.h>
 #include <autoDelay.h>
 #include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_BME280.h>
 #include <MCP4151.h>
 
 // Included Libraries
@@ -71,9 +73,9 @@ const int tank_hysteresis = 50;
 // User Options & Program Config
 
 // JSON Reporting
-#define PRINT_JSON false
+#define PRINT_JSON true
 #define PRETTY_PRINT_JSON false
-#define JSON_TX_BUFFER_SIZE 240
+#define JSON_TX_BUFFER_SIZE 500
 
 
 // Sample & Printing Rates
@@ -98,8 +100,11 @@ jsonMessenger jsonRX;  // create a jsonMessenger object to handle commands recei
 // Delay Objects
 autoDelay sampleDelay;
 autoDelay printDelay;
-
-
+// Environment Sensing
+Adafruit_BME280 bme; // use I2C interface
+Adafruit_Sensor *bme_temp = bme.getTemperatureSensor();
+Adafruit_Sensor *bme_pressure = bme.getPressureSensor();
+Adafruit_Sensor *bme_humidity = bme.getHumiditySensor();
 
 
 
@@ -186,22 +191,22 @@ uint8_t num_samples_req = uint8_t(sampleRate_Hz / print_rate_Hz);  // Number of 
 // on smaller microcontrollers. Suggest limit of 4, so print rate cant even be less than 4 times sample rate. This can be defined by DATA_ARRAY_SIZE, and will (later) be used to resitrict sample rates and print rates to
 // stay within this value, each time one is updated it must be checked for conformity to this against the other.
 
-int arbitaryData = 1;  // just here to provide an incrementing number for demonstration
+//int arbitaryData = 1;  // just here to provide an incrementing number for demonstration
 
 
-#define DATA_ARRAY_SIZE 1
+#define DATA_ARRAY_SIZE 2
 
 uint32_t timestamp_array[DATA_ARRAY_SIZE];
-int16_t data_array_one[DATA_ARRAY_SIZE];
-float data_array_two[DATA_ARRAY_SIZE];
-float data_array_three[DATA_ARRAY_SIZE];
+float ambient_temp[DATA_ARRAY_SIZE];
+float ambient_press[DATA_ARRAY_SIZE];
+float ambient_humid[DATA_ARRAY_SIZE];
 
 void init_arrays() {
   for (int i = 0; i < DATA_ARRAY_SIZE; i++) {
     timestamp_array[i] = 0;
-    data_array_one[i] = 0;
-    data_array_two[i] = 0;
-    data_array_three[i] = 0;
+    ambient_temp[i] = 0;
+    ambient_press[i] = 0;
+    ambient_humid[i] = 0;
   }
 }
 

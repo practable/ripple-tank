@@ -22,7 +22,7 @@ typedef enum {
   STATE_WAIT,
   STATE_LIGHT,
   STATE_HZ,
-    STATE_AMP,
+  STATE_AMP,
   STATE_START,
   STATE_STOP,
   STATE_PULSE,
@@ -39,7 +39,8 @@ typedef enum {
   NUM_STATES  // Sentinal value lets us get the total number of states without manually counting. Do not forget this value, it is important for correct function
 } stateDef_t;
 
-
+//stateDef_t smState = STATE_INIT;
+//stateDef_t lastState;
 
 
 // 2. Then we define two variables to hold the current state enum, and the previous state enum. Holding both these values allows us to compare them as we enter a state,

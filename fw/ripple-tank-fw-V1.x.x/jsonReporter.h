@@ -54,7 +54,7 @@ void formatFloat(float value, char *buffer, size_t length, int decimalPlaces = 2
 
 
 
-void update_json(int16_t num_samples) {
+void update_json(int16_t num_samples, stateDef_t currentState) {
 
   StaticJsonDocument<JSON_TX_BUFFER_SIZE> jsonTX;
 
@@ -71,7 +71,7 @@ void update_json(int16_t num_samples) {
 
   // new method to get state name text from progmem
   char buffer[14];
-  strcpy_P(buffer, (char *)pgm_read_ptr(&(stateNames[smState])));  // Necessary casts and dereferencing, just copy.
+  strcpy_P(buffer, (char *)pgm_read_ptr(&(stateNames[currentState])));  // Necessary casts and dereferencing, just copy.
   jsonTX[F("payload")][F("state")].set(buffer);
   jsonTX[F("payload")][F("freq")].set(frequency);
 jsonTX[F("payload")][F("amp")].set(amplitude);

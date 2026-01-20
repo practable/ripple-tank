@@ -141,17 +141,49 @@ autoDelay waveTableDelay;
 
 // global settings for waves
 const uint32_t WAVE_MAX_TIME_S = 600;
-bool wavetable_active = false;
+//bool wavetable_active = false;
 bool pulse_active = false;
-uint8_t amplitude = 10;
-float frequency = 40;
 
-// utility for wave functions
+
+uint8_t amplitude = 50;
+float frequency = 10;
+
+
+// Implementing a Phase Accumulator (DDS -> Direct Digital Synthesis)
+// - Fixed-rate ISR at 30 kHz
+// - Advance wavetable in ISR
+// - Frequency changes dynamically
+// - No loop timing dependence
+//in ISR -> do:
+//phase += phaseIncrement;
+//table_index = phase >> PHASE_SHIFT;
+// where:
+// phaseIncrement = (frequency * tableSize << PHASE_SHIFT) / sampleRate
+// fixed parameters
+#define SAMPLE_RATE   30000
+#define TABLE_SIZE    240
+#define PHASE_BITS    24
+#define PHASE_SHIFT   (PHASE_BITS - 8)  // 240 fits in 8 bits 
+// phase range 0 … (1<<24)-1
+// shared parameters (Volatile!)
+volatile uint32_t phase = 0;
+volatile uint32_t phaseIncrement = 0;
+
+
+// Trying something different with my own thinking
+volatile bool wavetable_active = false;
+volatile uint32_t wt_ticks = 0;   // the number of ticks recorded between samples in the wavetable. resets whenever a new sample is sent
+volatile uint32_t wt_ticks_per_sample = 125;  // this value is updated when changing frequency
+volatile uint32_t wt_index;  // index of the current sample
+
+
+
+// utility for wave functions -> MAYBE DEPRECIATED
 float waveBaseDelay_uS = 0;    // delay for 1Hz
-int16_t waveDelayTime_uS = 0;  // calculated delay for {frequency}
-uint16_t table_index = 0;
+volatile int16_t waveDelayTime_uS = 0;  // calculated delay for {frequency}
+volatile uint16_t table_index = 0;
 // Timing variables
-unsigned long previousMicros = 0;
+volatile unsigned long previousMicros = 0;
 uint32_t wave_start_time_mS = 0;
 
 
@@ -159,13 +191,19 @@ uint32_t wave_start_time_mS = 0;
 const int empty_time_S = 240;
 const int refill_time_S = 240;
 
-bool pump_empty_active = false;
-bool pump_refill_active = false;
+typedef enum {
+  STOPPED,
+  PUMP_EMPTYING,
+  PUMP_REFILLING
+} pumpState_t;
+
+
+pumpState_t pumpState = STOPPED;
 
 bool pump_start_time_mS = 0;
 
 // Sampling Vars
-bool streaming_active = true;
+bool streaming_active = false;
 bool snapshop_active = false;
 uint16_t snapshot_timer_mS = 25000;
 uint32_t snapshot_starttime_mS;
@@ -215,8 +253,10 @@ int16_t samples_written = 0;
 
 // Include headers that need to pull from globals right at the end
 // Include headers that stateMachine needs before stateMachine
+#include "pump.h"
 #include "wavetables.h"
-#include "stateMachine.h"  // State machine pulls from globals and headers describing hardware functions
-#include "jsonReporter.h"
+#include "jsonReporter.h"  
 #include "utilityFunctions.h"
+#include "stateMachine.h"  // State machine pulls from globals and headers describing hardware functions
+
 

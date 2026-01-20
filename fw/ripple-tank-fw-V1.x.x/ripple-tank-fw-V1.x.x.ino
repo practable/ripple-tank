@@ -41,11 +41,11 @@ void setup() {
   SPI.begin();
 
   // set up wavetable
-  calc_wave_baseDelay(tableSize);
-  analogWriteResolution(10);
-  set_frequency(0.1);
+   calc_wave_baseDelay(tableSize);
+   analogWriteResolution(10);
+   set_frequency(0.1);
   delay(10);
-  set_frequency(frequency);
+   set_frequency(frequency);
   setVolume(amplitude);
 
   while (!Serial) {
@@ -59,9 +59,13 @@ void setup() {
     Serial.println("{\"info\":\"Environment sensor found\"}");
   }
 
+  pump_setup();
 
+ //setupDAC();
+ // delay(100);
+ // wavetable_clock_setup();
   // get settings and cal data from memory
-
+ // setFrequency(frequency);
 
 
   // Start/Calibrate Sensors -> load scales from memory
@@ -120,13 +124,13 @@ void loop() {
 
 
   if (wavetable_active) {
-    run_wavetable();
+   run_wavetable();
     if (millis() - wave_start_time_mS >= (WAVE_MAX_TIME_S * 1000)) {
       wavetable_active = false;
       Serial.println("wavetable- timed out");
     }
   } else {
-    analogWrite(wave_pin, 0);
+   // analogWrite(wave_pin, 0);
   }
 
 
@@ -143,7 +147,25 @@ void loop() {
 #endif
 
 
+if (pumpState == PUMP_EMPTYING){
+  // code here to run pump
+  send_pulse(); 
+  if (millis() - pump_start_time_mS >= empty_time_S*1000){
+    pumpState = STOPPED;
+    // make sure stepper driver shut down properly
+    disable_pump();
+  }
+}
 
+if (pumpState == PUMP_REFILLING){
+  // code here to run pump
+  send_pulse();
+  if (millis() - pump_start_time_mS >= refill_time_S*1000){
+    pumpState = STOPPED;
+    // make sure stepper driver shut down properly
+    disable_pump();
+  }
+}
 
 
 
@@ -158,7 +180,7 @@ void loop() {
     sampleDelay.resetDelayTime_mS();         // makes sure that the sample loop is synced to the printing loop //moved to try and improve timings (doing this first so next sample is sooner)
     if (streaming_active || snapshop_active) {
       //print the sampled data
-      update_json(samples_written);
+      update_json(samples_written, smState);
     }
     samples_written = 0;
   }

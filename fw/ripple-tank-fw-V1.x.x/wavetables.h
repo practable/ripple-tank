@@ -1,74 +1,17 @@
-
 /*
-const uint16_t sineTable[256] PROGMEM = {
-512, 524, 537, 549, 562, 574, 587, 599,
-611, 624, 636, 648, 660, 672, 684, 696,
-707, 719, 730, 741, 753, 764, 774, 785,
-796, 806, 816, 826, 836, 846, 855, 864,
-873, 882, 890, 899, 907, 915, 922, 930,
-937, 944, 950, 957, 963, 968, 974, 979,
-984, 989, 993, 997, 1001, 1004, 1008, 1011,
-1013, 1015, 1017, 1019, 1021, 1022, 1022, 1023,
-1023, 1023, 1022, 1022, 1021, 1019, 1017, 1015,
-1013, 1011, 1008, 1004, 1001, 997, 993, 989,
-984, 979, 974, 968, 963, 957, 950, 944,
-937, 930, 922, 915, 907, 899, 890, 882,
-873, 864, 855, 846, 836, 826, 816, 806,
-796, 785, 774, 764, 753, 741, 730, 719,
-707, 696, 684, 672, 660, 648, 636, 624,
-611, 599, 587, 574, 562, 549, 537, 524,
-512, 499, 486, 474, 461, 449, 436, 424,
-412, 399, 387, 375, 363, 351, 339, 327,
-316, 304, 293, 282, 270, 259, 249, 238,
-227, 217, 207, 197, 187, 177, 168, 159,
-150, 141, 133, 124, 116, 108, 101, 93,
-86, 79, 73, 66, 60, 55, 49, 44,
-39, 34, 30, 26, 22, 19, 15, 12,
-10, 8, 6, 4, 2, 1, 1, 0,
-0, 0, 1, 1, 2, 4, 6, 8,
-10, 12, 15, 19, 22, 26, 30, 34,
-39, 44, 49, 55, 60, 66, 73, 79,
-86, 93, 101, 108, 116, 124, 133, 141,
-150, 159, 168, 177, 187, 197, 207, 217,
-227, 238, 249, 259, 270, 282, 293, 304,
-316, 327, 339, 351, 363, 375, 387, 399,
-412, 424, 436, 449, 461, 474, 486, 499,
-};
+
+Wavetables.h contains full implementation for a wavetable driven audio synth
+
+
 */
 
 // sine slightly offset from 0 to give op-amp buffer headroom
-const uint16_t sineTable[240] PROGMEM = {
-812, 817, 823, 828, 834, 839, 845, 850,
-855, 861, 866, 872, 877, 882, 887, 892,
-898, 903, 908, 912, 917, 922, 927, 931,
-936, 940, 945, 949, 953, 957, 961, 965,
-969, 972, 976, 979, 983, 986, 989, 992,
-995, 997, 1000, 1002, 1005, 1007, 1009, 1011,
-1013, 1014, 1016, 1017, 1018, 1019, 1020, 1021,
-1022, 1022, 1023, 1023, 1023, 1023, 1023, 1022,
-1022, 1021, 1020, 1019, 1018, 1017, 1016, 1014,
-1013, 1011, 1009, 1007, 1005, 1002, 1000, 997,
-995, 992, 989, 986, 983, 979, 976, 972,
-969, 965, 961, 957, 953, 949, 945, 940,
-936, 931, 927, 922, 917, 912, 908, 903,
-898, 892, 887, 882, 877, 872, 866, 861,
-855, 850, 845, 839, 834, 828, 823, 817,
-812, 806, 800, 795, 789, 784, 778, 773,
-768, 762, 757, 751, 746, 741, 736, 731,
-725, 720, 715, 711, 706, 701, 696, 692,
-687, 683, 678, 674, 670, 666, 662, 658,
-654, 651, 647, 644, 640, 637, 634, 631,
-628, 626, 623, 621, 618, 616, 614, 612,
-610, 609, 607, 606, 605, 604, 603, 602,
-601, 601, 600, 600, 600, 600, 600, 601,
-601, 602, 603, 604, 605, 606, 607, 609,
-610, 612, 614, 616, 618, 621, 623, 626,
-628, 631, 634, 637, 640, 644, 647, 651,
-654, 658, 662, 666, 670, 674, 678, 683,
-687, 692, 696, 701, 706, 711, 715, 720,
-725, 731, 736, 741, 746, 751, 757, 762,
-768, 773, 778, 784, 789, 795, 800, 806,
-};
+// ---------------------------- WAVETABLE ----------------------------
+// 12-bit unipolar sine table (0..4095)
+
+#include "tables.h"
+
+
 //uint16_t value = pgm_read_word(&sineTable[index & 255]);
 
 void setVolume(const uint8_t &volume) {
@@ -93,10 +36,10 @@ void calc_wave_baseDelay(uint16_t num_entries) {
   Serial.println(waveBaseDelay_uS);
 }
 
-
+// Polling implementation, fine on its own but not if other functions (like long serial prints) are using up loop time
 void run_wavetable() {
   if (waveTableDelay.microsDelay(waveDelayTime_uS)) {
-   // Serial.println(waveDelayTime_uS);
+    // Serial.println(waveDelayTime_uS);
     uint16_t tableVal = pgm_read_word(&sineTable[table_index]);
     analogWrite(wave_pin, tableVal);
     // Serial.println(tableVal);
@@ -105,4 +48,97 @@ void run_wavetable() {
   }
 }
 
+// PHASE ACCUMULATOR -> DDS (Direct Digital Synthesis) Implementation
 
+// Update frequency function
+void setFrequency(float freq) {
+  noInterrupts();
+  phaseIncrement = (uint32_t)((freq * TABLE_SIZE * (1UL << PHASE_BITS)) / SAMPLE_RATE);
+  interrupts();
+}
+
+
+
+// Function to set up DAQ
+void setupDAC() {
+  // Enable DAC in 12-bit mode
+  analogWriteResolution(10);  // 0–4095
+
+  // Enable DAC clock
+  PM->APBCMASK.reg |= PM_APBCMASK_DAC;
+
+  // Connect DAC to GCLK0
+  GCLK->CLKCTRL.reg = GCLK_CLKCTRL_ID_DAC | GCLK_CLKCTRL_GEN_GCLK0 | GCLK_CLKCTRL_CLKEN;
+  while (GCLK->STATUS.bit.SYNCBUSY)
+    ;
+
+  // Enable DAC
+  DAC->CTRLA.bit.ENABLE = 1;
+  while (DAC->STATUS.bit.SYNCBUSY)
+    ;
+
+  // Use VDD/2 as reference
+  DAC->CTRLB.bit.REFSEL = DAC_CTRLB_REFSEL_AVCC;
+  while (DAC->STATUS.bit.SYNCBUSY)
+    ;
+}
+
+// Function to set up timers & interrupts TC5
+// 48 MHz / 16 = 3 MHz
+// 3 MHz / 30 kHz = 100
+void wavetable_clock_setup() {
+
+  // Enable generic clock for TC4/TC5
+  GCLK->CLKCTRL.reg =
+    GCLK_CLKCTRL_ID_TC4_TC5 | GCLK_CLKCTRL_GEN_GCLK0 | GCLK_CLKCTRL_CLKEN;
+  while (GCLK->STATUS.bit.SYNCBUSY)
+    ;
+
+  // Disable TC5
+  TC5->COUNT16.CTRLA.reg = 0;
+  while (TC5->COUNT16.STATUS.bit.SYNCBUSY)
+    ;
+
+  // Configure TC5
+  TC5->COUNT16.CTRLA.reg =
+    TC_CTRLA_MODE_COUNT16 | TC_CTRLA_PRESCALER_DIV16 | TC_CTRLA_WAVEGEN_MFRQ;  // Match Frequency mode
+  while (TC5->COUNT16.STATUS.bit.SYNCBUSY)
+    ;
+
+  // Set compare value for 30 kHz
+  uint32_t compare = (48000000 / 16) / SAMPLE_RATE;
+  TC5->COUNT16.CC[0].reg = compare;
+  while (TC5->COUNT16.STATUS.bit.SYNCBUSY)
+    ;
+
+  // Enable interrupt on compare match
+  TC5->COUNT16.INTENSET.reg = TC_INTENSET_MC0;
+  NVIC_EnableIRQ(TC5_IRQn);
+
+  // Enable TC5
+  TC5->COUNT16.CTRLA.bit.ENABLE = 1;
+  while (TC5->COUNT16.STATUS.bit.SYNCBUSY)
+    ;
+}
+
+
+          
+
+// ISR based wavetable function that updates the (SAMD21) DAC directly
+void TC5_Handler() {
+  if (TC5->COUNT16.INTFLAG.bit.MC0) {
+    TC5->COUNT16.INTFLAG.reg = TC_INTFLAG_MC0;
+    // phase += phaseIncrement;
+    // uint16_t index = phase >> PHASE_SHIFT;
+    wt_ticks++;
+    if (wt_ticks >= wt_ticks_per_sample) {
+      wt_index++;
+      if (wavetable_active) {
+        DAC->DATA.reg = pgm_read_word(&sineTable[wt_index]) << 2;
+        if (wt_index >= TABLE_SIZE) wt_index = 0;  // why not just =0?
+      } else {
+        DAC->DATA.reg = 0;
+      }
+    }
+  }
+}

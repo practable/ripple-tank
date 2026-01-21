@@ -12,7 +12,7 @@ Wavetables.h contains full implementation for a wavetable driven audio synth
 #include "tables.h"
 
 
-//uint16_t value = pgm_read_word(&sineTable[index & 255]);
+
 
 void setVolume(const uint8_t &volume) {
   digitalWrite(digiPotSelectPin, LOW);
@@ -36,15 +36,44 @@ void calc_wave_baseDelay(uint16_t num_entries) {
   Serial.println(waveBaseDelay_uS);
 }
 
+
+void select_wavetable(float frequency = 1) {
+  if (frequency <= low_table_Hz) {
+    currentTable = LOW_HZ_TABLE;
+    tableSize = low_table_size;
+  } else if (frequency > low_table_Hz && frequency <= mid_table_Hz) {
+    currentTable = MID_HZ_TABLE;
+    tableSize = mid_table_size;
+  } else if (frequency > mid_table_Hz) {
+    currentTable = HIGH_HZ_TABLE;
+    tableSize = high_table_size;
+  } else {  // default // error? // default to low table
+    currentTable = LOW_HZ_TABLE;
+    tableSize = low_table_size;
+    Serial.println("ERROR");
+  }
+}
+
+
+
 // Polling implementation, fine on its own but not if other functions (like long serial prints) are using up loop time
 void run_wavetable() {
+  uint16_t tableVal = 0;
   if (waveTableDelay.microsDelay(waveDelayTime_uS)) {
-    // Serial.println(waveDelayTime_uS);
-    uint16_t tableVal = pgm_read_word(&sineTable[table_index]);
+    if (table_index >= tableSize) table_index = 0;  // reset this first as it will avoid indexes going OOB
+    if (currentTable == VH_HZ_TABLE) {
+      tableVal = pgm_read_word(&sineTable_Vhigh[table_index]);
+    } else if (currentTable == HIGH_HZ_TABLE) {
+      tableVal = pgm_read_word(&sineTable_high[table_index]);
+    } else if (currentTable == MID_HZ_TABLE) {
+      tableVal = pgm_read_word(&sineTable_mid[table_index]);
+    } else if (currentTable == LOW_HZ_TABLE) {
+      tableVal = pgm_read_word(&sineTable_low[table_index]);
+    } else {
+      tableVal = 255;  //stable mid scale output will highlight this error
+    }
     analogWrite(wave_pin, tableVal);
-    // Serial.println(tableVal);
     table_index++;
-    if (table_index >= tableSize) table_index = 0;
   }
 }
 
@@ -122,7 +151,7 @@ void wavetable_clock_setup() {
 }
 
 
-          
+
 
 // ISR based wavetable function that updates the (SAMD21) DAC directly
 void TC5_Handler() {
@@ -134,7 +163,7 @@ void TC5_Handler() {
     if (wt_ticks >= wt_ticks_per_sample) {
       wt_index++;
       if (wavetable_active) {
-        DAC->DATA.reg = pgm_read_word(&sineTable[wt_index]) << 2;
+        DAC->DATA.reg = pgm_read_word(&sineTable_low[wt_index]) << 2;
         if (wt_index >= TABLE_SIZE) wt_index = 0;  // why not just =0?
       } else {
         DAC->DATA.reg = 0;

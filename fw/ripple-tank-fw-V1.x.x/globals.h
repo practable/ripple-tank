@@ -15,6 +15,9 @@
 #include <Wire.h>
 #include <Adafruit_BME280.h>
 #include <MCP4151.h>
+#include <SAMD21turboPWM.h>
+
+TurboPWM pwm;
 
 // Included Libraries
 
@@ -48,11 +51,19 @@
 #define MOSI 11
 #define MISO 12
 #define SCK 13
-//led
-#define LED_CTRL 5
+
+
 // wave output
 const int wave_pin = A0;
 const int digiPotSelectPin = 10;
+const float frequencyDefault = 24.0;
+const int amplitudeDefault = 50;
+const uint32_t WAVE_MAX_TIME_S = 900;
+
+// Lamp
+const int led_ctrl_pin = 5;
+const uint32_t LED_MAX_TIME_S = 600;
+const int brightnessDefault = 30;
 
 // Pump 
 const int pump_step_pin = 6;
@@ -110,24 +121,31 @@ Adafruit_Sensor *bme_humidity = bme.getHumiditySensor();
 
 
 // LED datas
-const uint32_t LED_MAX_TIME_S = 300;
 uint8_t led_power = 0;
 uint32_t led_on_time_mS = 0;
 
-// Ripples Datas
-const int tableSize = 240;  // Number of samples in the sine wave table
+//Wavetable Stuff
+int tableSize = 240;  // Number of samples in the sine wave table
 // constants for different sine tables
-const int low_table_size = 240;  // up to 30 Hz
+const int low_table_size = 240;  // up to 30 Hz  (aprox-> defined below)
 const int mid_table_size = 120;  // 30 - 60 Hz
 const int high_table_size = 60;  // 60 to 120 Hz
+const int VH_table_size = 30;    // 60 to 120 Hz
 
-/*
-typedef uint8_t enum {
+const int low_table_Hz = 20;   // frequences under this limit will use the low table
+const int mid_table_Hz = 40;   // frequences between low and mid will use mid table
+const int high_table_Hz = 80;  // frequencies between mid and high limit will use the high table
+const int VH_table_Hz = 80;    // frequencies above high will use the Very High table
+
+
+typedef enum {
   LOW_HZ_TABLE,
   MID_HZ_TABLE,
-  HIGH_HZ_TABLE
+  HIGH_HZ_TABLE,
+  VH_HZ_TABLE
 } activeTable;
-*/
+
+activeTable currentTable;
 
 // Variables for sine wave control
 //float frequency = 1.0;  // Frequency of the sine wave in Hz
@@ -138,15 +156,20 @@ typedef uint8_t enum {
 
 autoDelay waveTableDelay;
 
-
-// global settings for waves
-const uint32_t WAVE_MAX_TIME_S = 600;
-//bool wavetable_active = false;
+// utility vars for wave functions 
 bool pulse_active = false;
+volatile bool wavetable_active = false;
+uint8_t amplitude = amplitudeDefault;
+float frequency = frequencyDefault;
 
 
-uint8_t amplitude = 50;
-float frequency = 10;
+float waveBaseDelay_uS = 0;    // delay for 1Hz
+volatile int16_t waveDelayTime_uS = 0;  // calculated delay for {frequency}
+volatile uint16_t table_index = 0;
+// Timing variables
+volatile unsigned long previousMicros = 0;
+uint32_t wave_start_time_mS = 0;
+
 
 
 // Implementing a Phase Accumulator (DDS -> Direct Digital Synthesis)
@@ -171,20 +194,13 @@ volatile uint32_t phaseIncrement = 0;
 
 
 // Trying something different with my own thinking
-volatile bool wavetable_active = false;
+
 volatile uint32_t wt_ticks = 0;   // the number of ticks recorded between samples in the wavetable. resets whenever a new sample is sent
 volatile uint32_t wt_ticks_per_sample = 125;  // this value is updated when changing frequency
 volatile uint32_t wt_index;  // index of the current sample
 
 
 
-// utility for wave functions -> MAYBE DEPRECIATED
-float waveBaseDelay_uS = 0;    // delay for 1Hz
-volatile int16_t waveDelayTime_uS = 0;  // calculated delay for {frequency}
-volatile uint16_t table_index = 0;
-// Timing variables
-volatile unsigned long previousMicros = 0;
-uint32_t wave_start_time_mS = 0;
 
 
 // PUMPING VARS
@@ -253,6 +269,7 @@ int16_t samples_written = 0;
 
 // Include headers that need to pull from globals right at the end
 // Include headers that stateMachine needs before stateMachine
+#include "lamp.h"
 #include "pump.h"
 #include "wavetables.h"
 #include "jsonReporter.h"  

@@ -30,22 +30,26 @@ Global variables use 813 bytes (39%) of dynamic memory, leaving 1235 bytes for l
 void setup() {
   Serial.begin(115200);
 
+  // Davids PWM Mod
+  pwm.setClockDivider(1, false);  // Input clock is divided by 1 and 48MHz is sent to Generic Clock, Turbo is off
+  pwm.timer(1, 1, 1262, true);    // Timer 1 is set to Generic Clock divided by 1, resolution is 960000, left-aligned aka single-slope PWM
+
 
   // Setup IO PIns
   pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(LED_CTRL, OUTPUT);
-  analogWrite(LED_CTRL, 0);  // need to do this first incase it hangs waiting for serial
+  pinMode(led_ctrl_pin, OUTPUT);
+  analogWrite(led_ctrl_pin, 0);  // need to do this first incase it hangs waiting for serial
 
   // Set Up SPI for digital pot volume control
   pinMode(digiPotSelectPin, OUTPUT);
   SPI.begin();
 
   // set up wavetable
-   calc_wave_baseDelay(tableSize);
-   analogWriteResolution(10);
-   set_frequency(0.1);
+  calc_wave_baseDelay(tableSize);
+  analogWriteResolution(10);
+  set_frequency(0.1);
   delay(10);
-   set_frequency(frequency);
+  set_frequency(frequency);
   setVolume(amplitude);
 
   while (!Serial) {
@@ -61,11 +65,11 @@ void setup() {
 
   pump_setup();
 
- //setupDAC();
- // delay(100);
- // wavetable_clock_setup();
+  //setupDAC();
+  // delay(100);
+  // wavetable_clock_setup();
   // get settings and cal data from memory
- // setFrequency(frequency);
+  // setFrequency(frequency);
 
 
   // Start/Calibrate Sensors -> load scales from memory
@@ -124,13 +128,13 @@ void loop() {
 
 
   if (wavetable_active) {
-   run_wavetable();
+    run_wavetable();
     if (millis() - wave_start_time_mS >= (WAVE_MAX_TIME_S * 1000)) {
       wavetable_active = false;
       Serial.println("wavetable- timed out");
     }
   } else {
-   // analogWrite(wave_pin, 0);
+    // analogWrite(wave_pin, 0);
   }
 
 
@@ -140,32 +144,32 @@ void loop() {
   if (led_power > 0) {  // timeout for LED light
     if (millis() - led_on_time_mS >= (LED_MAX_TIME_S * 1000)) {
       led_power = 0;
-      analogWrite(LED_CTRL, led_power);
+      analogWrite(led_ctrl_pin, led_power);
     }
   }
 
 #endif
 
 
-if (pumpState == PUMP_EMPTYING){
-  // code here to run pump
-  send_pulse(); 
-  if (millis() - pump_start_time_mS >= empty_time_S*1000){
-    pumpState = STOPPED;
-    // make sure stepper driver shut down properly
-    disable_pump();
+  if (pumpState == PUMP_EMPTYING) {
+    // code here to run pump
+    send_pulse();
+    if (millis() - pump_start_time_mS >= empty_time_S * 1000) {
+      pumpState = STOPPED;
+      // make sure stepper driver shut down properly
+      disable_pump();
+    }
   }
-}
 
-if (pumpState == PUMP_REFILLING){
-  // code here to run pump
-  send_pulse();
-  if (millis() - pump_start_time_mS >= refill_time_S*1000){
-    pumpState = STOPPED;
-    // make sure stepper driver shut down properly
-    disable_pump();
+  if (pumpState == PUMP_REFILLING) {
+    // code here to run pump
+    send_pulse();
+    if (millis() - pump_start_time_mS >= refill_time_S * 1000) {
+      pumpState = STOPPED;
+      // make sure stepper driver shut down properly
+      disable_pump();
+    }
   }
-}
 
 
 

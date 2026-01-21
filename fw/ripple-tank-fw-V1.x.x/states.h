@@ -27,6 +27,14 @@ void sm_state_init(jsonStateData_t &stateData) {
 #endif
     stateData.uInt++;
   }
+  amplitude = amplitudeDefault;
+  setVolume(amplitude);
+  frequency = frequencyDefault;
+  select_wavetable(frequency);
+  calc_wave_baseDelay(tableSize);
+  set_frequency(frequency);
+  led_power = brightnessDefault;
+  set_brightness(led_power);
 
   smState = STATE_WAIT;
 }
@@ -62,7 +70,7 @@ void sm_state_light(jsonStateData_t &stateData) {
       Serial.print("{\"brightness\":\"");
       Serial.print(led_power);
       Serial.println("\"}");
-      analogWrite(LED_CTRL, led_power);
+      analogWrite(led_ctrl_pin, led_power);
       led_on_time_mS = millis();
     } else {
       Serial.println("Requested lighting value OUT OF BOUNDS");
@@ -79,8 +87,12 @@ void sm_state_hz(jsonStateData_t &stateData) {
     Serial.println(F("state: HZ"));
 #endif
     lastState = smState;
-    if (stateData.floatData > 0 && stateData.floatData < 45) {
+    if (stateData.floatData > 0 && stateData.floatData < 300) {
+      Serial.print("{\"hz-set-to\":\"");
+      Serial.print(stateData.floatData);
+      Serial.println("\"}");
       frequency = stateData.floatData;
+      select_wavetable(frequency);
       set_frequency(frequency);
       wave_start_time_mS = millis();
       // setFrequency(frequency);   // interrupt method (doesnt work)
@@ -143,17 +155,17 @@ void sm_state_pulse(jsonStateData_t &stateData) {
 #endif
     lastState = smState;
     wavetable_active = false;
-    pulse_active = true;
-    table_index = 0;
+    pulse_active = true;    
   }
+  table_index = 0;
   uint16_t tableVal = 0;
   while (pulse_active) {
     if (waveTableDelay.microsDelay(waveDelayTime_uS)) {
-      tableVal = pgm_read_word(&sineTable[table_index]);
+      tableVal = pgm_read_word(&sineTable_low[table_index]);
       analogWrite(wave_pin, tableVal);
       // Serial.println(tableVal);
       table_index++;
-      if (table_index >= (tableSize - 35)) pulse_active = false;  // not using the whole table to avoid the zero crossing overshoot that is then corrected by the DC blocking caps, leading to a pop
+      if (table_index >= (low_table_size - 35)) pulse_active = false;  // not using the whole table to avoid the zero crossing overshoot that is then corrected by the DC blocking caps, leading to a pop
     }
   }
   table_index = 0;

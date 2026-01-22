@@ -12,6 +12,9 @@ Wavetables.h contains full implementation for a wavetable driven audio synth
 #include "tables.h"
 
 
+void wavetable_setup(){
+
+}
 
 
 void setVolume(const uint8_t &volume) {
@@ -52,8 +55,6 @@ void select_wavetable(float frequency = 1) {
     tableSize = low_table_size;
     Serial.println("ERROR");
   }
-  Serial.print("table size: ");
-  Serial.println(tableSize);
 }
 
 
@@ -63,7 +64,7 @@ void run_wavetable() {
   uint16_t tableVal = 0;
   if (waveTableDelay.microsDelay(waveDelayTime_uS)) {
     if (table_index >= tableSize) table_index = 0;  // reset this first as it will avoid indexes going OOB
-    Serial.println(table_index);
+                                                    // Serial.println(table_index);
     if (currentTable == VH_HZ_TABLE) {
       tableVal = pgm_read_word(&sineTable_Vhigh[table_index]);
     } else if (currentTable == HIGH_HZ_TABLE) {
@@ -80,97 +81,7 @@ void run_wavetable() {
   }
 }
 
-// PHASE ACCUMULATOR -> DDS (Direct Digital Synthesis) Implementation
-
-// Update frequency function
-void setFrequency(float freq) {
-  noInterrupts();
-  phaseIncrement = (uint32_t)((freq * TABLE_SIZE * (1UL << PHASE_BITS)) / SAMPLE_RATE);
-  interrupts();
-}
-
-
-
-// Function to set up DAQ
-void setupDAC() {
-  // Enable DAC in 12-bit mode
-  analogWriteResolution(10);  // 0–4095
-
-  // Enable DAC clock
-  PM->APBCMASK.reg |= PM_APBCMASK_DAC;
-
-  // Connect DAC to GCLK0
-  GCLK->CLKCTRL.reg = GCLK_CLKCTRL_ID_DAC | GCLK_CLKCTRL_GEN_GCLK0 | GCLK_CLKCTRL_CLKEN;
-  while (GCLK->STATUS.bit.SYNCBUSY)
-    ;
-
-  // Enable DAC
-  DAC->CTRLA.bit.ENABLE = 1;
-  while (DAC->STATUS.bit.SYNCBUSY)
-    ;
-
-  // Use VDD/2 as reference
-  DAC->CTRLB.bit.REFSEL = DAC_CTRLB_REFSEL_AVCC;
-  while (DAC->STATUS.bit.SYNCBUSY)
-    ;
-}
-
-// Function to set up timers & interrupts TC5
-// 48 MHz / 16 = 3 MHz
-// 3 MHz / 30 kHz = 100
-void wavetable_clock_setup() {
-
-  // Enable generic clock for TC4/TC5
-  GCLK->CLKCTRL.reg =
-    GCLK_CLKCTRL_ID_TC4_TC5 | GCLK_CLKCTRL_GEN_GCLK0 | GCLK_CLKCTRL_CLKEN;
-  while (GCLK->STATUS.bit.SYNCBUSY)
-    ;
-
-  // Disable TC5
-  TC5->COUNT16.CTRLA.reg = 0;
-  while (TC5->COUNT16.STATUS.bit.SYNCBUSY)
-    ;
-
-  // Configure TC5
-  TC5->COUNT16.CTRLA.reg =
-    TC_CTRLA_MODE_COUNT16 | TC_CTRLA_PRESCALER_DIV16 | TC_CTRLA_WAVEGEN_MFRQ;  // Match Frequency mode
-  while (TC5->COUNT16.STATUS.bit.SYNCBUSY)
-    ;
-
-  // Set compare value for 30 kHz
-  uint32_t compare = (48000000 / 16) / SAMPLE_RATE;
-  TC5->COUNT16.CC[0].reg = compare;
-  while (TC5->COUNT16.STATUS.bit.SYNCBUSY)
-    ;
-
-  // Enable interrupt on compare match
-  TC5->COUNT16.INTENSET.reg = TC_INTENSET_MC0;
-  NVIC_EnableIRQ(TC5_IRQn);
-
-  // Enable TC5
-  TC5->COUNT16.CTRLA.bit.ENABLE = 1;
-  while (TC5->COUNT16.STATUS.bit.SYNCBUSY)
-    ;
-}
 
 
 
 
-// ISR based wavetable function that updates the (SAMD21) DAC directly
-void TC5_Handler() {
-  if (TC5->COUNT16.INTFLAG.bit.MC0) {
-    TC5->COUNT16.INTFLAG.reg = TC_INTFLAG_MC0;
-    // phase += phaseIncrement;
-    // uint16_t index = phase >> PHASE_SHIFT;
-    wt_ticks++;
-    if (wt_ticks >= wt_ticks_per_sample) {
-      wt_index++;
-      if (wavetable_active) {
-        DAC->DATA.reg = pgm_read_word(&sineTable_low[wt_index]) << 2;
-        if (wt_index >= TABLE_SIZE) wt_index = 0;  // why not just =0?
-      } else {
-        DAC->DATA.reg = 0;
-      }
-    }
-  }
-}

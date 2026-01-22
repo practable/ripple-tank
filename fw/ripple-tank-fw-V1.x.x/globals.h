@@ -45,7 +45,7 @@ TurboPWM pwm;
 // LED / Indicators
 #define LED_BUILTIN 13
 #define LED_1 3
-#define LED_2 12   // Dont think this is functional while using SPI
+#define LED_2 12  // Dont think this is functional while using SPI
 
 // Hardware Consts
 //spi
@@ -68,7 +68,7 @@ const uint32_t LED_MAX_TIME_S = 600;
 const uint16_t brightnessDefault = 0;
 const uint16_t LIGHT_OFF = 0;
 
-// Pump 
+// Pump
 const int pump_step_pin = 6;
 const int pump_dir_pin = 4;
 const int pump_EN_pin = 2;
@@ -115,7 +115,7 @@ jsonMessenger jsonRX;  // create a jsonMessenger object to handle commands recei
 autoDelay sampleDelay;
 autoDelay printDelay;
 // Environment Sensing
-Adafruit_BME280 bme; // use I2C interface
+Adafruit_BME280 bme;  // use I2C interface
 Adafruit_Sensor *bme_temp = bme.getTemperatureSensor();
 Adafruit_Sensor *bme_pressure = bme.getPressureSensor();
 Adafruit_Sensor *bme_humidity = bme.getHumiditySensor();
@@ -146,9 +146,9 @@ typedef enum {
   MID_HZ_TABLE,
   HIGH_HZ_TABLE,
   VH_HZ_TABLE
-} activeTable;
+} activeTable_t;
 
-activeTable currentTable;
+activeTable_t currentTable;
 
 // Variables for sine wave control
 //float frequency = 1.0;  // Frequency of the sine wave in Hz
@@ -159,18 +159,27 @@ activeTable currentTable;
 
 autoDelay waveTableDelay;
 
-// utility vars for wave functions 
-bool pulse_active = false;
-volatile bool wavetable_active = false;
+
+typedef enum {
+  WAVE_STOPPED,
+  WAVE_START,
+  WAVE_ACTIVE,
+  WAVE_STOPPING,
+  WAVE_PULSE
+} waveState_t;
+
+waveState_t waveState = WAVE_STOPPED;
+
+// utility vars for wave functions
 uint8_t amplitude = amplitudeDefault;
 float frequency = frequencyDefault;
 
 
 float waveBaseDelay_uS = 0;    // delay for 1Hz
-volatile int16_t waveDelayTime_uS = 0;  // calculated delay for {frequency}
-volatile uint16_t table_index = 0;
+int16_t waveDelayTime_uS = 0;  // calculated delay for {frequency}
+uint16_t table_index = 0;
 // Timing variables
-volatile unsigned long previousMicros = 0;
+// unsigned long previousMicros = 0;
 uint32_t wave_start_time_mS = 0;
 
 
@@ -186,10 +195,10 @@ uint32_t wave_start_time_mS = 0;
 // where:
 // phaseIncrement = (frequency * tableSize << PHASE_SHIFT) / sampleRate
 // fixed parameters
-#define SAMPLE_RATE   30000
-#define TABLE_SIZE    240
-#define PHASE_BITS    24
-#define PHASE_SHIFT   (PHASE_BITS - 8)  // 240 fits in 8 bits 
+#define SAMPLE_RATE 30000
+#define TABLE_SIZE 240
+#define PHASE_BITS 24
+#define PHASE_SHIFT (PHASE_BITS - 8)  // 240 fits in 8 bits
 // phase range 0 … (1<<24)-1
 // shared parameters (Volatile!)
 volatile uint32_t phase = 0;
@@ -198,9 +207,9 @@ volatile uint32_t phaseIncrement = 0;
 
 // Trying something different with my own thinking
 
-volatile uint32_t wt_ticks = 0;   // the number of ticks recorded between samples in the wavetable. resets whenever a new sample is sent
+volatile uint32_t wt_ticks = 0;               // the number of ticks recorded between samples in the wavetable. resets whenever a new sample is sent
 volatile uint32_t wt_ticks_per_sample = 125;  // this value is updated when changing frequency
-volatile uint32_t wt_index;  // index of the current sample
+volatile uint32_t wt_index;                   // index of the current sample
 
 
 
@@ -275,8 +284,6 @@ int16_t samples_written = 0;
 #include "lamp.h"
 #include "pump.h"
 #include "wavetables.h"
-#include "jsonReporter.h"  
+#include "jsonReporter.h"
 #include "utilityFunctions.h"
 #include "stateMachine.h"  // State machine pulls from globals and headers describing hardware functions
-
-

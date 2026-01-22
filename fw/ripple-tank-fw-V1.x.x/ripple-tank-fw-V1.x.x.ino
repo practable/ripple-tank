@@ -30,9 +30,33 @@ Global variables use 813 bytes (39%) of dynamic memory, leaving 1235 bytes for l
 void setup() {
   Serial.begin(115200);
   // Davids PWM Mod
+  delay(2000);
+
   pwm.setClockDivider(1, false);  // Input clock is divided by 1 and 48MHz is sent to Generic Clock, Turbo is off
   pwm.timer(0, 1, 1262, true);    // Timer 1 is set to Generic Clock divided by 1, resolution is 960000, left-aligned aka single-slope PWM
 
+    // Setup IO PIns
+  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(LED_1, OUTPUT);
+  pinMode(LED_2, OUTPUT);
+  pinMode(led_ctrl_pin, OUTPUT);
+ // pinMode(wave_pin, OUTPUT);    // DO NOT SET THIS PIN TO OUTPUT IT BREAKS THE WAVE GENERATOR!
+  // pwm.analogWrite(led_ctrl_pin, 0);  // need to do this first incase it hangs waiting for serial
+  set_brightness(LIGHT_OFF);
+  digitalWrite(LED_1, true);
+
+  // Set Up SPI for digital pot volume control
+  pinMode(digiPotSelectPin, OUTPUT);
+  SPI.begin();
+  set_brightness(0);
+  digitalWrite(LED_1, false);
+
+   while (!Serial) {
+    delay(1);  // give time for Serial object to start
+  }
+
+  print_info();  // print the program info -> enables identification of current loaded firmware
+  
   // set up wavetable
   analogWriteResolution(10);
   calc_wave_baseDelay(tableSize);
@@ -42,37 +66,13 @@ void setup() {
 
 
 
-  // Setup IO PIns
-  pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(LED_1, OUTPUT);
-  pinMode(LED_2, OUTPUT);
-  pinMode(led_ctrl_pin, OUTPUT);
-  pinMode(wave_pin, OUTPUT);
-  // pwm.analogWrite(led_ctrl_pin, 0);  // need to do this first incase it hangs waiting for serial
-  set_brightness(LIGHT_OFF);
 
-  digitalWrite(LED_1, true);
 
-  // Set Up SPI for digital pot volume control
-  pinMode(digiPotSelectPin, OUTPUT);
-  SPI.begin();
-
-  // Set lamp to off
-  delay(500);
-
-  set_brightness(0);
-  delay(500);
-  digitalWrite(LED_1, false);
   // Set Volume (now SPI has started)
   setVolume(amplitudeDefault);
 
 
-  while (!Serial) {
-    delay(1);  // give time for Serial object to start
-  }
-  //delay(2000); // dont wait for serial as powered PCB will turn on LED untill serial connects -> just changed the order of operation now
-
-  print_info();  // print the program info -> enables identification of current loaded firmware
+ 
 
   if (bme.begin()) {
     Serial.println("{\"info\":\"Environment sensor found\"}");
@@ -121,7 +121,22 @@ void loop() {
 
 
 
-
+  if (waveState == WAVE_ACTIVE) {
+    run_wavetable();
+    if (millis() - wave_start_time_mS >= (WAVE_MAX_TIME_S * 1000)) {
+      waveState = WAVE_STOPPING;
+      Serial.println("wavetable- timed out");
+    }
+  } else if (waveState == WAVE_STOPPING) {    
+     analogWrite(wave_pin, 0);                // reset to position less likely to contain noise or cause pops (pops preferable to noise)
+     waveState = WAVE_STOPPED;
+  } else if (waveState == WAVE_START){
+    table_index = 0;  // restart wavetable from the begginning
+    waveState = WAVE_ACTIVE;
+  } else {
+     // do nothing
+  }
+// WAVE_PULSE is handled internal to state but could move here
 
 
 
@@ -146,15 +161,6 @@ void loop() {
 
 
 
-  if (wavetable_active) {
-    run_wavetable();
-    if (millis() - wave_start_time_mS >= (WAVE_MAX_TIME_S * 1000)) {
-      wavetable_active = false;
-      Serial.println("wavetable- timed out");
-    }
-  } else {
-    // analogWrite(wave_pin, 0);
-  }
 
 
 

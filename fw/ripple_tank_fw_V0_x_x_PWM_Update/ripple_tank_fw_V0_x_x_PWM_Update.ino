@@ -36,7 +36,7 @@ void setup() {
   delay(2000);  // this makes sure program starts even if no connection
 
   pwm.setClockDivider(1, false);  // Input clock is divided by 1 and 48MHz is sent to Generic Clock, Turbo is off
-  pwm.timer(1, 1, 1262, true);  // Timer 1 is set to Generic Clock divided by 1, resolution is 960000, left-aligned aka single-slope PWM
+  pwm.timer(0, 1, 1262, true);  // Timer 1 is set to Generic Clock divided by 1, resolution is 960000, left-aligned aka single-slope PWM
 
 
   Serial.print("\n{\"model\":\"");

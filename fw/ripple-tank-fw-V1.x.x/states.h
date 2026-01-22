@@ -134,7 +134,7 @@ void sm_state_start(jsonStateData_t &stateData) {
     Serial.println(F("state: START"));
 #endif
     lastState = smState;
-    wavetable_active = true;
+    waveState = WAVE_START;
     wave_start_time_mS = millis();
   }
   smState = STATE_WAIT;
@@ -146,7 +146,7 @@ void sm_state_stop(jsonStateData_t &stateData) {
     Serial.println(F("state: STOP"));
 #endif
     lastState = smState;
-    wavetable_active = false;
+    waveState = WAVE_STOPPING;
   }
   smState = STATE_WAIT;
 }
@@ -157,18 +157,17 @@ void sm_state_pulse(jsonStateData_t &stateData) {
     Serial.println(F("state: PULSE"));
 #endif
     lastState = smState;
-    wavetable_active = false;
-    pulse_active = true;
+    waveState = WAVE_PULSE;
   }
   table_index = 0;
   uint16_t tableVal = 0;
-  while (pulse_active) {
+  while (waveState == WAVE_PULSE) {
     if (waveTableDelay.microsDelay(waveDelayTime_uS)) {
       tableVal = pgm_read_word(&sineTable_low[table_index]);
       analogWrite(wave_pin, tableVal);
       // Serial.println(tableVal);
       table_index++;
-      if (table_index >= (low_table_size - 35)) pulse_active = false;  // not using the whole table to avoid the zero crossing overshoot that is then corrected by the DC blocking caps, leading to a pop
+      if (table_index >= (low_table_size - 35)) waveState == WAVE_STOPPED;  // not using the whole table to avoid the zero crossing overshoot that is then corrected by the DC blocking caps, leading to a pop
     }
   }
   table_index = 0;

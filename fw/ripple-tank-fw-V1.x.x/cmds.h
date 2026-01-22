@@ -32,17 +32,18 @@ const char desc_4[] PROGMEM = "Stop Ripple Output";
 const char desc_5[] PROGMEM = "Send Single Pulse at set Frequency";
 const char desc_6[] PROGMEM = "Empty Water from Tank to Reservoir";
 const char desc_7[] PROGMEM = "Fill Tank from Reservoir";
+const char desc_8[] PROGMEM = "Stop Pump";
 // Common Commands
-const char desc_8[] PROGMEM = "Set Samplerate in Hz (dflt: 1)";
-const char desc_9[] PROGMEM = "Set Print Rate in Hz (dflt: 1) ";
-const char desc_10[] PROGMEM = "Start Data Streaming T";
-const char desc_11[] PROGMEM = "End Data Streaming";
-const char desc_12[] PROGMEM = "set the secret word";
-const char desc_13[] PROGMEM = "Reset to Default Condition";
-const char desc_14[] PROGMEM = "print sensor data & status";
-const char desc_15[] PROGMEM = "print commands list";
-const char desc_16[] PROGMEM = "n/a";
+const char desc_9[] PROGMEM = "Set Samplerate in Hz (dflt: 1)";
+const char desc_10[] PROGMEM = "Set Print Rate in Hz (dflt: 1) ";
+const char desc_11[] PROGMEM = "Start Data Streaming T";
+const char desc_12[] PROGMEM = "End Data Streaming";
+const char desc_13[] PROGMEM = "set the secret word";
+const char desc_14[] PROGMEM = "Reset to Default Condition";
+const char desc_15[] PROGMEM = "print sensor data & status";
+const char desc_16[] PROGMEM = "print commands list";
 const char desc_17[] PROGMEM = "n/a";
+const char desc_18[] PROGMEM = "n/a";
 
 
 const char *const cmdDesc[] PROGMEM = {

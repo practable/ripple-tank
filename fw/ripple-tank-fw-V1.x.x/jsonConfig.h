@@ -100,8 +100,9 @@ const jsonStateMapData_t jsonStateMap[] = {
   { "start", dataTypes_t::EMPTY, STATE_START },
   { "stop", dataTypes_t::EMPTY, STATE_STOP },
   { "pulse", dataTypes_t::UINT, STATE_PULSE },
-  { "unpump", dataTypes_t::UINT, STATE_PUMPOUT },
-  { "pump", dataTypes_t::UINT, STATE_PUMPIN },
+  { "unpump", dataTypes_t::EMPTY, STATE_PUMPOUT },
+  { "pump", dataTypes_t::EMPTY, STATE_PUMPIN },
+  { "stpump", dataTypes_t::EMPTY, STATE_STOP_PUMP },
   // Common States
   { "sample", dataTypes_t::UINT, STATE_SAMPLERATE },
   { "print", dataTypes_t::UINT, STATE_PRINTRATE },

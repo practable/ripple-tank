@@ -159,18 +159,6 @@ void sm_state_pulse(jsonStateData_t &stateData) {
     lastState = smState;
     waveState = WAVE_PULSE;
   }
-  table_index = 0;
-  uint16_t tableVal = 0;
-  while (waveState == WAVE_PULSE) {
-    if (waveTableDelay.microsDelay(waveDelayTime_uS)) {
-      tableVal = pgm_read_word(&sineTable_low[table_index]);
-      analogWrite(wave_pin, tableVal);
-      // Serial.println(tableVal);
-      table_index++;
-      if (table_index >= (low_table_size - 35)) waveState == WAVE_STOPPED;  // not using the whole table to avoid the zero crossing overshoot that is then corrected by the DC blocking caps, leading to a pop
-    }
-  }
-  table_index = 0;
   smState = STATE_WAIT;
 }
 
@@ -203,6 +191,20 @@ void sm_state_pumpin(jsonStateData_t &stateData) {
   }
   smState = STATE_WAIT;
 }
+
+void sm_state_stoppump(jsonStateData_t &stateData) {
+  if (lastState != smState) {
+#if DEBUG_STATES == true
+    Serial.println(F("state: STOPPUMP"));
+#endif
+    lastState = smState;
+    disable_pump();
+    pumpState = PUMP_STOPPED;
+    set_direction(false);    
+  }
+  smState = STATE_WAIT;
+}
+
 
 
 
@@ -317,6 +319,15 @@ void sm_state_reset(jsonStateData_t &stateData) {
     Serial.println(F("state: RESET"));
 #endif
     lastState = smState;
+    led_power = 0;
+    pwm.analogWrite(led_ctrl_pin, led_power);
+    frequency = frequencyDefault;
+    amplitude = amplitudeDefault;
+    pumpState = PUMP_STOPPED;
+    waveState = WAVE_STOPPING;      
+    select_wavetable(frequency);
+    calc_wave_baseDelay(tableSize);  // calculate the default delay for 1Hz
+    set_frequency(frequency);
   }
   smState = STATE_WAIT;
 }
@@ -331,6 +342,8 @@ void sm_state_info(jsonStateData_t &stateData) {
 #endif
     stateData.uInt++;
     lastState = smState;
+    sample_tank();
+    sample_data();
     update_json(1, smState);
   }
 

@@ -74,8 +74,9 @@ void update_json(int16_t num_samples, stateDef_t currentState) {
   strcpy_P(buffer, (char *)pgm_read_ptr(&(stateNames[currentState])));  // Necessary casts and dereferencing, just copy.
   jsonTX[F("payload")][F("state")].set(buffer);
   jsonTX[F("payload")][F("freq")].set(frequency);
-jsonTX[F("payload")][F("amp")].set(amplitude);
-jsonTX[F("payload")][F("light")].set(led_power);
+  jsonTX[F("payload")][F("amp")].set(amplitude);
+  jsonTX[F("payload")][F("light")].set(led_power);
+
 
   //char buffer[13];
   //const char *ptr = (const char *)pgm_read_word(&stateNames[smState]);
@@ -97,6 +98,13 @@ jsonTX[F("payload")][F("light")].set(led_power);
   JsonArray jsonArrayOne = jsonTX[F("payload")][F("sensors")].createNestedArray("temp");
   JsonArray jsonArrayTwo = jsonTX[F("payload")][F("sensors")].createNestedArray("press");
   JsonArray jsonArrayThree = jsonTX[F("payload")][F("sensors")].createNestedArray("humid");
+
+  jsonTX[F("payload")][F("tanklevel")].set(tank_level);
+  if (tankStatus == TANK_FULL) {
+    jsonTX[F("payload")][F("tankstatus")].set("TANK_FULL");
+  } else {
+    jsonTX[F("payload")][F("tankstatus")].set("TANK_EMPTY");
+  }
   jsonTX[F("payload")][("meta")][F("samples")].set(num_samples);
   JsonArray timeArray = jsonTX[F("payload")][F("meta")].createNestedArray("time");
 
@@ -111,7 +119,7 @@ jsonTX[F("payload")][F("light")].set(led_power);
     formatFloat(ambient_press[i], float_buffer_two, sizeof(float_buffer_two), 2);
     jsonArrayTwo.add(float_buffer_two);
 
- 
+
     char float_buffer_three[8];
     formatFloat(ambient_humid[i], float_buffer_three, sizeof(float_buffer_three), 2);
     jsonArrayThree.add(float_buffer_three);

@@ -12,8 +12,7 @@ Wavetables.h contains full implementation for a wavetable driven audio synth
 #include "tables.h"
 
 
-void wavetable_setup(){
-
+void wavetable_setup() {
 }
 
 
@@ -81,7 +80,28 @@ void run_wavetable() {
   }
 }
 
-
-
-
-
+void pulse_wavetable() {
+  table_index = 0;
+  uint16_t tableVal = 0;
+  while (waveState == WAVE_PULSE) {
+    if (waveTableDelay.microsDelay(waveDelayTime_uS)) {
+      if (table_index >= tableSize) table_index = 0;  // reset this first as it will avoid indexes going OOB
+                                                      // Serial.println(table_index);
+      if (currentTable == VH_HZ_TABLE) {
+        tableVal = pgm_read_word(&sineTable_Vhigh[table_index]);
+      } else if (currentTable == HIGH_HZ_TABLE) {
+        tableVal = pgm_read_word(&sineTable_high[table_index]);
+      } else if (currentTable == MID_HZ_TABLE) {
+        tableVal = pgm_read_word(&sineTable_mid[table_index]);
+      } else if (currentTable == LOW_HZ_TABLE) {
+        tableVal = pgm_read_word(&sineTable_low[table_index]);
+      } else {
+        tableVal = 255;  //stable mid scale output will highlight this error
+      }
+      analogWrite(wave_pin, tableVal);
+      table_index++;
+      if (table_index >= (tableSize - 35)) waveState = WAVE_STOPPED;  // not using the whole table to avoid the zero crossing overshoot that is then corrected by the DC blocking caps, leading to a pop
+    }
+  }
+  table_index = 0;
+}

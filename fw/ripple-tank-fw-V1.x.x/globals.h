@@ -78,8 +78,16 @@ const int pump_reset_pin = A7;
 
 // Sensors
 const int tank_level_sense_pin = A2;
-const int tank_threshold = 300;
+const int tank_threshold = 700;
 const int tank_hysteresis = 50;
+int tank_level = 0;
+
+typedef enum {
+  TANK_FULL,
+  TANK_EMPTY
+} tankStatus_t;
+
+tankStatus_t tankStatus = TANK_EMPTY;
 
 // Limits & Timeouts
 #define LIMITS_ENABLED true
@@ -220,13 +228,13 @@ const int empty_time_S = 240;
 const int refill_time_S = 240;
 
 typedef enum {
-  STOPPED,
+  PUMP_STOPPED,
   PUMP_EMPTYING,
   PUMP_REFILLING
 } pumpState_t;
 
 
-pumpState_t pumpState = STOPPED;
+pumpState_t pumpState = PUMP_STOPPED;
 
 bool pump_start_time_mS = 0;
 

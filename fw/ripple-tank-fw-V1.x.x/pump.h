@@ -1,11 +1,27 @@
 
 
 autoDelay pumpDelay;
-const int PULSE_HIGH_mS = 100;
-const int PULSE_LOW_mS = 200;
+const int PULSE_HIGH_mS = 1;
+const int PULSE_LOW_mS = 1;
 int pulse_state = false;
 
 // ADD STOP PUMP STATE
+
+
+void sample_tank(){
+ tank_level = analogRead(tank_level_sense_pin);
+    if (tankStatus == TANK_FULL) {
+      if (tank_level >= tank_threshold + tank_hysteresis) {
+        tankStatus = TANK_EMPTY;
+      }
+    } else if (tankStatus == TANK_EMPTY) {
+      if (tank_level <= tank_threshold - tank_hysteresis) {
+        tankStatus = TANK_FULL;
+      }
+    }
+}
+
+
 
 void pump_setup() {
   pinMode(pump_step_pin, OUTPUT);
@@ -28,7 +44,7 @@ void disable_pump() {
   digitalWrite(pump_dir_pin, 0);
   digitalWrite(pump_EN_pin, 0);
   digitalWrite(pump_sleep_pin, 0);
-  digitalWrite(pump_reset_pin, 0);
+  digitalWrite(pump_reset_pin, 1);
 }
 
 void set_direction(bool direction = false) {
@@ -48,3 +64,4 @@ void send_pulse() {
     }
   }
 }
+

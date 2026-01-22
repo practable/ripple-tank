@@ -35,12 +35,12 @@ void setup() {
   pwm.setClockDivider(1, false);  // Input clock is divided by 1 and 48MHz is sent to Generic Clock, Turbo is off
   pwm.timer(0, 1, 1262, true);    // Timer 1 is set to Generic Clock divided by 1, resolution is 960000, left-aligned aka single-slope PWM
 
-    // Setup IO PIns
+  // Setup IO PIns
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(LED_1, OUTPUT);
   pinMode(LED_2, OUTPUT);
   pinMode(led_ctrl_pin, OUTPUT);
- // pinMode(wave_pin, OUTPUT);    // DO NOT SET THIS PIN TO OUTPUT IT BREAKS THE WAVE GENERATOR!
+  // pinMode(wave_pin, OUTPUT);    // DO NOT SET THIS PIN TO OUTPUT IT BREAKS THE WAVE GENERATOR!
   // pwm.analogWrite(led_ctrl_pin, 0);  // need to do this first incase it hangs waiting for serial
   set_brightness(LIGHT_OFF);
   digitalWrite(LED_1, true);
@@ -51,12 +51,12 @@ void setup() {
   set_brightness(0);
   digitalWrite(LED_1, false);
 
-   while (!Serial) {
+  while (!Serial) {
     delay(1);  // give time for Serial object to start
   }
 
   print_info();  // print the program info -> enables identification of current loaded firmware
-  
+
   // set up wavetable
   analogWriteResolution(10);
   calc_wave_baseDelay(tableSize);
@@ -72,7 +72,7 @@ void setup() {
   setVolume(amplitudeDefault);
 
 
- 
+
 
   if (bme.begin()) {
     Serial.println("{\"info\":\"Environment sensor found\"}");
@@ -127,37 +127,31 @@ void loop() {
       waveState = WAVE_STOPPING;
       Serial.println("wavetable- timed out");
     }
-  } else if (waveState == WAVE_STOPPING) {    
-     analogWrite(wave_pin, 0);                // reset to position less likely to contain noise or cause pops (pops preferable to noise)
-     waveState = WAVE_STOPPED;
-  } else if (waveState == WAVE_START){
+  } else if (waveState == WAVE_STOPPING) {
+    analogWrite(wave_pin, 0);  // reset to position less likely to contain noise or cause pops (pops preferable to noise)
+    waveState = WAVE_STOPPED;
+  } else if (waveState == WAVE_START) {
     table_index = 0;  // restart wavetable from the begginning
     waveState = WAVE_ACTIVE;
+  } else if (waveState == WAVE_PULSE) {
+    pulse_wavetable();
+    waveState == WAVE_STOPPED;
   } else {
-     // do nothing
+    // do nothing
   }
-// WAVE_PULSE is handled internal to state but could move here
+  // WAVE_PULSE is handled internal to state but could move here
 
 
 
 
 
   // Do sampling Data at the specified rate
-  if (sampleDelay.millisDelay(sampleDelay_mS)) {
-    if (samples_written < num_samples_req && samples_written < DATA_ARRAY_SIZE) {  // check to make sure collecting the correct number of samples for the samplerate, and smaller than the
-      timestamp_array[samples_written] = millis();
-      sensors_event_t temp_event, pressure_event, humidity_event;
-      bme_temp->getEvent(&temp_event);
-      bme_pressure->getEvent(&pressure_event);
-      bme_humidity->getEvent(&humidity_event);
-      ambient_temp[samples_written] = temp_event.temperature;
-      ambient_press[samples_written] = pressure_event.pressure;
-      ambient_humid[samples_written] = humidity_event.relative_humidity;
-      //arbitaryData++;  // just a placeholder to generate moving data
-      samples_written++;
-      //Serial.println(humidity_event.relative_humidity);
-    }
-  }
+  // Moved this to info state, as timing is critical in this situation
+  // if (sampleDelay.millisDelay(sampleDelay_mS)) {
+  //  if (samples_written < num_samples_req && samples_written < DATA_ARRAY_SIZE) {  // check to make sure collecting the correct number of samples for the samplerate, and smaller than the
+
+  //  }
+  // }
 
 
 
@@ -181,7 +175,7 @@ void loop() {
     // code here to run pump
     send_pulse();
     if (millis() - pump_start_time_mS >= empty_time_S * 1000) {
-      pumpState = STOPPED;
+      pumpState = PUMP_STOPPED;
       // make sure stepper driver shut down properly
       disable_pump();
     }
@@ -191,12 +185,16 @@ void loop() {
     // code here to run pump
     send_pulse();
     if (millis() - pump_start_time_mS >= refill_time_S * 1000) {
-      pumpState = STOPPED;
+      pumpState = PUMP_STOPPED;
       // make sure stepper driver shut down properly
       disable_pump();
     }
   }
 
+  if (pumpState != PUMP_STOPPED || streaming_active) {
+    sample_tank();
+    sample_data();
+  }
 
 
 

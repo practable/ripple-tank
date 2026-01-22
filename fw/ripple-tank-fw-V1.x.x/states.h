@@ -26,6 +26,7 @@ void sm_state_init(jsonStateData_t &stateData) {
     Serial.println("state: INIT");
 #endif
     stateData.uInt++;
+    lastState = smState;
   }
   amplitude = amplitudeDefault;
   setVolume(amplitude);
@@ -33,8 +34,8 @@ void sm_state_init(jsonStateData_t &stateData) {
   select_wavetable(frequency);
   calc_wave_baseDelay(tableSize);
   set_frequency(frequency);
-  led_power = brightnessDefault;
-  set_brightness(led_power);
+  led_power = 0;
+  set_brightness(0);
 
   smState = STATE_WAIT;
 }
@@ -64,13 +65,14 @@ void sm_state_light(jsonStateData_t &stateData) {
 #if DEBUG_STATES == true
     Serial.println(F("state: LIGHT"));
 #endif
-
     if (stateData.uInt >= 0 && stateData.uInt <= 100) {
-      led_power = map(stateData.uInt, 0, 100, 0, 255);
-      Serial.print("{\"brightness\":\"");
-      Serial.print(led_power);
+      led_power = map(stateData.uInt, 0, 100, 0, 1024);
+      Serial.print("{\"light\":\"");
+      //Serial.print(led_power);   // useful for debugging but users should only see percentage
+      Serial.print(stateData.uInt);
       Serial.println("\"}");
-      analogWrite(led_ctrl_pin, led_power);
+      set_brightness(led_power);
+      //analogWrite(led_ctrl_pin, led_power);
       led_on_time_mS = millis();
     } else {
       Serial.println("Requested lighting value OUT OF BOUNDS");
@@ -88,11 +90,12 @@ void sm_state_hz(jsonStateData_t &stateData) {
 #endif
     lastState = smState;
     if (stateData.floatData > 0 && stateData.floatData < 300) {
-      Serial.print("{\"hz-set-to\":\"");
+      Serial.print("{\"hz\":\"");
       Serial.print(stateData.floatData);
       Serial.println("\"}");
-      frequency = stateData.floatData;
+      frequency = stateData.floatData;      
       select_wavetable(frequency);
+      calc_wave_baseDelay(tableSize);  // calculate the default delay for 1Hz
       set_frequency(frequency);
       wave_start_time_mS = millis();
       // setFrequency(frequency);   // interrupt method (doesnt work)
@@ -155,7 +158,7 @@ void sm_state_pulse(jsonStateData_t &stateData) {
 #endif
     lastState = smState;
     wavetable_active = false;
-    pulse_active = true;    
+    pulse_active = true;
   }
   table_index = 0;
   uint16_t tableVal = 0;
@@ -346,6 +349,7 @@ void sm_state_help(jsonStateData_t &stateData) {
     stateData.uInt++;
     lastState = smState;
   }
-  print_cmds();
+  //print_cmds();
+  print_cmds2();
   smState = STATE_WAIT;
 }

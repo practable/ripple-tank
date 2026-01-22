@@ -35,7 +35,7 @@ TurboPWM pwm;
 // Hardware Definitions
 const int dacPin = A0;  // DAC
 const int digiPotSelectPin = 10;
-const int lampCtrlPin = 7;
+const int lampCtrlPin = 5;
 const int beaconPin = 5;  // user interface LED
 
 

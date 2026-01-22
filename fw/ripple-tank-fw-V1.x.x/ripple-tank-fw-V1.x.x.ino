@@ -29,28 +29,43 @@ Global variables use 813 bytes (39%) of dynamic memory, leaving 1235 bytes for l
 
 void setup() {
   Serial.begin(115200);
-
   // Davids PWM Mod
   pwm.setClockDivider(1, false);  // Input clock is divided by 1 and 48MHz is sent to Generic Clock, Turbo is off
-  pwm.timer(1, 1, 1262, true);    // Timer 1 is set to Generic Clock divided by 1, resolution is 960000, left-aligned aka single-slope PWM
+  pwm.timer(0, 1, 1262, true);    // Timer 1 is set to Generic Clock divided by 1, resolution is 960000, left-aligned aka single-slope PWM
+
+  // set up wavetable
+  analogWriteResolution(10);
+  calc_wave_baseDelay(tableSize);
+  set_frequency(0.1);
+  delay(10);
+  set_frequency(frequency);
+
 
 
   // Setup IO PIns
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(LED_1, OUTPUT);
+  pinMode(LED_2, OUTPUT);
   pinMode(led_ctrl_pin, OUTPUT);
-  analogWrite(led_ctrl_pin, 0);  // need to do this first incase it hangs waiting for serial
+  pinMode(wave_pin, OUTPUT);
+  // pwm.analogWrite(led_ctrl_pin, 0);  // need to do this first incase it hangs waiting for serial
+  set_brightness(LIGHT_OFF);
+
+  digitalWrite(LED_1, true);
 
   // Set Up SPI for digital pot volume control
   pinMode(digiPotSelectPin, OUTPUT);
   SPI.begin();
 
-  // set up wavetable
-  calc_wave_baseDelay(tableSize);
-  analogWriteResolution(10);
-  set_frequency(0.1);
-  delay(10);
-  set_frequency(frequency);
-  setVolume(amplitude);
+  // Set lamp to off
+  delay(500);
+
+  set_brightness(0);
+  delay(500);
+  digitalWrite(LED_1, false);
+  // Set Volume (now SPI has started)
+  setVolume(amplitudeDefault);
+
 
   while (!Serial) {
     delay(1);  // give time for Serial object to start
@@ -76,8 +91,11 @@ void setup() {
 
 
   delay(1000);  // delay to allow system to settle
-
-  // Tare/zero sensors
+  digitalWrite(LED_2, false);
+  set_brightness(1);  // trying this line everywhere but no luck. Works as soon as its called from a state though???
+  led.begin(true);    // blink beacon to show ready for use
+  led.setDefault(true);
+  led.callBlink();
 }
 
 
@@ -92,6 +110,7 @@ void loop() {
 
 
   if (nextState_data.cmd_received) {  // If command is receive
+    led.callBlink(4, 20, 60);
     // This is the bit that parses the command recieved by user, and sets the state machine to go to the correct state
     if (nextState_data.stateEnum != STATE_NULL) {
       smState = nextState_data.stateEnum;
@@ -144,7 +163,8 @@ void loop() {
   if (led_power > 0) {  // timeout for LED light
     if (millis() - led_on_time_mS >= (LED_MAX_TIME_S * 1000)) {
       led_power = 0;
-      analogWrite(led_ctrl_pin, led_power);
+      // pwm.analogWrite(led_ctrl_pin, led_power);
+      set_brightness(0);
     }
   }
 

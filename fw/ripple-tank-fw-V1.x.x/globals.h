@@ -22,12 +22,13 @@ TurboPWM pwm;
 // Included Libraries
 
 // Included Headers (Called from within any JSON-state-machine header or class)
-#include "cmds.h"
+
 
 // JSON-state-machine headers & libraries (Must be included in this order)
 #include "stateConfig.h"  // must always be first as jsonConfig uses variables within
 #include "jsonConfig.h"
 #include "jsonMessenger.h"  // jsonMessenger also relies on variables desifined in jsonConfig
+#include "cmds.h"           // must be after jsonConfig.h but before states.h
 // stateMachine is defined at the end of this file, as it needs access to all globals
 
 // Program Attributes
@@ -38,12 +39,13 @@ TurboPWM pwm;
 
 // Hardware Definitions
 // Pins & IOs
-// Encoder
 #define INTERRUPT_0_PIN 2
 #define INTERRUPT_1_PIN 3
 
 // LED / Indicators
 #define LED_BUILTIN 13
+#define LED_1 3
+#define LED_2 12   // Dont think this is functional while using SPI
 
 // Hardware Consts
 //spi
@@ -63,7 +65,8 @@ const uint32_t WAVE_MAX_TIME_S = 900;
 // Lamp
 const int led_ctrl_pin = 5;
 const uint32_t LED_MAX_TIME_S = 600;
-const int brightnessDefault = 30;
+const uint16_t brightnessDefault = 0;
+const uint16_t LIGHT_OFF = 0;
 
 // Pump 
 const int pump_step_pin = 6;
@@ -105,7 +108,7 @@ const int tank_hysteresis = 50;
 
 // Object Declaration
 // Indicator LED
-ledObject led(LED_BUILTIN);
+ledObject led(LED_1);
 // jsonMessenger Object to handle incoming Serial JSON commands
 jsonMessenger jsonRX;  // create a jsonMessenger object to handle commands received over Serial connection
 // Delay Objects
@@ -121,7 +124,7 @@ Adafruit_Sensor *bme_humidity = bme.getHumiditySensor();
 
 
 // LED datas
-uint8_t led_power = 0;
+uint16_t led_power = 0;
 uint32_t led_on_time_mS = 0;
 
 //Wavetable Stuff

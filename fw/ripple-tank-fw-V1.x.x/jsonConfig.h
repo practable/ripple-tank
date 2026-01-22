@@ -96,7 +96,7 @@ const jsonStateMapData_t jsonStateMap[] = {
   // Unique States
   { "light", dataTypes_t::UINT, STATE_LIGHT },
   { "hz", dataTypes_t::FLOAT, STATE_HZ },
-   { "amp", dataTypes_t::UINT, STATE_AMP },
+  { "amp", dataTypes_t::UINT, STATE_AMP },
   { "start", dataTypes_t::EMPTY, STATE_START },
   { "stop", dataTypes_t::EMPTY, STATE_STOP },
   { "pulse", dataTypes_t::UINT, STATE_PULSE },
@@ -113,7 +113,7 @@ const jsonStateMapData_t jsonStateMap[] = {
   { "help", dataTypes_t::EMPTY, STATE_HELP }
 };
 
-const uint8_t NUM_CMDS = 16;
+const uint8_t NUM_CMDS = 17;
 
 
 

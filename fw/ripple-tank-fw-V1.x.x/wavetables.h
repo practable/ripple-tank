@@ -32,8 +32,8 @@ uint32_t set_frequency(float frequency = 1) {
 // Used at startup to calculate the delay time between samples at 1Hz
 void calc_wave_baseDelay(uint16_t num_entries) {
   waveBaseDelay_uS = 1000000.0 / float(num_entries);
-  Serial.print("Base Delay uS: ");
-  Serial.println(waveBaseDelay_uS);
+  // Serial.print("Base Delay uS: ");
+  // Serial.println(waveBaseDelay_uS);
 }
 
 
@@ -52,6 +52,8 @@ void select_wavetable(float frequency = 1) {
     tableSize = low_table_size;
     Serial.println("ERROR");
   }
+  Serial.print("table size: ");
+  Serial.println(tableSize);
 }
 
 
@@ -61,6 +63,7 @@ void run_wavetable() {
   uint16_t tableVal = 0;
   if (waveTableDelay.microsDelay(waveDelayTime_uS)) {
     if (table_index >= tableSize) table_index = 0;  // reset this first as it will avoid indexes going OOB
+    Serial.println(table_index);
     if (currentTable == VH_HZ_TABLE) {
       tableVal = pgm_read_word(&sineTable_Vhigh[table_index]);
     } else if (currentTable == HIGH_HZ_TABLE) {

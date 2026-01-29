@@ -22,8 +22,9 @@
           </div>
 
           <div class='d-flex' id='third-row'>
-            <div class='drop-area drop-area-half' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><video-capture id='video-capture' /></div>
-            <div class='drop-area drop-area-half' id='drop_2_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
+            <!-- <div class='drop-area drop-area-half' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><video-capture id='video-capture' /></div> -->
+            <div class='drop-area drop-area-half' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><snapshot-recorder id="snapshot-recorder" :headings="['Frequency \n[Hz]', 'Wavelength\n[cm]', 'Wave speed\n[cm/s]']"/></div>
+            <div class='drop-area drop-area-half' id='drop_2_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><graph id="graph"/></div>
           </div>
 
           <!-- <div class='d-flex' id='fourth-row'>
@@ -102,6 +103,8 @@ import ControlPanel from "./components/ControlPanel.vue"
 import StreamInformation from "./components/StreamInformation.vue";
 import ShowConfigFile from "./components/ShowConfigFile.vue";
 import Workspace from "./components/Workspace.vue";
+import SnapshotRecorder from './components/SnapshotRecorder.vue';
+import Graph from './components/Graph.vue';
 
 export default {
   name: 'App',
@@ -115,7 +118,9 @@ export default {
     ShowConfigFile,
     VideoCapture,
     ImageCapture,
-    Workspace
+    Workspace,
+    SnapshotRecorder,
+    Graph
 
   },
   mounted(){

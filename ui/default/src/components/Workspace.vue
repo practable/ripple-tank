@@ -1,35 +1,102 @@
-//Updated for Vue3, removing eventBus $on waiting for addruler/protractor event - now controlled through props from App.vue
+//29/01/2026 - update to add marker tools and better control of ruler and protractor separately
 
 <template>
-<div class="d-flex justify-content-center">
-    <div class="col-4">
-        <button class='button-sm button-primary me-2' @mousedown='rotateRuler(-10)'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/></svg>
-        </button>
-        <button class='button-sm button-primary me-2' @mousedown='rotateRuler(-1)'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/></svg>
-        </button>
-
-        <input type='text' class='input-disabled' placeholder='Rotation' size='10'>  
-
-        <button class='button-sm button-primary me-2' @click='rotateRuler(1)'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
-        </button>
-        <button class='button-sm button-primary me-2' @click='rotateRuler(10)'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
-        </button>
-    
+<div class="d-flex justify-content-middle align-items-center">
+    <div class="col-md-2">
+        <div class="d-flex form-check form-switch ms-2">
+            <input class="form-check-input me-1" type="checkbox" id="workspace-toggle" @click="toggleWorkspaceClickable" v-model="workspace_canvas_clickable">
+            <label class="form-check-label" for="workspace-toggle">Toggle Workspace </label>
+        </div>
     </div>
 
-    <div class="col-4">
+    <!-- COMPONENT FOR MANIPULATING SIZE AND ANGLE OF RULER -->
+    <div class="col-md-4">
+        <div class="d-flex flex-row align-items-center">
+            <button class='button-sm button-primary me-2' @mousedown='rotateTool(-10, "ruler")'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/></svg>
+            </button>
+            <button class='button-sm button-primary me-2' @mousedown='rotateTool(-1, "ruler")'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/></svg>
+            </button>
+
+            <button class='button-sm button-primary' @click='decreaseRulerSize'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
+                </svg>
+            </button>
+
+            <label type='text' class='ms-2 me-2'>Ruler</label>  
+
+            <button class='button-sm button-primary me-2' @click='increaseRulerSize'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                </svg>
+            </button>
+
+            <button class='button-sm button-primary me-2' @click='rotateTool(1, "ruler")'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
+            </button>
+            <button class='button-sm button-primary me-2' @click='rotateTool(10, "ruler")'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- COMPONENT FOR MANIPULATING SIZE AND ANGLE OF PROTRACTOR -->
+    <div class="col-md-4">
+        <div class="d-flex flex-row align-items-center">
+            <button class='button-sm button-primary me-2' @mousedown='rotateTool(-10, "protractor")'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/></svg>
+            </button>
+            <button class='button-sm button-primary me-2' @mousedown='rotateTool(-1, "protractor")'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/></svg>
+            </button>
+
+            <button class='button-sm button-primary' @click='decreaseProtractorSize'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
+                </svg>
+            </button>
+
+            <label type='text' class='ms-2 me-2'>Protractor</label>  
+
+            <button class='button-sm button-primary me-2' @click='increaseProtractorSize'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                </svg>
+            </button>
+
+            <button class='button-sm button-primary me-2' @click='rotateTool(1, "protractor")'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
+            </button>
+            <button class='button-sm button-primary me-2' @click='rotateTool(10, "protractor")'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
+            </button>
+        </div>
+
+    </div>
+
+    <div class="col-md-2">
+        <button type='button' class='button-toolbar button-primary me-2' id='add-marker-button' aria-label='add marker button' @click='addMarker'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+            </svg>
+        </button>
+        <label class="form-check-label" for="add-marker-button">Add marker</label>
+    </div>
+
+    <!-- <div class="col-md-2">
         <button class='button-sm button-primary me-2' @click='increaseRulerSize'>+</button>
         <input type='text' class='input-disabled' placeholder='Size (Ruler)' size='10'>  
         <button class='button-sm button-primary' @click='decreaseRulerSize'>-</button>
-    </div>
+    </div> -->
 
     <canvas :class="workspace_canvas_clickable ? 'clickable' : 'unclickable'" id="workspace" @mousedown="checkClick" @mousemove="moveClicked" @mouseup="mouseUnclick"></canvas>
+    
     <img id="ruler-image" src="/images/ruler.png" hidden>
     <img id="protractor" src="/images/protractor.png" hidden>
+    <img id="crosshair1" src="/images/crosshair.svg" hidden>
     
 </div>
 </template>
@@ -40,6 +107,7 @@ var canvas;
 var ctx;
 let protractor = new Image();
 let ruler = new Image();
+let crosshair1 = new Image();
 let shapes = [];        //the added objects to canvas
 
 export default {
@@ -59,6 +127,9 @@ export default {
             ruler_width: 800,
             ruler_height: 80,
             ruler_ratio: 0.1,
+            protractor_width: 400,
+            protractor_height: 200,
+            protractor_ratio: 0.5,
             mouseHeld: false
         }
     },
@@ -100,10 +171,15 @@ export default {
                 ctx.save();
 
                 if(shapes[i].image != null){
-                    if(shapes[i].image == ruler){
+                    if(shapes[i].name == 'ruler'){
                         shapes[i].width = this.ruler_width;
                         shapes[i].height = this.ruler_height;
                     } 
+                    else if(shapes[i].name == 'protractor'){
+                        shapes[i].width = this.protractor_width;
+                        shapes[i].height = this.protractor_height;
+                    } 
+
                     ctx.translate(shapes[i].x,shapes[i].y);
                     ctx.translate(shapes[i].width/2, shapes[i].height/2)
                     ctx.rotate(shapes[i].angle);
@@ -130,7 +206,7 @@ export default {
                 let y= 100;
                 let w=400;
                 let h=200;
-                shapes.push( {x:x, y:y, width:w, height:h, image:protractor, angle:0} );
+                shapes.push( {x:x, y:y, width:w, height:h, image:protractor, angle:0, name:'protractor'} );
                 ctx.drawImage(protractor, x, y, w, h);
                 
                 
@@ -145,7 +221,7 @@ export default {
                 let w = _this.ruler_width;
                 let h = _this.ruler_height;
                 
-                shapes.push( {x:x, y:y, width:w, height:h, image:ruler, angle:0} );
+                shapes.push( {x:x, y:y, width:w, height:h, image:ruler, angle:0, name:'ruler'} );
                 ctx.drawImage(ruler, x, y, w, h);
                 
             };
@@ -156,6 +232,25 @@ export default {
             
             ruler.src = document.getElementById("ruler-image").src;
         
+        },
+        addMarker(){
+            let _this = this;
+            crosshair1.onload = function() {
+                let x = 100;
+                let y= 100;
+                let w = 50;
+                let h = 50;
+                
+                shapes.push( {x:x, y:y, width:w, height:h, image:crosshair1, angle:0, name:'marker'} );
+                ctx.drawImage(crosshair1, x, y, w, h);
+                
+            };
+
+            crosshair1.onerror = function(){
+                console.log('no image');
+            }
+            
+            crosshair1.src = document.getElementById("crosshair1").src;
         },
         updateMode(event){
             if(event.repeat){
@@ -170,6 +265,9 @@ export default {
                 }
             }
             
+        },
+        toggleWorkspaceClickable(){
+            this.workspace_canvas_clickable = !this.workspace_canvas_clickable;
         },
         checkClick(event){
             for(let i=0; i<shapes.length;i++){
@@ -281,6 +379,11 @@ export default {
             this.ruler_height = this.ruler_ratio*this.ruler_width;
             this.draw();
         },
+        increaseProtractorSize(){
+            this.protractor_width += 10;
+            this.protractor_height = this.protractor_ratio*this.protractor_width;
+            this.draw();
+        },
         decreaseRulerSize(){
             if(this.ruler_width > 100){
                 this.ruler_width -= 10;
@@ -288,18 +391,41 @@ export default {
                 this.draw();
             }
         },
-        rotateRuler(angle){
-            
-                if(shapes[0] != null){
-                    shapes[0].angle += angle*Math.PI/180;
-                }
+        decreaseProtractorSize(){
+            if(this.protractor_width > 100){
+                this.protractor_width -= 10;
+                this.protractor_height = this.protractor_ratio*this.protractor_width;
+                this.draw();
+            }
+        },
+        // rotateRuler(angle){
+        //     // if(shapes[0] != null){
+        //     //     shapes[0].angle += angle*Math.PI/180;
+        //     // }
 
-                if(shapes[1] != null){
-                    shapes[1].angle += angle*Math.PI/180;
+        //     // if(shapes[1] != null){
+        //     //     shapes[1].angle += angle*Math.PI/180;
+        //     // }
+        //     for (let i=0; i<shapes.length; i++){
+        //         if(shapes[i].name == 'ruler'){
+        //             shapes[i].angle += angle*Math.PI/180;
+        //             break;
+        //         }
+        //     }
+            
+        //     this.draw(); 
+        // },
+        rotateTool(angle, tool){
+            //angle is the additional angle to rotate
+            // tool is a string name of the tool, either 'ruler', 'protractor' or perhaps 'marker'
+            for (let i=0; i<shapes.length; i++){
+                if(shapes[i].name == tool){
+                    shapes[i].angle += angle*Math.PI/180;
+                    break;
                 }
-                
-                this.draw(); 
-          
+            }
+            
+            this.draw(); 
         }
     }
 }

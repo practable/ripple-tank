@@ -55,7 +55,6 @@ const commandStore = {
             }
         },
         COMMAND_START(state){
-            console.log('START COMMAND SENT');
             if(state.dataSocket != null){
                 state.dataSocket.send(JSON.stringify({
                     set: "start"
@@ -63,7 +62,6 @@ const commandStore = {
             }
         },
         COMMAND_PULSE(state){
-            console.log('PULSE COMMAND SENT = ' + state.driver.pulse);
             if(state.dataSocket != null){
                 state.dataSocket.send(JSON.stringify({
                     set: "pulse",
@@ -84,7 +82,6 @@ const commandStore = {
             state.lamp.brightness = Number(val);
         },
         COMMAND_UPDATE_DRIVING_FREQUENCY(state){
-            console.log('sending command to update freq = ' + state.driver.hz)
             if(state.dataSocket != null){
                 state.dataSocket.send(JSON.stringify({
                     set: "hz",
@@ -93,7 +90,6 @@ const commandStore = {
             }
         },
         COMMAND_UPDATE_AMPLITUDE(state){
-            console.log('sending command to update amplitude = ' + state.driver.amplitude)
             if(state.dataSocket != null){
                 state.dataSocket.send(JSON.stringify({
                     set: "amp",
@@ -102,11 +98,24 @@ const commandStore = {
             }
         },
         COMMAND_UPDATE_BRIGHTNESS(state){
-            console.log('sending command to update brightness = ' + state.lamp.brightness)
             if(state.dataSocket != null){
                 state.dataSocket.send(JSON.stringify({
-                    set: "lamp",
+                    set: "light",
                     to: state.lamp.brightness
+                }));
+            }
+        },
+        COMMAND_PUMP_OUT(state){
+            if(state.dataSocket != null){
+                state.dataSocket.send(JSON.stringify({
+                    set: "unpump"
+                }));
+            }
+        },
+        COMMAND_PUMP_IN(state){
+            if(state.dataSocket != null){
+                state.dataSocket.send(JSON.stringify({
+                    set: "pump"
                 }));
             }
         },
@@ -200,8 +209,12 @@ const commandStore = {
         setReportedBrightness(context, val){
             context.commit('SET_REPORTED_BRIGHTNESS', val);
         },
-        
-
+        sendCommandPumpOut(context){
+            context.commit('COMMAND_PUMP_OUT');
+        },
+        sendCommandPumpIn(context){
+            context.commit('COMMAND_PUMP_IN');
+        },
        },
        getters:{
         getDataSocket(state){

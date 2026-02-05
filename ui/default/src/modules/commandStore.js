@@ -119,6 +119,13 @@ const commandStore = {
                 }));
             }
         },
+        COMMAND_PUMP_STOP(state){
+            if(state.dataSocket != null){
+                state.dataSocket.send(JSON.stringify({
+                    set: "stpump"
+                }));
+            }
+        },
         SET_REPORTED_DRIVING_FREQUENCY(state, val){
             state.driver['from_hardware_hz'] = val;
         },
@@ -214,6 +221,9 @@ const commandStore = {
         },
         sendCommandPumpIn(context){
             context.commit('COMMAND_PUMP_IN');
+        },
+        sendCommandPumpStop(context){
+            context.commit('COMMAND_PUMP_STOP');
         },
        },
        getters:{

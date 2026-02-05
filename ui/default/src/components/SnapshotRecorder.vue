@@ -181,7 +181,7 @@ export default {
                 frequency: this.getCurrentFrequency,
                 wavelength: this.getCurrentWavelength,
                 speed: this.speed.toFixed(2),
-                period: (1/this.getCurrentFrequency).toFixed(2),
+                period: (1/this.getCurrentFrequency),
                
             };
             this.addData(new_snap);

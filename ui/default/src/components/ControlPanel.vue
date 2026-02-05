@@ -374,7 +374,10 @@ export default {
         'updateAmplitude',
         'sendCommandUpdateAmplitude',
         'updateBrightness',
-        'sendCommandUpdateBrightness'
+        'sendCommandUpdateBrightness',
+        'setReportedDrivingFrequency',
+        'setReportedAmplitude',
+        'setReportedBrightness'
         
     ]),
       sendMessage(){
@@ -389,20 +392,62 @@ export default {
           this.dataSocket = new WebSocket(this.getDataURL);
           this.$store.dispatch('setDataSocket', this.dataSocket);
           this.dataSocket.onopen = () =>  {
+            setTimeout(() => {
+              console.log('0. stopping');
+              _this.sendCommandStop();
+            }, 100);
+
+            setTimeout(() => {
+              console.log('1. setting default driving frequency');
+              _this.sendCommandUpdateDrivingFrequency(_this.getDrivingFrequency);
+            }, 200);
+
+            setTimeout(() => {
+              console.log('2. setting default amplitude');
+              _this.sendCommandUpdateAmplitude(_this.getAmplitude);
+            }, 300);
+
+            setTimeout(() => {
+              console.log('3. setting default brightness');
+              _this.sendCommandUpdateBrightness(_this.getBrightness);
+            }, 400);
              
           };
 
           this.dataSocket.onmessage = (event) =>  {
               try {
-                  
-                let response = JSON.parse(event.data);
-
-                  if(_this.received_messages.length < 10){
-                    _this.received_messages.push(response);
-                  } else{
-                    _this.received_messages.push(response);
-                    _this.received_messages.splice(0,1);
+                //some commands are coming through in a wrong format because two JSON messages are being combined
+                // so trying to parse them as json results in an error
+                // need to split the string received into valid JSON first
+                let response_string = event.data;
+                let response_array = response_string.split('}');
+                response_array.forEach((command, index) => {
+                  if(command.includes("cmd")){
+                    // console.log(index);
+                    // console.log(command.length);
+                    //console.log(command + '}');
+                    let response = JSON.parse(command + '}');
+                    //console.log(response.cmd);
+                    if(response.cmd == 'hz'){
+                      _this.setReportedDrivingFrequency(parseInt(response.data));
+                    } else if(response.cmd == 'amp'){
+                      _this.setReportedAmplitude(response.data);
+                    } else if(response.cmd == 'light'){
+                      _this.setReportedBrightness(response.data);
+                    }
                   }
+                  
+                })
+                //console.log(response_string.split('}')[0]);
+                // console.log(event.data.split('}'));
+                //let response = JSON.parse(event.data);
+
+                  // if(_this.received_messages.length < 10){
+                  //   _this.received_messages.push(response);
+                  // } else{
+                  //   _this.received_messages.push(response);
+                  //   _this.received_messages.splice(0,1);
+                  // }
       
               } catch (e) {
                   console.log(e)

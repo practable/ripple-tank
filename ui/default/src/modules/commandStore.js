@@ -16,15 +16,15 @@ const commandStore = {
             'pulse_min': 1,
             'pulse_max': 999,   //ms
             'pulse_step': 1,    //ms, for slider input only
-            'amplitude': 10,   //percentage, was previously absolute value between 0 - 255 for hardware
-            'from_hardware_amplitude': 10,
+            'amplitude': 20,   //percentage, was previously absolute value between 0 - 255 for hardware
+            'from_hardware_amplitude': 0,
             'amplitude_step': 1,    //for input slider only
             'amplitude_min': 0,
             'amplitude_max': 100        //percentage, was previously 0-255
         },
         lamp: {
-            'brightness': 10,          //percentage, previously 0-1024
-            'from_hardware_brightness': 10,
+            'brightness': 50,          //percentage, previously 0-1024
+            'from_hardware_brightness': 0,
             'brightness-step': 1,
             'brightness_min': 0,
             'brightness_max': 100       //previously was up to 1024 but has been changed to a percentage value   
@@ -197,15 +197,15 @@ const commandStore = {
         },
         sendCommandUpdateDrivingFrequency(context){
             context.commit('COMMAND_UPDATE_DRIVING_FREQUENCY');
-            context.commit('SET_REPORTED_DRIVING_FREQUENCY', context.getters.getDrivingFrequency)   //TEMP for setting a value from hardware
+           // context.commit('SET_REPORTED_DRIVING_FREQUENCY', context.getters.getDrivingFrequency)   //TEMP for setting a value from hardware
         },
         sendCommandUpdateAmplitude(context){
             context.commit('COMMAND_UPDATE_AMPLITUDE');
-            context.commit('SET_REPORTED_AMPLITUDE', context.getters.getAmplitude)   //TEMP for setting a value from hardware
+            //context.commit('SET_REPORTED_AMPLITUDE', context.getters.getAmplitude)   //TEMP for setting a value from hardware
         },
         sendCommandUpdateBrightness(context){
             context.commit('COMMAND_UPDATE_BRIGHTNESS');
-            context.commit('SET_REPORTED_BRIGHTNESS', context.getters.getBrightness)   //TEMP for setting a value from hardware
+            //context.commit('SET_REPORTED_BRIGHTNESS', context.getters.getBrightness)   //TEMP for setting a value from hardware
         },
         setReportedDrivingFrequency(context, val){
             context.commit('SET_REPORTED_DRIVING_FREQUENCY', val);

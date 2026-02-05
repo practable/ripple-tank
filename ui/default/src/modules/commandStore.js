@@ -16,18 +16,18 @@ const commandStore = {
             'pulse_min': 1,
             'pulse_max': 999,   //ms
             'pulse_step': 1,    //ms, for slider input only
-            'amplitude': 101,   //absolute value between 0 - 255 for hardware
-            'from_hardware_amplitude': 101,
+            'amplitude': 10,   //percentage, was previously absolute value between 0 - 255 for hardware
+            'from_hardware_amplitude': 10,
             'amplitude_step': 1,    //for input slider only
             'amplitude_min': 0,
-            'amplitude_max': 255
+            'amplitude_max': 100        //percentage, was previously 0-255
         },
         lamp: {
-            'brightness': 101,          //absolute value between 0 - 1024 for hardware
-            'from_hardware_brightness': 101,
+            'brightness': 10,          //percentage, previously 0-1024
+            'from_hardware_brightness': 10,
             'brightness-step': 1,
             'brightness_min': 0,
-            'brightness_max': 1024     
+            'brightness_max': 100       //previously was up to 1024 but has been changed to a percentage value   
         }
        }),
        mutations:{

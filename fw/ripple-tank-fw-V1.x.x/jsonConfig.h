@@ -114,7 +114,7 @@ const jsonStateMapData_t jsonStateMap[] = {
   { "help", dataTypes_t::EMPTY, STATE_HELP }
 };
 
-const uint8_t NUM_CMDS = 17;
+const uint8_t NUM_CMDS = 18;
 
 
 

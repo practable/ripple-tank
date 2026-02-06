@@ -163,6 +163,7 @@
               </div>
         </div>
 
+<!--
         <div v-if="getCurrentMode == 'pulse'" >
                   <div class="d-flex flex-row align-items-center justify-content-center mt-2">
                     <div class="col">
@@ -210,7 +211,7 @@
                   </div>
 
           </div>
-
+        -->
       </div>
 
   </div>

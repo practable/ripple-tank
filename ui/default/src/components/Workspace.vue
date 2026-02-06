@@ -1,8 +1,8 @@
 //29/01/2026 - update to add marker tools and better control of ruler and protractor separately
 
 <template>
-<div class="d-flex justify-content-middle align-items-center">
-    <div class="col-md-2">
+<div class="d-flex flex-wrap justify-content-middle align-items-center">
+    <div class="col-lg-2">
         <div class="d-flex form-check form-switch ms-2">
             <input class="form-check-input me-1" type="checkbox" id="workspace-toggle" @click="toggleWorkspaceClickable" v-model="workspace_canvas_clickable">
             <label class="form-check-label" for="workspace-toggle">Toggle Workspace </label>
@@ -10,16 +10,21 @@
     </div>
 
     <!-- COMPONENT FOR MANIPULATING SIZE AND ANGLE OF RULER -->
-    <div class="col-md-4">
+    <div class="col-lg-4">
         <div class="d-flex flex-row align-items-center">
-            <button class='button-sm button-primary me-2' @mousedown='rotateTool(-10, "ruler")'>
+            <button id='rotate-ruler-anti-clockwise-large-button' class='button-sm button-primary me-2' @mousedown='rotateTool(-10, "ruler")'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/></svg>
             </button>
-            <button class='button-sm button-primary me-2' @mousedown='rotateTool(-1, "ruler")'>
+            <button id='rotate-ruler-anti-clockwise-small-button' class='button-sm button-primary me-2' @mousedown='rotateTool(-1, "ruler")'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/></svg>
             </button>
 
-            <button class='button-sm button-primary' @click='decreaseRulerSize'>
+            <button id='decrease-ruler-size-large-button' class='button-sm button-primary' @click='decreaseRulerSizeBig'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" stroke="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
+                </svg>
+            </button>
+            <button id='decrease-ruler-size-small-button'class='button-sm button-primary' @click='decreaseRulerSize'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
                 </svg>
@@ -27,16 +32,21 @@
 
             <label type='text' class='ms-2 me-2'>Ruler</label>  
 
-            <button class='button-sm button-primary me-2' @click='increaseRulerSize'>
+            <button id='increase-ruler-size-small-button' class='button-sm button-primary me-2' @click='increaseRulerSize'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                 </svg>
             </button>
+            <button id='increase-ruler-size-large-button' class='button-sm button-primary me-2' @click='increaseRulerSizeBig'>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" stroke="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                </svg>
+            </button>
 
-            <button class='button-sm button-primary me-2' @click='rotateTool(1, "ruler")'>
+            <button id='rotate-ruler-clockwise-small-button' class='button-sm button-primary me-2' @click='rotateTool(1, "ruler")'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
             </button>
-            <button class='button-sm button-primary me-2' @click='rotateTool(10, "ruler")'>
+            <button id='rotate-ruler-clockwise-large-button' class='button-sm button-primary me-2' @click='rotateTool(10, "ruler")'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38"/></svg>
             </button>
         </div>
@@ -44,7 +54,7 @@
     </div>
 
     <!-- COMPONENT FOR MANIPULATING SIZE AND ANGLE OF PROTRACTOR -->
-    <div class="col-md-4">
+    <div class="col-lg-4">
         <div class="d-flex flex-row align-items-center">
             <button class='button-sm button-primary me-2' @mousedown='rotateTool(-10, "protractor")'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/></svg>
@@ -77,7 +87,7 @@
 
     </div>
 
-    <div class="col-md-2">
+    <div class="col-lg-2">
         <button type='button' class='button-toolbar button-primary me-2' id='add-marker-button' aria-label='add marker button' @click='addMarker'>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
@@ -379,6 +389,11 @@ export default {
             this.ruler_height = this.ruler_ratio*this.ruler_width;
             this.draw();
         },
+        increaseRulerSizeBig(){
+            this.ruler_width += 100;
+            this.ruler_height = this.ruler_ratio*this.ruler_width;
+            this.draw();
+        },
         increaseProtractorSize(){
             this.protractor_width += 10;
             this.protractor_height = this.protractor_ratio*this.protractor_width;
@@ -387,6 +402,13 @@ export default {
         decreaseRulerSize(){
             if(this.ruler_width > 100){
                 this.ruler_width -= 10;
+                this.ruler_height = this.ruler_ratio*this.ruler_width;
+                this.draw();
+            }
+        },
+        decreaseRulerSizeBig(){
+            if(this.ruler_width > 100){
+                this.ruler_width -= 100;
                 this.ruler_height = this.ruler_ratio*this.ruler_width;
                 this.draw();
             }

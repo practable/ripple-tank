@@ -1,21 +1,10 @@
-/* JSON State Machine
+/* Ripple Tank Firmware V1.x.x
 
 
-VERSION 3.0.0
-- Now at close to minimum memory requirements for this topology
-(compiled for Arduino Nano)
-Sketch uses 21134 bytes (68%) of program storage space. Maximum is 30720 bytes.
-Global variables use 932 bytes (45%) of dynamic memory, leaving 1116 bytes for local variables. Maximum is 2048 bytes.
-- changed all state machine functions to pass by reference so new copies of data are not created in both state machine function and state function when called
-(this shouldnt change the global overhead much, but it does stop additional data being created while within each state)
-Sketch uses 21058 bytes (68%) of program storage space. Maximum is 30720 bytes.
-Global variables use 904 bytes (44%) of dynamic memory, leaving 1144 bytes for local variables. Maximum is 2048 bytes.
-- did change it slightly though, I assume because the function pointer structure doesnt need to make memory space for that data structure
 
-Version 3.0.1
--Removed secrets due to compatability with IoT 33 SAMD platforms
-Sketch uses 16190 bytes (52%) of program storage space. Maximum is 30720 bytes.
-Global variables use 813 bytes (39%) of dynamic memory, leaving 1235 bytes for local variables. Maximum is 2048 bytes
+
+Version 1.0.1
+- Updates to water pump timing
 
 
 */
@@ -105,43 +94,44 @@ void setup() {
 void loop() {
 
 
-  // Json Messenger & State Machine
-  jsonStateData_t nextState_data = jsonRX.jsonReadSerialLoop();
+  if (pumpState == PUMP_STOPPED) {
+
+    // Json Messenger & State Machine
+    jsonStateData_t nextState_data = jsonRX.jsonReadSerialLoop();
 
 
-  if (nextState_data.cmd_received) {  // If command is receive
-    led.callBlink(4, 20, 60);
-    // This is the bit that parses the command recieved by user, and sets the state machine to go to the correct state
-    if (nextState_data.stateEnum != STATE_NULL) {
-      smState = nextState_data.stateEnum;
+    if (nextState_data.cmd_received) {  // If command is receive
+      led.callBlink(4, 20, 60);
+      // This is the bit that parses the command recieved by user, and sets the state machine to go to the correct state
+      if (nextState_data.stateEnum != STATE_NULL) {
+        smState = nextState_data.stateEnum;
+      }
     }
-  }
-  sm_Run(nextState_data);  // This Runs the state machine in the correct state, and is passed all of the data sent by the last command
+    sm_Run(nextState_data);  // This Runs the state machine in the correct state, and is passed all of the data sent by the last command
 
 
 
 
-  if (waveState == WAVE_ACTIVE) {
-    run_wavetable();
-    if (millis() - wave_start_time_mS >= (WAVE_MAX_TIME_S * 1000)) {
-      waveState = WAVE_STOPPING;
-      Serial.println("wavetable- timed out");
+    if (waveState == WAVE_ACTIVE) {
+      run_wavetable();
+      if (millis() - wave_start_time_mS >= (WAVE_MAX_TIME_S * 1000)) {
+        waveState = WAVE_STOPPING;
+        Serial.println("wavetable- timed out");
+      }
+    } else if (waveState == WAVE_STOPPING) {
+      analogWrite(wave_pin, 0);  // reset to position less likely to contain noise or cause pops (pops preferable to noise)
+      waveState = WAVE_STOPPED;
+    } else if (waveState == WAVE_START) {
+      table_index = 0;  // restart wavetable from the begginning
+      waveState = WAVE_ACTIVE;
+    } else if (waveState == WAVE_PULSE) {
+      pulse_wavetable();
+      waveState == WAVE_STOPPED;
+    } else {
+      // do nothing
     }
-  } else if (waveState == WAVE_STOPPING) {
-    analogWrite(wave_pin, 0);  // reset to position less likely to contain noise or cause pops (pops preferable to noise)
-    waveState = WAVE_STOPPED;
-  } else if (waveState == WAVE_START) {
-    table_index = 0;  // restart wavetable from the begginning
-    waveState = WAVE_ACTIVE;
-  } else if (waveState == WAVE_PULSE) {
-    pulse_wavetable();
-    waveState == WAVE_STOPPED;
-  } else {
-    // do nothing
+    // WAVE_PULSE is handled internal to state but could move here
   }
-  // WAVE_PULSE is handled internal to state but could move here
-
-
 
 
 
@@ -204,18 +194,21 @@ void loop() {
 
   // do streaming data at the specified rate
 
-  if (samples_written >= num_samples_req) {  // REMOVED PRINT TIMER because the number of samples taken is already calculated to meet the printing time   // if (printDelay.millisDelay(print_delay_mS)) {
-    sampleDelay.resetDelayTime_mS();         // makes sure that the sample loop is synced to the printing loop //moved to try and improve timings (doing this first so next sample is sooner)
-    if (streaming_active || snapshop_active) {
-      //print the sampled data
-      update_json(samples_written, smState);
+ 
+
+    if (samples_written >= num_samples_req) {  // REMOVED PRINT TIMER because the number of samples taken is already calculated to meet the printing time   // if (printDelay.millisDelay(print_delay_mS)) {
+      sampleDelay.resetDelayTime_mS();         // makes sure that the sample loop is synced to the printing loop //moved to try and improve timings (doing this first so next sample is sooner)
+      if (streaming_active || snapshop_active) {
+        //print the sampled data
+        update_json(samples_written, smState);
+      }
+      samples_written = 0;
     }
-    samples_written = 0;
-  }
 
 
-  // Time Out Tools and utility loop functions
-  led.performBlink();
+    // Time Out Tools and utility loop functions
+    led.performBlink();
+  
 }
 
 

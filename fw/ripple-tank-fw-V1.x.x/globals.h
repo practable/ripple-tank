@@ -33,7 +33,7 @@ TurboPWM pwm;
 
 // Program Attributes
 #define EXPERIMENT_NAME "ripple-tank"
-#define FIRMWARE_VERSION "1.0.0"
+#define FIRMWARE_VERSION "1.0.1"
 #define DEVELOPER "Imogen-Wren"
 
 

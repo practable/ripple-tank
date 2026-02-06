@@ -94,7 +94,7 @@ void setup() {
 void loop() {
 
 
-  if (pumpState == PUMP_STOPPED) {
+
 
     // Json Messenger & State Machine
     jsonStateData_t nextState_data = jsonRX.jsonReadSerialLoop();
@@ -131,7 +131,7 @@ void loop() {
       // do nothing
     }
     // WAVE_PULSE is handled internal to state but could move here
-  }
+  
 
 
 
@@ -163,9 +163,10 @@ void loop() {
 
   if (pumpState == PUMP_EMPTYING) {
     // code here to run pump
-    send_pulse();
+   // send_pulse();
     if (millis() - pump_start_time_mS >= empty_time_S * 1000) {
       pumpState = PUMP_STOPPED;
+      stop_pump();
       // make sure stepper driver shut down properly
       disable_pump();
     }
@@ -173,9 +174,10 @@ void loop() {
 
   if (pumpState == PUMP_REFILLING) {
     // code here to run pump
-    send_pulse();
+   // send_pulse();
     if (millis() - pump_start_time_mS >= refill_time_S * 1000) {
       pumpState = PUMP_STOPPED;
+      stop_pump();
       // make sure stepper driver shut down properly
       disable_pump();
     }

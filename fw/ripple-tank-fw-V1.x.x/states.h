@@ -93,7 +93,7 @@ void sm_state_hz(jsonStateData_t &stateData) {
       Serial.print("{\"hz\":\"");
       Serial.print(stateData.floatData);
       Serial.println("\"}");
-      frequency = stateData.floatData;      
+      frequency = stateData.floatData;
       select_wavetable(frequency);
       calc_wave_baseDelay(tableSize);  // calculate the default delay for 1Hz
       set_frequency(frequency);
@@ -174,6 +174,7 @@ void sm_state_pumpout(jsonStateData_t &stateData) {
     pump_start_time_mS = millis();
     set_direction(false);
     enable_pump();
+    start_pump();
   }
   smState = STATE_WAIT;
 }
@@ -188,6 +189,7 @@ void sm_state_pumpin(jsonStateData_t &stateData) {
     pump_start_time_mS = millis();
     set_direction(true);
     enable_pump();
+    start_pump();
   }
   smState = STATE_WAIT;
 }
@@ -198,9 +200,10 @@ void sm_state_stoppump(jsonStateData_t &stateData) {
     Serial.println(F("state: STOPPUMP"));
 #endif
     lastState = smState;
+    stop_pump();
     disable_pump();
     pumpState = PUMP_STOPPED;
-    set_direction(false);    
+    set_direction(false);
   }
   smState = STATE_WAIT;
 }
@@ -324,7 +327,7 @@ void sm_state_reset(jsonStateData_t &stateData) {
     frequency = frequencyDefault;
     amplitude = amplitudeDefault;
     pumpState = PUMP_STOPPED;
-    waveState = WAVE_STOPPING;      
+    waveState = WAVE_STOPPING;
     select_wavetable(frequency);
     calc_wave_baseDelay(tableSize);  // calculate the default delay for 1Hz
     set_frequency(frequency);

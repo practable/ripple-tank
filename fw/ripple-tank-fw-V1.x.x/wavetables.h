@@ -46,10 +46,16 @@ void select_wavetable(float frequency = 1) {
   } else if (frequency > low_table_Hz && frequency <= mid_table_Hz) {
     currentTable = MID_HZ_TABLE;
     tableSize = mid_table_size;
-  } else if (frequency > mid_table_Hz) {
+  } else if (frequency > mid_table_Hz && frequency <= high_table_Hz) {
     currentTable = HIGH_HZ_TABLE;
     tableSize = high_table_size;
-  } else {  // default // error? // default to low table
+  } else if (frequency > high_table_Hz && frequency <= VH_table_Hz) {
+    currentTable = VH_HZ_TABLE;
+    tableSize = VH_table_size;  
+   } else if (frequency > VH_table_Hz ) {
+    currentTable = UH_HZ_TABLE;
+    tableSize = UH_table_size;  
+   } else {  // default // error? // default to low table
     currentTable = LOW_HZ_TABLE;
     tableSize = low_table_size;
     Serial.println("ERROR");
@@ -64,7 +70,10 @@ void run_wavetable() {
   if (waveTableDelay.microsDelay(waveDelayTime_uS)) {
     if (table_index >= tableSize) table_index = 0;  // reset this first as it will avoid indexes going OOB
                                                     // Serial.println(table_index);
-    if (currentTable == VH_HZ_TABLE) {
+    
+    if (currentTable == UH_HZ_TABLE) {
+      tableVal = pgm_read_word(&sineTable_Uhigh[table_index]);
+    } else if (currentTable == VH_HZ_TABLE) {
       tableVal = pgm_read_word(&sineTable_Vhigh[table_index]);
     } else if (currentTable == HIGH_HZ_TABLE) {
       tableVal = pgm_read_word(&sineTable_high[table_index]);
@@ -87,7 +96,9 @@ void pulse_wavetable() {
     if (waveTableDelay.microsDelay(waveDelayTime_uS)) {
       if (table_index >= tableSize) table_index = 0;  // reset this first as it will avoid indexes going OOB
                                                       // Serial.println(table_index);
-      if (currentTable == VH_HZ_TABLE) {
+      if (currentTable == UH_HZ_TABLE) {
+        tableVal = pgm_read_word(&sineTable_Vhigh[table_index]);
+      } else if (currentTable == VH_HZ_TABLE) {
         tableVal = pgm_read_word(&sineTable_Vhigh[table_index]);
       } else if (currentTable == HIGH_HZ_TABLE) {
         tableVal = pgm_read_word(&sineTable_high[table_index]);

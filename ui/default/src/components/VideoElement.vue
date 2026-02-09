@@ -12,9 +12,9 @@
       </div>
     </div>
     
-   <div class="d-flex flex-row"> 
+   <!-- <div class="d-flex flex-row"> 
     <toolbar parentCanvasID="video-canvas" parentComponentName="webcam" parentDivID='video-element' :showDownload='true' :showPopupHelp='false' :showOptions="false"></toolbar>
-  </div> 
+  </div>  -->
       
     
 </div>    

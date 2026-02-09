@@ -20,7 +20,7 @@
                   unit="Hz"
                   fontSize="2em"
                   width="220"
-                  height="220"
+                  height="200"
                   digitWidth="100"
                   digitHeight="150"
                   NDigits="2"
@@ -462,6 +462,7 @@ export default {
 <style scoped>
 /* LARGE SCREENS */
 @media only screen and (min-width: 992px){
+
 .control-toggle-container{
   width: 4em;
   height: 2em;

@@ -1,3 +1,4 @@
+#include "api/Common.h"
 
 /* States.h
 
@@ -89,7 +90,7 @@ void sm_state_hz(jsonStateData_t &stateData) {
     Serial.println(F("state: HZ"));
 #endif
     lastState = smState;
-    if (stateData.floatData > 0 && stateData.floatData < 300) {
+    if (stateData.floatData > 0 && stateData.floatData <= 300) {
       Serial.print("{\"hz\":\"");
       Serial.print(stateData.floatData);
       Serial.println("\"}");
@@ -173,8 +174,11 @@ void sm_state_pumpout(jsonStateData_t &stateData) {
     pumpState = PUMP_EMPTYING;
     pump_start_time_mS = millis();
     set_direction(false);
+    delayMicroseconds(4);
     enable_pump();
+    delayMicroseconds(4);
     start_pump();
+    waveState = WAVE_STOPPING;
   }
   smState = STATE_WAIT;
 }
@@ -186,10 +190,13 @@ void sm_state_pumpin(jsonStateData_t &stateData) {
 #endif
     lastState = smState;
     pumpState = PUMP_REFILLING;
-    pump_start_time_mS = millis();
+    pump_start_time_mS = millis();  
     set_direction(true);
+    delayMicroseconds(4);
     enable_pump();
+    delayMicroseconds(4);
     start_pump();
+    waveState = WAVE_STOPPING;
   }
   smState = STATE_WAIT;
 }

@@ -64,10 +64,12 @@ void setup() {
 
 
   if (bme.begin()) {
-    Serial.println("{\"info\":\"Environment sensor found\"}");
+    //Serial.println("{\"info\":\"Environment sensor found\"}");
   }
 
   pump_setup();
+  set_direction(true);
+  setupTimerTC5(35);
 
   //setupDAC();
   // delay(100);
@@ -96,42 +98,42 @@ void loop() {
 
 
 
-    // Json Messenger & State Machine
-    jsonStateData_t nextState_data = jsonRX.jsonReadSerialLoop();
+  // Json Messenger & State Machine
+  jsonStateData_t nextState_data = jsonRX.jsonReadSerialLoop();
 
 
-    if (nextState_data.cmd_received) {  // If command is receive
-      led.callBlink(4, 20, 60);
-      // This is the bit that parses the command recieved by user, and sets the state machine to go to the correct state
-      if (nextState_data.stateEnum != STATE_NULL) {
-        smState = nextState_data.stateEnum;
-      }
+  if (nextState_data.cmd_received) {  // If command is receive
+    led.callBlink(4, 20, 60);
+    // This is the bit that parses the command recieved by user, and sets the state machine to go to the correct state
+    if (nextState_data.stateEnum != STATE_NULL) {
+      smState = nextState_data.stateEnum;
     }
-    sm_Run(nextState_data);  // This Runs the state machine in the correct state, and is passed all of the data sent by the last command
+  }
+  sm_Run(nextState_data);  // This Runs the state machine in the correct state, and is passed all of the data sent by the last command
 
 
 
 
-    if (waveState == WAVE_ACTIVE) {
-      run_wavetable();
-      if (millis() - wave_start_time_mS >= (WAVE_MAX_TIME_S * 1000)) {
-        waveState = WAVE_STOPPING;
-        Serial.println("wavetable- timed out");
-      }
-    } else if (waveState == WAVE_STOPPING) {
-      analogWrite(wave_pin, 0);  // reset to position less likely to contain noise or cause pops (pops preferable to noise)
-      waveState = WAVE_STOPPED;
-    } else if (waveState == WAVE_START) {
-      table_index = 0;  // restart wavetable from the begginning
-      waveState = WAVE_ACTIVE;
-    } else if (waveState == WAVE_PULSE) {
-      pulse_wavetable();
-      waveState == WAVE_STOPPED;
-    } else {
-      // do nothing
+  if (waveState == WAVE_ACTIVE) {
+    run_wavetable();
+    if (millis() - wave_start_time_mS >= (WAVE_MAX_TIME_S * 1000)) {
+      waveState = WAVE_STOPPING;
+      Serial.println("wavetable- timed out");
     }
-    // WAVE_PULSE is handled internal to state but could move here
-  
+  } else if (waveState == WAVE_STOPPING) {
+    analogWrite(wave_pin, 0);  // reset to position less likely to contain noise or cause pops (pops preferable to noise)
+    waveState = WAVE_STOPPED;
+  } else if (waveState == WAVE_START) {
+    table_index = 0;  // restart wavetable from the begginning
+    waveState = WAVE_ACTIVE;
+  } else if (waveState == WAVE_PULSE) {
+    pulse_wavetable();
+    waveState == WAVE_STOPPED;
+  } else {
+    // do nothing
+  }
+  // WAVE_PULSE is handled internal to state but could move here
+
 
 
 
@@ -160,13 +162,14 @@ void loop() {
 
 #endif
 
-
   if (pumpState == PUMP_EMPTYING) {
-    // code here to run pump
-   // send_pulse();
+        // code here to run pump
+    // send_pulse();   // this is now an interrupt
     if (millis() - pump_start_time_mS >= empty_time_S * 1000) {
       pumpState = PUMP_STOPPED;
+      Serial.println("pump empty timeout");
       stop_pump();
+      delayMicroseconds(4);
       // make sure stepper driver shut down properly
       disable_pump();
     }
@@ -174,10 +177,12 @@ void loop() {
 
   if (pumpState == PUMP_REFILLING) {
     // code here to run pump
-   // send_pulse();
+    // send_pulse();  // this is now an interrupt
     if (millis() - pump_start_time_mS >= refill_time_S * 1000) {
       pumpState = PUMP_STOPPED;
+      Serial.println("pump refill timeout");
       stop_pump();
+      delayMicroseconds(4);
       // make sure stepper driver shut down properly
       disable_pump();
     }
@@ -196,21 +201,21 @@ void loop() {
 
   // do streaming data at the specified rate
 
- 
 
-    if (samples_written >= num_samples_req) {  // REMOVED PRINT TIMER because the number of samples taken is already calculated to meet the printing time   // if (printDelay.millisDelay(print_delay_mS)) {
-      sampleDelay.resetDelayTime_mS();         // makes sure that the sample loop is synced to the printing loop //moved to try and improve timings (doing this first so next sample is sooner)
-      if (streaming_active || snapshop_active) {
-        //print the sampled data
-        update_json(samples_written, smState);
-      }
-      samples_written = 0;
+
+  if (samples_written >= num_samples_req) {  // REMOVED PRINT TIMER because the number of samples taken is already calculated to meet the printing time   // if (printDelay.millisDelay(print_delay_mS)) {
+    sampleDelay.resetDelayTime_mS();         // makes sure that the sample loop is synced to the printing loop //moved to try and improve timings (doing this first so next sample is sooner)
+    if (streaming_active || snapshop_active) {
+      //print the sampled data
+      update_json(samples_written, smState);
     }
+    samples_written = 0;
+  }
 
 
-    // Time Out Tools and utility loop functions
-    led.performBlink();
-  
+  // Time Out Tools and utility loop functions
+  led.performBlink();
+ 
 }
 
 

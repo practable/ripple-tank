@@ -33,7 +33,7 @@ TurboPWM pwm;
 
 // Program Attributes
 #define EXPERIMENT_NAME "ripple-tank"
-#define FIRMWARE_VERSION "1.0.1"
+#define FIRMWARE_VERSION "1.1.1"
 #define DEVELOPER "Imogen-Wren"
 
 
@@ -64,7 +64,7 @@ const uint32_t WAVE_MAX_TIME_S = 900;
 
 // Lamp
 const int led_ctrl_pin = 5;
-const uint32_t LED_MAX_TIME_S = 600;
+const uint32_t LED_MAX_TIME_S = 1200;  // 20 mins
 const uint16_t brightnessDefault = 0;
 const uint16_t LIGHT_OFF = 0;
 
@@ -110,7 +110,7 @@ tankStatus_t tankStatus = TANK_EMPTY;
 
 // Debugging
 #define DEBUG_STATES false
-#define DEBUG_STATE_MACHINE true
+#define DEBUG_STATE_MACHINE false
 
 
 
@@ -142,18 +142,21 @@ const int low_table_size = 240;  // up to 30 Hz  (aprox-> defined below)
 const int mid_table_size = 120;  // 30 - 60 Hz
 const int high_table_size = 60;  // 60 to 120 Hz
 const int VH_table_size = 30;    // 60 to 120 Hz
+const int UH_table_size = 15;
 
 const int low_table_Hz = 20;   // frequences under this limit will use the low table
 const int mid_table_Hz = 40;   // frequences between low and mid will use mid table
 const int high_table_Hz = 80;  // frequencies between mid and high limit will use the high table
 const int VH_table_Hz = 80;    // frequencies above high will use the Very High table
+const int UH_table_Hz = 200;   // frequencies above Very High will use Ultra High
 
 
 typedef enum {
   LOW_HZ_TABLE,
   MID_HZ_TABLE,
   HIGH_HZ_TABLE,
-  VH_HZ_TABLE
+  VH_HZ_TABLE,
+  UH_HZ_TABLE
 } activeTable_t;
 
 activeTable_t currentTable;
@@ -224,8 +227,8 @@ volatile uint32_t wt_index;                   // index of the current sample
 
 
 // PUMPING VARS
-const int empty_time_S = 240;
-const int refill_time_S = 240;
+const int empty_time_S = 300;
+const int refill_time_S = 300;
 
 typedef enum {
   PUMP_STOPPED,
@@ -236,7 +239,7 @@ typedef enum {
 
 pumpState_t pumpState = PUMP_STOPPED;
 
-bool pump_start_time_mS = 0;
+uint32_t pump_start_time_mS = 0;
 
 // Sampling Vars
 bool streaming_active = false;

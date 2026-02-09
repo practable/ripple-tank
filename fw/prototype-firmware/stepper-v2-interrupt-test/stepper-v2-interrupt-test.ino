@@ -1,33 +1,14 @@
 
 // Pump
-//const int pump_step_pin = 6;
-//const int pump_dir_pin = 4;
-//const int pump_EN_pin = 2;
-//const int pump_fault_pin = A3;
-//const int pump_sleep_pin = A6;
-//const int pump_reset_pin = A7;
-
-
-
-
-void sample_tank() {
-  tank_level = analogRead(tank_level_sense_pin);
-  if (tankStatus == TANK_FULL) {
-    if (tank_level >= tank_threshold + tank_hysteresis) {
-      tankStatus = TANK_EMPTY;
-    }
-  } else if (tankStatus == TANK_EMPTY) {
-    if (tank_level <= tank_threshold - tank_hysteresis) {
-      tankStatus = TANK_FULL;
-    }
-  }
-}
-
-
-
+const int pump_step_pin = 6;
+const int pump_dir_pin = 4;
+const int pump_EN_pin = 2;
+const int pump_fault_pin = A3;
+const int pump_sleep_pin = A6;
+const int pump_reset_pin = A7;
 
 void pump_setup() {
-  pinMode(pump_step_pin, OUTPUT);
+ pinMode(pump_step_pin, OUTPUT);  
   pinMode(pump_dir_pin, OUTPUT);
   pinMode(pump_EN_pin, OUTPUT);
   pinMode(pump_sleep_pin, OUTPUT);
@@ -57,9 +38,9 @@ void set_direction(bool direction = false) {
 volatile bool pump_enabled = false;
 
 // ===== STEP PULSE ISR =====
-void TC5_Handler() {
-  if (TC5->COUNT16.INTFLAG.bit.MC0) {
-    TC5->COUNT16.INTFLAG.reg = TC_INTFLAG_MC0;  // clear interrupt
+void TC5_Handler(){
+  if (TC5->COUNT16.INTFLAG.bit.MC0)  {
+    TC5->COUNT16.INTFLAG.reg = TC_INTFLAG_MC0; // clear interrupt
 
     if (!pump_enabled) return;
 
@@ -76,51 +57,50 @@ void TC5_Handler() {
   }
 }
 
-void setupTimerTC5(uint16_t compare) {
+void setupTimerTC5(uint16_t compare){
   // Enable TC5 clock
   GCLK->CLKCTRL.reg =
-    GCLK_CLKCTRL_ID(GCM_TC4_TC5) | GCLK_CLKCTRL_CLKEN | GCLK_CLKCTRL_GEN_GCLK0;
+    GCLK_CLKCTRL_ID(GCM_TC4_TC5) |
+    GCLK_CLKCTRL_CLKEN |
+    GCLK_CLKCTRL_GEN_GCLK0;
 
-  while (GCLK->STATUS.bit.SYNCBUSY)
-    ;
+  while (GCLK->STATUS.bit.SYNCBUSY);
 
   TC5->COUNT16.CTRLA.reg = TC_CTRLA_SWRST;
-  while (TC5->COUNT16.STATUS.bit.SYNCBUSY)
-    ;
+  while (TC5->COUNT16.STATUS.bit.SYNCBUSY);
 
   TC5->COUNT16.CTRLA.reg =
-    TC_CTRLA_MODE_COUNT16 | TC_CTRLA_PRESCALER_DIV1024 | TC_CTRLA_WAVEGEN_MFRQ;
+    TC_CTRLA_MODE_COUNT16 |
+    TC_CTRLA_PRESCALER_DIV1024 |
+    TC_CTRLA_WAVEGEN_MFRQ;
 
   TC5->COUNT16.CC[0].reg = compare;
-  while (TC5->COUNT16.STATUS.bit.SYNCBUSY)
-    ;
+  while (TC5->COUNT16.STATUS.bit.SYNCBUSY);
 
   TC5->COUNT16.INTENSET.reg = TC_INTENSET_MC0;
 
   NVIC_EnableIRQ(TC5_IRQn);
 
-  TC5->COUNT16.CTRLA.bit.ENABLE = 0;  // start disabled
-  while (TC5->COUNT16.STATUS.bit.SYNCBUSY)
-    ;
+  TC5->COUNT16.CTRLA.bit.ENABLE = 0; // start disabled
+  while (TC5->COUNT16.STATUS.bit.SYNCBUSY);
 }
 
 
-void start_pump() {
+void start_pump(){
   digitalWrite(pump_step_pin, LOW);
+
   pump_enabled = true;
 
-  TC5->COUNT16.COUNT.reg = 0;  // reset phase
+  TC5->COUNT16.COUNT.reg = 0;   // reset phase
   while (TC5->COUNT16.STATUS.bit.SYNCBUSY);
 
   TC5->COUNT16.CTRLA.bit.ENABLE = 1;
   while (TC5->COUNT16.STATUS.bit.SYNCBUSY);
 }
 
-void stop_pump() {
-  
-//   TC5->COUNT16.CTRLA.bit.ENABLE = 0;/
-//  while (TC5->COUNT16.STATUS.bit.SYNCBUSY)
-//    ;
+void stop_pump(){
+  TC5->COUNT16.CTRLA.bit.ENABLE = 0;
+  while (TC5->COUNT16.STATUS.bit.SYNCBUSY);
 
   pump_enabled = false;
   digitalWrite(pump_step_pin, LOW);
@@ -129,4 +109,22 @@ void stop_pump() {
 
 
 
+void setup() {
+  Serial.begin(115200);
+  delay(3000);
+  Serial.println("StepperTesting V2!");
+   pump_setup();
+  set_direction(true);
+  enable_pump();
+  setupTimerTC5(35); //
+}
 
+void loop(){
+  enable_pump();
+  start_pump();
+  delay(2000);
+
+  stop_pump();
+  disable_pump();
+  delay(2000);
+}

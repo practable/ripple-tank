@@ -71,6 +71,7 @@ SAMDTimer ITimer(SELECTED_TIMER);
 SAMD_ISR_Timer ISR_Timer;
 
 #define TIMER_INTERVAL_400uS 400L
+#define TIMER_INTERVAL_US 400
 
 void TimerHandler(void) {
   ISR_Timer.run();
@@ -118,8 +119,8 @@ void sample_tank(){
 
 
 void pump_setup() {
-  // pinMode(pump_step_pin, OUTPUT);   // equivilent below
-  PORT->Group[0].DIRSET.reg = (1 << 20);
+ pinMode(pump_step_pin, OUTPUT);   // equivilent below
+  //PORT->Group[0].DIRSET.reg = (1 << 20);
   pinMode(pump_dir_pin, OUTPUT);
   pinMode(pump_EN_pin, OUTPUT);
   pinMode(pump_sleep_pin, OUTPUT);
@@ -162,38 +163,30 @@ void send_pulse() {
 
 
 // The following functions are suitable for placing within an interrupt + starting and stopping interrupts
-//uint8_t current_pulse_state = 0;
+volatile uint8_t current_pulse_state = false;
 // PORT->Group[0].OUTSET.reg = (1 << 20);  // write pin 6 high
 // PORT->Group[0].OUTCLR.reg = (1 << 20);  // write pin 6 low
 
 void update_pulse_out() {
-  // current_pulse_state = !current_pulse_state;
-  // digitalWrite(pump_step_pin, current_pulse_state);
-  PORT->Group[0].OUTTGL.reg = (1 << 20);  // toggle the output pin directly at the register level
+  current_pulse_state = !current_pulse_state;
+  digitalWrite(pump_step_pin, current_pulse_state);
+  //PORT->Group[0].OUTTGL.reg = (1 << 20);  // toggle the output pin directly at the register level (doesnt work)
 }
 
 
 
 void start_pump() {
-  if (ITimer.attachInterruptInterval(HW_TIMER_INTERVAL_MS, TimerHandler)) {
+  if (ITimer.attachInterruptInterval(TIMER_INTERVAL_US, update_pulse_out)) {
     Serial.print(F("Starting ITimer OK, millis() = "));
     Serial.println(millis());
-  } else {
+  } else { 
     Serial.println(F("Can't set ITimer. Select another freq. or timer"));
-
-
-    // Just to demonstrate, don't use too many ISR Timers if not absolutely necessary
-    // You can use up to 16 timer for each ISR_Timer
-    ISR_Timer.setInterval(TIMER_INTERVAL_400uS, update_pulse_out);
   }
 }
 
 
 void stop_pump() {
   ITimer.detachInterrupt();
-
-  //ISR_TImer.detachInterrupt();
-
   PORT->Group[0].OUTCLR.reg = (1 << 20);  // write pin 6 low
 }
 

@@ -150,13 +150,15 @@ void setup() {
 //////////////////////////////////////////////
 
 bool stopped = false;
+bool started = false;
 
 void loop() {
   if (millis() > 20000 && !stopped) {
     stop_interrupt();
     stopped = true;
   }
-  if (millis() > 40000) {
+  if (millis() > 40000 && !started) {
     start_interrupt();
+    started = true;
   }
 }

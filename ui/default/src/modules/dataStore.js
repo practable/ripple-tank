@@ -14,6 +14,8 @@ const dataStore = {
       data_set_index: 0,
       max_data_points: 5000,
       isRecording: false,
+      x_axis_variable: 'frequency',
+      y_axis_variable: 'wavelength', 
    }),
    mutations:{
       SET_IS_RECORDING(state, set){
@@ -45,6 +47,12 @@ const dataStore = {
       },
       SET_CURRENT_FREQUENCY(state, f){
          state.frequency = f;
+      },
+      SET_X_AXIS(state, variable){
+         state.x_axis_variable = variable;
+      },
+      SET_Y_AXIS(state, variable){
+         state.y_axis_variable = variable;
       }
    },
    actions:{
@@ -77,6 +85,12 @@ const dataStore = {
       },
       setCurrentFrequency(context, f){
          context.commit('SET_CURRENT_FREQUENCY', f);
+      },
+      setXAxis(context, variable){
+         context.commit('SET_X_AXIS', variable);
+      },
+      setYAxis(context, variable){
+         context.commit('SET_Y_AXIS', variable);
       }
    },
    getters:{
@@ -134,7 +148,13 @@ const dataStore = {
      },
      getCurrentFrequency(state){
       return state.frequency;
-     }
+     },
+     getXAxisVariable(state){
+         return state.x_axis_variable;
+      },
+      getYAxisVariable(state){
+         return state.y_axis_variable;
+      },
    }
       
 }

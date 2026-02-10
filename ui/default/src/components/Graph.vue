@@ -147,6 +147,29 @@
             <span v-else class="align-middle">Plotted: {{ maxDataPoints }} / {{ maxDataPoints }} MAX REACHED</span>
             <span class="align-middle ms-2" for="gradient">Gradient: {{ gradient.toFixed(2) }}</span>
         </div>
+
+        <div class='col-sm-3 dropdown'>
+            <button id='graph-x-axis-select' type="button" class="button-sm button-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                X Axis
+            </button>
+            <ul class="dropdown-menu">
+                <li><a id='graph-x-axis-select-wavelength' class="dropdown-item" @click='() => changeXAxis("wavelength")'>wavelength</a></li>
+                <li><a id='graph-x-axis-select-frequency' class="dropdown-item" @click='() => changeXAxis("frequency")'>frequency</a></li>
+                <li><a id='graph-x-axis-select-period' class="dropdown-item" @click='() => changeXAxis("period")'>period (1/f)</a></li>
+                <li><a id='graph-x-axis-select-speed' class="dropdown-item" @click='() => changeXAxis("speed")'>wave speed</a></li>
+            </ul>
+        </div>
+        <div class='col-sm-3 dropdown'>
+            <button id='graph-y-axis-select' type="button" class="button-sm button-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Y Axis
+            </button>
+            <ul class="dropdown-menu">
+                <li><a id='graph-y-axis-select-wavelength' class="dropdown-item" @click='() => changeYAxis("wavelength")'>wavelength</a></li>
+                <li><a id='graph-y-axis-select-frequency' class="dropdown-item" @click='() => changeYAxis("frequency")'>frequency</a></li>
+                <li><a id='graph-y-axis-select-period' class="dropdown-item" @click='() => changeYAxis("period")'>period (1/f)</a></li>
+                <li><a id='graph-y-axis-select-speed' class="dropdown-item" @click='() => changeYAxis("speed")'>wave speed</a></li>
+            </ul>
+        </div>
     </div>
 
     
@@ -213,11 +236,14 @@ export default {
             'getNumData',
             'getIsRecording',
             'getDarkTheme',
-            'getCurrentMode'
+            'getCurrentMode',
+            'getXAxisVariable',
+            'getYAxisVariable'
         ]),
       },
     watch:{
         getData(){
+            console.log('get data is clearing data')
             this.clearData(); //only runs if data array gets reset to [];
         },
         getDarkTheme(){
@@ -237,7 +263,9 @@ export default {
     },
     methods: {
         ...mapActions([
-            'setDraggable'
+            'setDraggable',
+            'setXAxis',
+            'setYAxis'
         ]),
         updateChart(){
             let num_data = this.getNumData;
@@ -282,7 +310,7 @@ export default {
                     x: {
                         title:{
                             display: true,
-                            text: '1/f [s]',
+                            text: _this.getXAxisVariable == 'period' ? '1/f [s]' : (_this.getXAxisVariable == 'frequency' ? 'f [Hz]' : (_this.getXAxisVariable == 'wavelength' ? 'wavelength [cm]' : (_this.getXAxisVariable == 'speed' ? 'wave speed [cm/s]' : ''))),
                             color: _this.getDarkTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
                         },
                         type: 'linear',
@@ -306,7 +334,7 @@ export default {
                     y: {
                         title:{
                             display: true,
-                            text: 'wavelength [cm]',
+                            text: _this.getYAxisVariable == 'period' ? '1/f [s]' : (_this.getYAxisVariable == 'frequency' ? 'f [Hz]' : (_this.getYAxisVariable == 'wavelength' ? 'wavelength [cm]' : (_this.getYAxisVariable == 'speed' ? 'wave speed [cm/s]' : ''))),
                             color: _this.getDarkTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(0, 0, 0, 1)'
                         },
                         type: 'linear',
@@ -394,6 +422,7 @@ export default {
             }
         },
         clearData(){
+            console.log('clearing data')
             this.latest_index = 0;          //NEW
             
             scatterChart.destroy();
@@ -407,8 +436,10 @@ export default {
             for(let i=_current_index; i<this.getNumData;i++){
                 let data = this.getData[i];
                 // let x_data = data.reportedRPM;                       //where the actual X data is added
-                let x_data = data.period;                       //where the actual X data is added
-                let y_data = data.wavelength;                            //where the actual Y data is added
+                // let x_data = data.period;                       //where the actual X data is added
+                // let y_data = data.wavelength;                            //where the actual Y data is added
+                let x_data = data[this.getXAxisVariable];                       //where the actual X data is added
+                let y_data = data[this.getYAxisVariable];                            //where the actual Y data is added
 
                 this.addDataToChart({x: x_data, y: y_data}, data.set);
                 
@@ -436,8 +467,10 @@ export default {
             if(index >= 0){
                 let data = this.getData[index];
                 //let x_data = data.reportedRPM;                       //where the actual X data is added
-                let x_data = data.period;                       //where the actual X data is added
-                let y_data = data.wavelength;                            //where the actual Y data is added
+                // let x_data = data.period;                       //where the actual X data is added
+                // let y_data = data.wavelength;                            //where the actual Y data is added
+                let x_data = data[this.getXAxisVariable];                       //where the actual X data is added
+                let y_data = data[this.getYAxisVariable];                            //where the actual Y data is added
 
                 this.addDataToChart({x: x_data, y: y_data}, data.set);
                 
@@ -448,8 +481,10 @@ export default {
             if(index >= 0){
                 let data = this.getData[index];
                 // let x_data = data.reportedRPM;                       //where the actual X data is added
-                let x_data = data.period;                       //where the actual X data is added
-                let y_data = data.wavelength;                            //where the actual Y data is added
+                // let x_data = data.period;                       //where the actual X data is added
+                // let y_data = data.wavelength;                            //where the actual Y data is added
+                let x_data = data[this.getXAxisVariable];                       //where the actual X data is added
+                let y_data = data[this.getYAxisVariable];                            //where the actual Y data is added
 
                 this.addDataToChart({x: x_data, y: y_data}, data.set);
 
@@ -580,6 +615,18 @@ export default {
         countDataSets(){
                 let datasets = scatterChart.data.datasets.filter(set => set.id.includes("dataset"));
                 return datasets.length;
+        },
+        changeXAxis(variable){
+            console.log('x axis updating')
+            this.setXAxis(variable);
+            this.clearData();
+            //this.getAllData();    //updateChart is running on an interval, so no need to get all data again
+        },
+        changeYAxis(variable){
+            console.log('y axis updating')
+            this.setYAxis(variable);
+            this.clearData();
+            //this.getAllData();    //updateChart is running on an interval, so no need to get all data again
         },
       },
       

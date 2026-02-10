@@ -16,6 +16,7 @@
       </div>
       
     <label for="captureImageButton" id="captureImageLabel">{{ images_index }} / {{ max_captures }}</label>
+    <label v-if="selected_image != null" for="" id="captureImageFrequencyLabel">f = {{ selected_image.getAttribute('frequency') }} Hz</label>
     </div>
     
     <!-- Displayed, large image for selected image-->
@@ -53,6 +54,7 @@
 </template>
 
 <script>
+import { nextTick } from 'vue';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
@@ -71,11 +73,8 @@ export default {
   },
   computed:{
     ...mapGetters([
-        
-
-        
-    ]),
-    
+        'getDrivingFrequency'
+    ])
   },
   watch:{
     
@@ -104,6 +103,8 @@ export default {
         const newImg = new Image();
         newImg.src = canvas.toDataURL("image/png")
         newImg.alt = "captured image " + this.images_index;
+        //add a custom key that adds the captured wave frequency to the image data
+        newImg.setAttribute('frequency', this.getDrivingFrequency);
         if(this.images_index < this.max_captures){
           this.images.push(newImg);
           this.images_index += 1;

@@ -273,7 +273,8 @@ export default {
       'getBrightnessMax',
       'getBrightnessStep',
       'getReportedBrightness',
-      'isMobile'
+      'isMobile',
+      'getConfigJSON'
     ]),
     driving_frequency: {
 			get(){
@@ -352,6 +353,22 @@ export default {
 				console.log(e);
 			}
 		},
+    getConfigJSON(config){
+			if(config.name != undefined){
+				try{
+          this.setMaxFrequency(parseFloat(config.parameters.ui.maxFrequency));
+          this.setMaxAmplitude(parseFloat(config.parameters.ui.maxAmplitude));
+          this.setMaxBrightness(parseFloat(config.parameters.ui.maxBrightness));
+          console.log('config parameters set')
+				} catch(e){
+					console.log('config missing, parameters remain at default');
+					//this.setServoMaxPosition(0); //the default of 10% set in the vuex store is not changed
+				}
+			} else{
+				console.log('incorrect config, parameters remain at default');
+				//this.setServoMaxPosition(0); //the default of 10% set in the vuex store is not changed
+			}
+		}
   },
   created(){
       
@@ -378,7 +395,10 @@ export default {
         'sendCommandUpdateBrightness',
         'setReportedDrivingFrequency',
         'setReportedAmplitude',
-        'setReportedBrightness'
+        'setReportedBrightness',
+        'setMaxFrequency',
+        'setMaxAmplitude',
+        'setMaxBrightness'
         
     ]),
       sendMessage(){

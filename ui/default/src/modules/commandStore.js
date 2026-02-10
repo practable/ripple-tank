@@ -135,6 +135,15 @@ const commandStore = {
         SET_REPORTED_BRIGHTNESS(state, val){
             state.lamp['from_hardware_brightness'] = val;
         },
+        SET_MAX_FREQUENCY(state, max){
+            state.driver.max = max;
+        },
+        SET_MAX_AMPLITUDE(state, max){
+            state.driver["amplitude_max"] = max;
+        },
+        SET_MAX_BRIGHTNESS(state, max){
+            state.lamp["brightness_max"] = max;
+        },
 
        },
        actions:{
@@ -225,6 +234,15 @@ const commandStore = {
         sendCommandPumpStop(context){
             context.commit('COMMAND_PUMP_STOP');
         },
+        setMaxFrequency(context, max){
+            context.commit('SET_MAX_FREQUENCY', max);
+        },
+        setMaxAmplitude(context, max){
+            context.commit('SET_MAX_AMPLITUDE', max);
+        },
+        setMaxBrightness(context, max){
+            context.commit('SET_MAX_BRIGHTNESS', max);
+        }
        },
        getters:{
         getDataSocket(state){

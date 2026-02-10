@@ -64,6 +64,21 @@ export default {
         this.$store.dispatch('setCourse', course);
       }
 
+      //get configuration parameters
+      let conf_url = query.get('config');
+      if(conf_url != null){
+        try{
+          fetch(conf_url)
+            .then(response => response.json())
+            .then(data => this.$store.dispatch('setConfigJSON', data));
+        } 
+        catch(e){
+          console.log(e);
+        }
+      } else{
+        console.log('no configuration file available');
+      }
+
     } catch (e) {
       console.log("error decoding streams");
       this.$store.dispatch("deleteStreams");

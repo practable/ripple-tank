@@ -35,7 +35,11 @@
           </ul>
 
             <ul class="navbar-nav dropstart">
-  
+
+                <li class="nav-item me-1">
+                    <show-hardware-config-button />
+                </li>
+
                 <li class="nav-item me-1">
                   <button type='button' class='button-toolbar button-secondary' id='toggle-theme-button' aria-label='toggle dark theme' @click='toggleTheme' :disabled="disableThemeButton">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
@@ -56,6 +60,7 @@
 
 import Clock from "./Clock.vue";
 import { mapGetters } from 'vuex';
+import ShowHardwareConfigButton from "./elements/ShowHardwareConfigButton.vue";
 
 export default {
 
@@ -68,6 +73,7 @@ export default {
   },
   components: {
     Clock,
+    ShowHardwareConfigButton
   },
   computed:{
       ...mapGetters([

@@ -5,7 +5,7 @@
     <div class="container-fluid">
       <div class="navbar-brand">
           <img src="/images/practable-icon.png" width="30" height="30" alt="practable.io logo">
-          Ripple Tank
+          {{ labName }}
       </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -78,8 +78,20 @@ export default {
   computed:{
       ...mapGetters([
         'getDarkTheme',
-        'getIsChatOn'
-      ])
+        'getIsChatOn',
+        'getConfigJSON'
+      ]),
+      labName(){
+        return this.getLabID == '' ? 'Ripple Tank': 'Ripple Tank (' + this.getLabID + ')';
+      },
+      getLabID(){
+        let config = this.getConfigJSON;
+        if(config.parameters != undefined){
+          return config.name;
+        } else{
+          return '';
+        }
+      },
   },
   methods: {
       addTool(tool){

@@ -20,7 +20,7 @@ const commandStore = {
             'from_hardware_amplitude': 0,
             'amplitude_step': 1,    //for input slider only
             'amplitude_min': 0,
-            'amplitude_max': 100        //percentage, was previously 0-255
+            'amplitude_max': 50        //percentage, was previously 0-255
         },
         lamp: {
             'brightness': 50,          //percentage, previously 0-1024

@@ -94,12 +94,12 @@
           </div>
              
               <div v-if="isMobile" class="d-flex flex-column mt-2">
-                <button id="amplitude-step-negative-10" class="button-control-panel-small" aria-label="decrease amplitude by 10 percent" @click="() => {amplitude -= Math.floor(10*getAmplitudeMax/100); sendCommandUpdateAmplitude()}">-10</button>
-                <button id="amplitude-step-negative-1" class="button-control-panel-small" aria-label="decrease amplitude by 1 percent" @click="() => {amplitude -= Math.floor(getAmplitudeMax/100); sendCommandUpdateAmplitude()}">-1</button>
+                <button id="amplitude-step-negative-10" class="button-control-panel-small" aria-label="decrease amplitude by 10 percent" @click="() => {amplitude -= 5; sendCommandUpdateAmplitude()}">-10</button>
+                <button id="amplitude-step-negative-1" class="button-control-panel-small" aria-label="decrease amplitude by 1 percent" @click="() => {amplitude -= 1; sendCommandUpdateAmplitude()}">-2</button>
               </div>
               <div v-else class="d-flex flex-column mt-2">
-                <button id="amplitude-step-positive-1" class="button-control-panel-small" aria-label="increase amplitude by 1 percent" @click="() => {amplitude += Math.floor(getAmplitudeMax/100); sendCommandUpdateAmplitude()}">+</button>
-                <button id="amplitude-step-negative-1" class="button-control-panel-small" aria-label="decrease amplitude by 1 percent" @click="() => {amplitude -= Math.floor(getAmplitudeMax/100); sendCommandUpdateAmplitude()}">-</button>
+                <button id="amplitude-step-positive-1" class="button-control-panel-small" aria-label="increase amplitude by 1 percent" @click="() => {amplitude += 1; sendCommandUpdateAmplitude()}">+</button>
+                <button id="amplitude-step-negative-1" class="button-control-panel-small" aria-label="decrease amplitude by 1 percent" @click="() => {amplitude -= 1; sendCommandUpdateAmplitude()}">-</button>
               </div>
 
               <seven-segment-display id="seven-segment-display-amplitude" 
@@ -115,8 +115,8 @@
                 />
 
                 <div v-if="isMobile" class="d-flex flex-column mt-2">
-                <button id="amplitude-step-positive-10" class="button-control-panel-small" aria-label="increase amplitude by 10 percent" @click="() => {amplitude += Math.floor(10*getAmplitudeMax/100); sendCommandUpdateAmplitude()}">+10</button>
-                <button id="amplitude-step-positive-1" class="button-control-panel-small" aria-label="increase amplitude by 1 percent" @click="() => {amplitude += Math.floor(getAmplitudeMax/100); sendCommandUpdateAmplitude()}">+1</button>
+                <button id="amplitude-step-positive-10" class="button-control-panel-small" aria-label="increase amplitude by 10 percent" @click="() => {amplitude += 5; sendCommandUpdateAmplitude()}">+10</button>
+                <button id="amplitude-step-positive-1" class="button-control-panel-small" aria-label="increase amplitude by 1 percent" @click="() => {amplitude += 1; sendCommandUpdateAmplitude()}">+2</button>
               </div>
         </div>
           
@@ -137,12 +137,12 @@
           </div>
               
               <div v-if='isMobile' class="d-flex flex-column mt-2">
-                <button id="brightness-step-negative-10" class="button-control-panel-small" aria-label="decrease brightness by 10 percent" @click="() => {brightness -= Math.floor(10*getBrightnessMax/100); sendCommandUpdateBrightness()}">-10</button>
-                <button id="brightness-step-negative-1" class="button-control-panel-small" aria-label="decrease brightness by 1 percent" @click="() => {brightness -= Math.floor(getBrightnessMax/100); sendCommandUpdateBrightness()}">-1</button>
+                <button id="brightness-step-negative-10" class="button-control-panel-small" aria-label="decrease brightness by 10 percent" @click="() => {brightness -= 10; sendCommandUpdateBrightness()}">-10</button>
+                <button id="brightness-step-negative-1" class="button-control-panel-small" aria-label="decrease brightness by 1 percent" @click="() => {brightness -= 1; sendCommandUpdateBrightness()}">-1</button>
               </div>
               <div v-else class="d-flex flex-column mt-2">
-                <button id="brightness-step-positive-1" class="button-control-panel-small" aria-label="increase brightness by 1 percent" @click="() => {brightness += Math.floor(getBrightnessMax/100); sendCommandUpdateBrightness()}">+</button>
-                <button id="brightness-step-negative-1" class="button-control-panel-small" aria-label="decrease brightness by 1 percent" @click="() => {brightness -= Math.floor(getBrightnessMax/100); sendCommandUpdateBrightness()}">-</button>
+                <button id="brightness-step-positive-1" class="button-control-panel-small" aria-label="increase brightness by 1 percent" @click="() => {brightness += 1; sendCommandUpdateBrightness()}">+</button>
+                <button id="brightness-step-negative-1" class="button-control-panel-small" aria-label="decrease brightness by 1 percent" @click="() => {brightness -= 1; sendCommandUpdateBrightness()}">-</button>
               </div>
 
               <seven-segment-display id="seven-segment-display-brightness" 
@@ -158,8 +158,8 @@
                 />
 
                 <div v-if='isMobile' class="d-flex flex-column mt-2">
-                <button id="brightness-step-positive-10" class="button-control-panel-small" aria-label="increase brightness by 10 percent" @click="() => {brightness += Math.floor(10*getBrightnessMax/100); sendCommandUpdateBrightness()}">+10</button>
-                <button id="brightness-step-positive-1" class="button-control-panel-small" aria-label="increase brightness by 1 percent" @click="() => {brightness += Math.floor(getBrightnessMax/100); sendCommandUpdateBrightness()}">+1</button>
+                <button id="brightness-step-positive-10" class="button-control-panel-small" aria-label="increase brightness by 10 percent" @click="() => {brightness += 10; sendCommandUpdateBrightness()}">+10</button>
+                <button id="brightness-step-positive-1" class="button-control-panel-small" aria-label="increase brightness by 1 percent" @click="() => {brightness += 1; sendCommandUpdateBrightness()}">+1</button>
               </div>
         </div>
 

@@ -16,11 +16,11 @@ const commandStore = {
             'pulse_min': 1,
             'pulse_max': 999,   //ms
             'pulse_step': 1,    //ms, for slider input only
-            'amplitude': 20,   //percentage, was previously absolute value between 0 - 255 for hardware
+            'amplitude': 10,   //percentage, was previously absolute value between 0 - 255 for hardware
             'from_hardware_amplitude': 0,
             'amplitude_step': 1,    //for input slider only
             'amplitude_min': 0,
-            'amplitude_max': 50        //percentage, was previously 0-255
+            'amplitude_max': 10        //percentage, was previously 0-255
         },
         lamp: {
             'brightness': 50,          //percentage, previously 0-1024

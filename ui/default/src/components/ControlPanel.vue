@@ -94,13 +94,18 @@
               </div>
           </div>
              
-              <div v-if="isMobile" class="d-flex flex-column mt-2">
+              <!-- <div v-if="isMobile" class="d-flex flex-column mt-2">
                 <button id="amplitude-step-negative-10" class="button-control-panel-small" aria-label="decrease amplitude by 10 percent" @click="() => {amplitude -= 5; sendCommandUpdateAmplitude()}">-10</button>
                 <button id="amplitude-step-negative-1" class="button-control-panel-small" aria-label="decrease amplitude by 1 percent" @click="() => {amplitude -= 1; sendCommandUpdateAmplitude()}">-2</button>
               </div>
               <div v-else class="d-flex flex-column mt-2">
-                <button id="amplitude-step-positive-1" class="button-control-panel-small" aria-label="increase amplitude by 1 percent" @click="() => {amplitude += 1; sendCommandUpdateAmplitude()}">+</button>
-                <button id="amplitude-step-negative-1" class="button-control-panel-small" aria-label="decrease amplitude by 1 percent" @click="() => {amplitude -= 1; sendCommandUpdateAmplitude()}">-</button>
+                <button id="amplitude-step-positive-1" class="button-control-panel-small" aria-label="increase amplitude by 1 unit" @click="() => {amplitude += 1; sendCommandUpdateAmplitude()}">+</button>
+                <button id="amplitude-step-negative-1" class="button-control-panel-small" aria-label="decrease amplitude by 1 unit" @click="() => {amplitude -= 1; sendCommandUpdateAmplitude()}">-</button>
+              </div> -->
+
+              <div class="d-flex flex-column mt-2">
+                <button id="amplitude-step-positive-1" class="button-control-panel-small" aria-label="increase amplitude by 1 unit" @click="() => {amplitude += 1; sendCommandUpdateAmplitude()}">+</button>
+                <button id="amplitude-step-negative-1" class="button-control-panel-small" aria-label="decrease amplitude by 1 unit" @click="() => {amplitude -= 1; sendCommandUpdateAmplitude()}">-</button>
               </div>
 
               <seven-segment-display id="seven-segment-display-amplitude" 
@@ -115,10 +120,10 @@
                   NDigits="3"
                 />
 
-                <div v-if="isMobile" class="d-flex flex-column mt-2">
+                <!-- <div v-if="isMobile" class="d-flex flex-column mt-2">
                 <button id="amplitude-step-positive-10" class="button-control-panel-small" aria-label="increase amplitude by 10 percent" @click="() => {amplitude += 5; sendCommandUpdateAmplitude()}">+10</button>
                 <button id="amplitude-step-positive-1" class="button-control-panel-small" aria-label="increase amplitude by 1 percent" @click="() => {amplitude += 1; sendCommandUpdateAmplitude()}">+2</button>
-              </div>
+              </div> -->
         </div>
           
 
@@ -363,6 +368,7 @@ export default {
     getConfigJSON(config){
 			if(config.name != undefined){
 				try{
+          this.updateAmplitude(parseFloat(config.parameters.ui.defaultAmplitude));
           this.setMaxFrequency(parseFloat(config.parameters.ui.maxFrequency));
           this.setMaxAmplitude(parseFloat(config.parameters.ui.maxAmplitude));
           this.setMaxBrightness(parseFloat(config.parameters.ui.maxBrightness));

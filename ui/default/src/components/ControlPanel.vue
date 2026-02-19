@@ -368,7 +368,6 @@ export default {
     getConfigJSON(config){
 			if(config.name != undefined){
 				try{
-          this.updateAmplitude(parseFloat(config.parameters.ui.defaultAmplitude));
           this.setMaxFrequency(parseFloat(config.parameters.ui.maxFrequency));
           this.setMaxAmplitude(parseFloat(config.parameters.ui.maxAmplitude));
           this.setMaxBrightness(parseFloat(config.parameters.ui.maxBrightness));
@@ -417,10 +416,10 @@ export default {
     hotkey(event){
 			if(event.key == "p"){
         if(this.getCurrentMode == 'pulse'){
-          console.log('PULSE')
+          //console.log('PULSE')
           this.sendCommandPulse();
         } else{
-          console.log('SET PULSE MODE')
+          //console.log('SET PULSE MODE')
           this.togglePulse = true;
         }
 			} 
@@ -449,6 +448,7 @@ export default {
 
             setTimeout(() => {
               console.log('2. setting default amplitude');
+              _this.updateAmplitude(_this.getConfigJSON.parameters.ui.defaultAmplitude);
               _this.sendCommandUpdateAmplitude(_this.getAmplitude);
             }, 300);
 

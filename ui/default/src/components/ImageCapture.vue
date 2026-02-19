@@ -84,13 +84,19 @@ export default {
     
   },
   mounted(){
-    
+    window.addEventListener('keydown', this.hotkey, false);
 
   },
   methods: {
     ...mapActions([
       
     ]),
+    hotkey(event){
+			if(event.key == "c"){
+        console.log('CAPTURE')
+        this.capture();
+			} 
+		},
     getImageClass(image){
       if(image == this.selected_image){
         return "captured-image selected-image"

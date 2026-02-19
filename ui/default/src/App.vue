@@ -27,10 +27,10 @@
             <div class='drop-area drop-area-half' id='drop_2_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><graph id="graph"/></div>
           </div>
 
-          <!-- <div class='d-flex' id='fourth-row'>
-            <div class='drop-area drop-area-half' id='drop_3_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
+          <div class='d-flex' id='fourth-row'>
+            <div class='drop-area drop-area-half' id='drop_3_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><video-capture id='video-capture' /></div>
             <div class='drop-area drop-area-half' id='drop_3_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
-          </div> -->
+          </div>
 
 
         </div>

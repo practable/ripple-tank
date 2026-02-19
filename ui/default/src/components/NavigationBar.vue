@@ -79,7 +79,8 @@ export default {
       ...mapGetters([
         'getDarkTheme',
         'getIsChatOn',
-        'getConfigJSON'
+        'getConfigJSON',
+        'isMobile'
       ]),
       labName(){
         return this.getLabID == '' ? 'Ripple Tank': 'Ripple Tank (' + this.getLabID + ')';

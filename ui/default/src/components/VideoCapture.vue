@@ -12,14 +12,14 @@
 
     <div class="d-flex flex-row">
       
-        <div class="input-group mb-3 align-items-center" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
-            <label class='flex-fill me-2' for="recording-length-slider">Record Time: {{ this.captureInterval/1000 }} s</label>
+        <div class="input-group mb-3 align-items-center justify-content-center" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
+            <label class='me-4' for="recording-length-slider">Record Time: {{ (this.captureInterval/1000).toFixed(1) }} s</label>
             <input type="range" id="recording-length-slider" class="slider" step="100" min="100" max="3000" v-model="captureInterval">
         </div>
-        <div class="input-group mb-3 align-items-center" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
+        <!-- <div class="input-group mb-3 align-items-center" @mousedown="setDraggable(false)" @mouseup="setDraggable(true)">
             <label class='flex-fill me-2' for="recording-fps-slider">FPS: {{ this.framerate }}</label>
             <input type="range" id="recording-fps-slider" class="slider" step="1" min="1" max="24" v-model="framerate">
-        </div>
+        </div> -->
 
     </div>
     
@@ -94,13 +94,19 @@ export default {
     })
   },
   mounted(){
-    
+    window.addEventListener('keydown', this.hotkey, false);
 
   },
   methods: {
     ...mapActions([
       'setDraggable'
     ]),
+    hotkey(event){
+        if(event.key == "r"){
+            console.log('RECORD');
+            this.capture();
+        } 
+    },
     capture(){
         //const canvas = document.querySelector("video-canvas");
         const canvas = document.getElementById("video-canvas");

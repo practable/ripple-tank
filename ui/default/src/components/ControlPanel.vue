@@ -50,6 +50,7 @@
 
       <!-- MIDDLE PANEL-->
       <div class="d-flex flex-column col-lg-4 align-items-center justify-content-start">
+        <h5 class="mt-sm-2 mt-lg-0">Vibration Generator</h5>
           <!-- TOGGLE FOR MODE START/STOP -->
         <div class="input-group align-items-center justify-content-center mt-lg-3 mb-lg-3">
           <label class="control-toggle-label-before" id="toggle-off-text">Off</label>
@@ -329,11 +330,17 @@ export default {
 			},
 			set(val){
         if(val){
+          //if pulse mode gets set, then first stop the vibration generator
+          this.setModeStop();
+          this.sendCommandStop();
           this.setModePulse();
           //this.sendCommandPulse();
         } else{
-          this.setModeStart();
-          this.sendCommandStart();
+          //if pulse mode is switched off then enter stop mode, do not keep the vibration generator running
+          // this.setModeStart();
+          // this.sendCommandStart();
+          this.setModeStop();
+          this.sendCommandStop();
         }
 				
 			}
@@ -374,7 +381,7 @@ export default {
       
   },
   mounted(){
-      
+      window.addEventListener('keydown', this.hotkey, false);
 
   },
   methods: {
@@ -401,6 +408,17 @@ export default {
         'setMaxBrightness'
         
     ]),
+    hotkey(event){
+			if(event.key == "p"){
+        if(this.getCurrentMode == 'pulse'){
+          console.log('PULSE')
+          this.sendCommandPulse();
+        } else{
+          console.log('SET PULSE MODE')
+          this.togglePulse = true;
+        }
+			} 
+		},
       sendMessage(){
         //this.getDataSocket.send(JSON.stringify(this.message));
         this.getDataSocket.send(this.message);
@@ -484,31 +502,31 @@ export default {
 @media only screen and (min-width: 992px){
 
 .control-toggle-container{
-  width: 4em;
-  height: 2em;
+  width: 6em;
+  height: 3em;
 }
 
 .control-toggle-label-before{
-  font-size: 1.25em;
+  font-size: 1.5em;
   width: 8ch;
   padding-right: 0.5em;
   text-align: right;
 }
 
 .control-toggle-label-after{
-  font-size: 1.25em;
+  font-size: 1.5em;
   width: 8ch;
   padding-left: 0.5em;
   text-align: left;
 }
 
 #toggle-pulse-button{
-  width: 4em;
-  height:2em;
+  width: 6em;
+  height:3em;
 }
 #toggle-start-button{
-  width: 4em;
-  height:2em;
+  width: 6em;
+  height:3em;
 }
 
 .button-control-panel{
@@ -591,32 +609,32 @@ export default {
 }
 
 .control-toggle-container{
-  width: 2em;
-  height: 1em;
+  width: 4em;
+  height: 2em;
 }
 
 .control-toggle-label-before{
-  font-size: 1em;
+  font-size: 1.25em;
   width: 8ch;
   padding-right: 0.5em;
   text-align: right;
 }
 
 .control-toggle-label-after{
-  font-size: 1em;
+  font-size: 1.25em;
   width: 8ch;
   padding-left: 0.5em;
   text-align: left;
 }
 
 #toggle-pulse-button{
-  width: 2em;
-  height:1em;
+  width: 4em;
+  height:2em;
 }
 
 #toggle-start-button{
-  width: 2em;
-  height:1em;
+  width: 4em;
+  height:2em;
 }
 
 .button-control-panel{

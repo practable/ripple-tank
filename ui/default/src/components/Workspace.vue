@@ -1,17 +1,27 @@
 //29/01/2026 - update to add marker tools and better control of ruler and protractor separately
 
 <template>
-<div class="d-flex flex-wrap justify-content-middle align-items-center">
+<div class="d-flex align-items-center">
     <div class="col-lg-2">
         <div class="d-flex form-check form-switch ms-2">
             <input class="form-check-input me-1" type="checkbox" id="workspace-toggle" @click="toggleWorkspaceClickable" v-model="workspace_canvas_clickable">
-            <label class="form-check-label" for="workspace-toggle">Toggle Workspace </label>
+            <label class="form-check-label" for="workspace-toggle">Toggle Tools </label>
         </div>
+
+        <div class="d-flex align-items-center ms-2">
+            <button type='button' class='button-toolbar button-primary me-2 mt-2' id='add-marker-button' aria-label='add marker button' @click='addMarker'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+            </svg>
+        </button>
+        <label class="form-check-label" for="add-marker-button">Add marker</label>
+        </div>
+        
     </div>
 
     <!-- COMPONENT FOR MANIPULATING SIZE AND ANGLE OF RULER -->
-    <div class="col-lg-4">
-        <div class="d-flex flex-row align-items-center">
+    <div class="col-lg-10 ms-2" style="overflow-x: scroll;">
+        <div class="d-flex flex-row align-items-center justify-content-center">
             <button id='rotate-ruler-anti-clockwise-large-button' class='button-sm button-primary me-2' @mousedown='rotateTool(-10, "ruler")'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/></svg>
             </button>
@@ -51,11 +61,7 @@
             </button>
         </div>
 
-    </div>
-
-    <!-- COMPONENT FOR MANIPULATING SIZE AND ANGLE OF PROTRACTOR -->
-    <div class="col-lg-4">
-        <div class="d-flex flex-row align-items-center">
+        <div class="d-flex flex-row align-items-center justify-content-center">
             <button class='button-sm button-primary me-2' @mousedown='rotateTool(-10, "protractor")'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/></svg>
             </button>
@@ -87,14 +93,9 @@
 
     </div>
 
-    <div class="col-lg-2">
-        <button type='button' class='button-toolbar button-primary me-2' id='add-marker-button' aria-label='add marker button' @click='addMarker'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" stroke="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
-            </svg>
-        </button>
-        <label class="form-check-label" for="add-marker-button">Add marker</label>
-    </div>
+    <!-- COMPONENT FOR MANIPULATING SIZE AND ANGLE OF PROTRACTOR -->
+    
+
 
     <!-- <div class="col-md-2">
         <button class='button-sm button-primary me-2' @click='increaseRulerSize'>+</button>
@@ -461,13 +462,13 @@ export default {
     z-index: 2;
     position:absolute;
     left:0px;
-    top:100px;
+    top:200px;
     /* pointer-events: none; */
 }
 
 .unclickable{
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.0;
 }
 
 .clickable{

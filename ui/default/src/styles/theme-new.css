@@ -90,6 +90,14 @@ body.dark-theme {
         max-width: 100dvw;
         resize: vertical;
     }
+
+    #fifth-row{
+        overflow: auto;
+        max-height: 100dvh;
+        min-height: 20dvh;
+        max-width: 100dvw;
+        resize: vertical;
+    }
 }
 
 .navbar-background{

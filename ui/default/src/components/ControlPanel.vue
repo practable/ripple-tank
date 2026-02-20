@@ -9,7 +9,7 @@
           <h5>Wave Frequency</h5>
 
         <div class="d-flex flex-row">
-            <div class="d-flex flex-column">
+            <div v-if="getCurrentMode != 'pulse'" class="d-flex flex-column">
               <button id="frequency-step-negative-10" class="button-control-panel" aria-label="reduce frequency by 10 hertz" @click="() => {driving_frequency -= 10; sendCommandUpdateDrivingFrequency()}">-10</button>
               <button id="frequency-step-negative-1" class="button-control-panel" aria-label="reduce frequency by 1 hertz" @click="() => {driving_frequency -= 1; sendCommandUpdateDrivingFrequency()}">-1</button>
             </div>
@@ -26,7 +26,7 @@
                   NDigits="2"
             />
 
-            <div class="d-flex flex-column">
+            <div v-if="getCurrentMode != 'pulse'" class="d-flex flex-column">
               <button id="frequency-step-positive-10" class="button-control-panel" aria-label="increase frequency by 10 hertz" @click="() => {driving_frequency += 10; sendCommandUpdateDrivingFrequency()}">+10</button>
               <button id="frequency-step-positive-1" class="button-control-panel" aria-label="increase frequency by 1 hertz" @click="() => {driving_frequency += 1; sendCommandUpdateDrivingFrequency()}">+1</button>
             </div>
@@ -34,7 +34,7 @@
         </div>
 
 
-          <div class="col-12">
+          <div v-if="getCurrentMode != 'pulse'" class="col-12">
             <input class="" type="range" id="driving-frequency-slider" style="width: 75%;"
                 :min="getDrivingFrequencyMin" 
                 :max="getDrivingFrequencyMax" 
@@ -338,7 +338,17 @@ export default {
           //if pulse mode gets set, then first stop the vibration generator
           this.setModeStop();
           this.sendCommandStop();
-          this.setModePulse();
+          //then ensure the driving frequency is returned to 24Hz as pulse mode seems to struggle at high frequencies.
+          setTimeout(() => {
+            this.driving_frequency = 24; 
+            this.sendCommandUpdateDrivingFrequency();
+          }, 50);
+          //then actually set pulse mode
+          setTimeout(() => {
+            this.setModePulse();
+          }, 100);
+          
+          
           //this.sendCommandPulse();
         } else{
           //if pulse mode is switched off then enter stop mode, do not keep the vibration generator running

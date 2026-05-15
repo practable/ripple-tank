@@ -36,6 +36,20 @@
 
             <ul class="navbar-nav dropstart">
 
+              <popup-help class="me-1" id="popup-help-nav-bar">
+                  <template v-slot:header>
+                      <h5> Interface version: {{ getUIVersion }}</h5>
+                  </template>
+                  <template v-slot:body>
+                      <b>Help</b><br>
+                      Information about control and data collection are available by clicking the information buttons in each of the separate components.
+                      <br>
+                      <b>Contact</b><br>
+                      Contact RL.Eng@ed.ac.uk if you have any problems with the remote lab.
+
+                  </template>
+              </popup-help>
+
                 <li class="nav-item me-1">
                     <show-hardware-config-button />
                 </li>
@@ -61,6 +75,7 @@
 import Clock from "./Clock.vue";
 import { mapGetters } from 'vuex';
 import ShowHardwareConfigButton from "./elements/ShowHardwareConfigButton.vue";
+import PopupHelp from "./elements/PopupHelp.vue";
 
 export default {
 
@@ -73,14 +88,16 @@ export default {
   },
   components: {
     Clock,
-    ShowHardwareConfigButton
+    ShowHardwareConfigButton,
+    PopupHelp
   },
   computed:{
       ...mapGetters([
         'getDarkTheme',
         'getIsChatOn',
         'getConfigJSON',
-        'isMobile'
+        'isMobile',
+        'getUIVersion'
       ]),
       labName(){
         return this.getLabID == '' ? 'Ripple Tank': 'Ripple Tank (' + this.getLabID + ')';

@@ -7,7 +7,8 @@ const uiStore = {
        usesLocalStorage: false,        //can only use localStorage if the browser allows it.
        config_json: '',  
        darkTheme: document.body.classList.contains('dark-theme') ? true : false,
-       windowWidth: window.innerWidth
+       windowWidth: window.innerWidth,
+       uiVersion: import.meta.env.VITE_APP_VERSION
        }),
        mutations:{
          SET_DRAGGABLE(state, draggable){
@@ -68,6 +69,9 @@ const uiStore = {
             } else{
                return false;
             }
+         },
+         getUIVersion(state){
+            return state.uiVersion;
          }
          
          

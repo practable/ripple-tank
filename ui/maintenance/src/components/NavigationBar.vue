@@ -35,6 +35,20 @@
           </ul>
 
             <ul class="navbar-nav dropstart">
+
+              <popup-help class="me-1" id="popup-help-nav-bar">
+                  <template v-slot:header>
+                      <h5> Interface version: {{ getUIVersion }}</h5>
+                  </template>
+                  <template v-slot:body>
+                      <b>Help</b><br>
+                      Information about control and data collection are available by clicking the information buttons in each of the separate components.
+                      <br>
+                      <b>Contact</b><br>
+                      Contact RL.Eng@ed.ac.uk if you have any problems with the remote lab.
+
+                  </template>
+              </popup-help>
   
                 <li class="nav-item me-1">
                   <button type='button' class='button-toolbar button-secondary' id='toggle-theme-button' aria-label='toggle dark theme' @click='toggleTheme' :disabled="disableThemeButton">
@@ -56,6 +70,7 @@
 
 import Clock from "./Clock.vue";
 import { mapGetters } from 'vuex';
+import PopupHelp from "./elements/PopupHelp.vue";
 
 export default {
 
@@ -68,11 +83,13 @@ export default {
   },
   components: {
     Clock,
+    PopupHelp
   },
   computed:{
       ...mapGetters([
         'getDarkTheme',
-        'getIsChatOn'
+        'getIsChatOn',
+        'getUIVersion'
       ])
   },
   methods: {

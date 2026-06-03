@@ -103,8 +103,8 @@
         <button class='button-sm button-primary' @click='decreaseRulerSize'>-</button>
     </div> -->
 
-    <canvas :class="workspace_canvas_clickable ? 'clickable' : 'unclickable'" id="workspace" @mousedown="checkClick" @mousemove="moveClicked" @mouseup="mouseUnclick"></canvas>
-    
+    <canvas :class="workspace_canvas_clickable ? 'clickable' : 'unclickable'" style="touch-action: none" id="workspace" @pointerdown="checkClick" @pointermove="moveClicked" @pointerup="mouseUnclick"></canvas>
+
     <img id="ruler-image" src="/images/ruler.png" hidden>
     <img id="protractor" src="/images/protractor.png" hidden>
     <img id="crosshair1" src="/images/crosshair.svg" hidden>

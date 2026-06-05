@@ -122,6 +122,7 @@ export default {
       },
       clearWorkspace(){
           this.$emit('clearworkspace');
+          document.getElementById('app').style.marginTop = '60px';
       },
       // needs a short delay before can be rerun so as to enable the chart to recolour everything
       toggleTheme(){
@@ -137,6 +138,7 @@ export default {
 </script>
 
 <style scoped>
-
-
+.navbar{
+  z-index: 1040;
+}
 </style>

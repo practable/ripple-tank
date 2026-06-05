@@ -1,7 +1,7 @@
 //29/01/2026 - update to add marker tools and better control of ruler and protractor separately
 
 <template>
-<div class="d-flex align-items-center">
+<div class="d-flex align-items-center fixed-top" style="top:58px; background-color: var(--background-color);">
     <div class="col-lg-2">
         <div class="d-flex form-check form-switch ms-2">
             <input class="form-check-input me-1" type="checkbox" id="workspace-toggle" @click="toggleWorkspaceClickable" v-model="workspace_canvas_clickable">
@@ -165,11 +165,13 @@ export default {
         protractorAdded(set) {
             if(set){
                 this.addProtractor();
+                document.getElementById('app').style.marginTop = '200px';
             }
         },
         rulerAdded(set) {
             if(set){
                 this.addRuler();
+                document.getElementById('app').style.marginTop = '200px';
             }
         },
     },
@@ -462,7 +464,7 @@ export default {
     z-index: 2;
     position:absolute;
     left:0px;
-    top:200px;
+    top:110px;
     /* pointer-events: none; */
 }
 

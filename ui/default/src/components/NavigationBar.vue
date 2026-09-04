@@ -1,0 +1,144 @@
+
+<template>
+
+    <nav :class="getDarkTheme ? 'navbar navbar-dark fixed-top navbar-expand-lg navbar-background' : 'navbar navbar-light fixed-top navbar-expand-lg  navbar-background'" id='navbar'>
+    <div class="container-fluid">
+      <div class="navbar-brand">
+          <img src="/images/practable-icon.png" width="30" height="30" alt="practable.io logo">
+          {{ labName }}
+      </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto">
+
+            <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="toolsdropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                   Tools
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                    <li><a class="dropdown-item" id='rulermenu' href="#" @click='addTool("ruler")'>Ruler</a></li>
+                    <li><a class="dropdown-item" id='protractormenu' href="#" @click='addTool("protractor")'>Protractor</a></li>
+                  </ul>
+              </li>
+
+              <li class="nav-item" id="clearworkspace">
+                  <a class="nav-link" href="#" tabindex="-1" @click='clearWorkspace'>Clear Workspace</a>
+              </li>
+             
+                <li class="nav-item">
+                    <clock class='nav-link' />
+                </li>
+
+          </ul>
+
+            <ul class="navbar-nav dropstart">
+
+              <popup-help class="me-1" id="popup-help-nav-bar">
+                  <template v-slot:header>
+                      <h5> Interface version: {{ getUIVersion }}</h5>
+                  </template>
+                  <template v-slot:body>
+                      <b>Help</b><br>
+                      Information about control and data collection are available by clicking the information buttons in each of the separate components.
+                      <br>
+                      <b>Contact</b><br>
+                      Contact RL.Eng@ed.ac.uk if you have any problems with the remote lab.
+
+                  </template>
+              </popup-help>
+
+                <li class="nav-item me-1">
+                    <show-hardware-config-button />
+                </li>
+
+                <li class="nav-item me-1">
+                  <button type='button' class='button-toolbar button-secondary' id='toggle-theme-button' aria-label='toggle dark theme' @click='toggleTheme' :disabled="disableThemeButton">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 0 8 1zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16"/>
+                    </svg>
+                  </button>
+              </li>
+
+            </ul>
+
+      </div>
+    </div>
+  </nav>
+
+</template>
+
+<script>
+
+import Clock from "./Clock.vue";
+import { mapGetters } from 'vuex';
+import ShowHardwareConfigButton from "./elements/ShowHardwareConfigButton.vue";
+import PopupHelp from "./elements/PopupHelp.vue";
+
+export default {
+
+  name: 'NavigationBar',
+  emits:['toggleworkspace', 'addruler', 'addprotractor', 'clearworkspace'],
+  data () {
+    return {
+      disableThemeButton: false,
+    }
+  },
+  components: {
+    Clock,
+    ShowHardwareConfigButton,
+    PopupHelp
+  },
+  computed:{
+      ...mapGetters([
+        'getDarkTheme',
+        'getIsChatOn',
+        'getConfigJSON',
+        'isMobile',
+        'getUIVersion'
+      ]),
+      labName(){
+        return this.getLabID == '' ? 'Ripple Tank': 'Ripple Tank (' + this.getLabID + ')';
+      },
+      getLabID(){
+        let config = this.getConfigJSON;
+        if(config.parameters != undefined){
+          return config.name;
+        } else{
+          return '';
+        }
+      },
+  },
+  methods: {
+      addTool(tool){
+          this.toggleComponent('workspace');
+          setTimeout(() => {this.$emit('add' + tool)}, 100);  //give the workspace time to initialise and then send tool event
+          
+      },
+      toggleComponent(component){
+          this.$emit('toggle' + component);
+      },
+      clearWorkspace(){
+          this.$emit('clearworkspace');
+          document.getElementById('app').style.marginTop = '60px';
+      },
+      // needs a short delay before can be rerun so as to enable the chart to recolour everything
+      toggleTheme(){
+          this.disableThemeButton = true;
+          setTimeout(() => {
+            this.disableThemeButton = false
+          }, 1000);
+          document.body.classList.toggle("dark-theme");
+          this.$store.dispatch('setDarkTheme', document.body.classList.contains("dark-theme"));
+      }
+  }
+}
+</script>
+
+<style scoped>
+.navbar{
+  z-index: 1040;
+}
+</style>

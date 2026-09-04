@@ -1,12 +1,7 @@
 <template>
-<div class='container-fluid m-2 practable-component'>
-<div class='row' id="video">
-	<div class='col-12'>
-		<!-- <canvas id="video-canvas"></canvas> -->
-		<video-element :url="url" />
-	</div>
-</div>
-</div>
+  <div class="container-fluid practable-component webcam-stream" id="video">
+    <video-element :url="url" />
+  </div>
 </template>
 
 <script>
@@ -88,8 +83,16 @@ export default {
 </script>
 
 <style scoped>
-#video-canvas{
-	width:80%;
-	height: 100%;
+.webcam-stream {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0.5rem;
+}
+
+.webcam-stream :deep(.video-element-root),
+.webcam-stream :deep(.session-end-root) {
+  flex: 1 1 auto;
+  min-height: 0;
 }
 </style>

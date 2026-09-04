@@ -85,6 +85,7 @@ body.dark-theme {
 
     #fourth-row{
         overflow: auto;
+        height: 45dvh; 
         max-height: 100dvh;
         min-height: 20dvh;
         max-width: 100dvw;
@@ -93,6 +94,7 @@ body.dark-theme {
 
     #fifth-row{
         overflow: auto;
+        height: 45dvh; 
         max-height: 100dvh;
         min-height: 20dvh;
         max-width: 100dvw;
@@ -126,6 +128,7 @@ body.dark-theme {
     display: block;
     min-width: 10dvw;
     min-height: 10dvh;
+    box-sizing: border-box;
     -ms-overflow-style: none;  /* Hiding scrollbars in IE and Edge */
     scrollbar-width: none;  /* Hiding scrollbars in Firefox */
 }
@@ -190,12 +193,15 @@ body.dark-theme {
 .drop-area-mobile{
     resize: none;
     overflow: auto;
+    height: 60dvh;
 }
 
 .practable-component{
     background-color: var(--background-color-highlight);
     max-width: 100%;
     max-height: 100%;
+    /* NEWLY ADDED*/
+    height: 100%;       
 }
 
 .toolbar-bottom{

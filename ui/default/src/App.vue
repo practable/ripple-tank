@@ -108,9 +108,6 @@ export default {
     Graph
 
   },
-  mounted(){
-    
-  },
   data() {
     return {
       // windowWidth: window.innerWidth,

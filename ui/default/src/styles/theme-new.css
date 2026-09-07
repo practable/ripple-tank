@@ -193,7 +193,7 @@ body.dark-theme {
 .drop-area-mobile{
     resize: none;
     overflow: auto;
-    height: 60dvh;
+    height: 50dvh;
 }
 
 .practable-component{

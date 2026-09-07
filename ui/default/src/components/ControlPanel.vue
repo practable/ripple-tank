@@ -246,6 +246,7 @@ export default {
   name: 'ControlPanel',
   data () {
     return {
+        dataSocket: null,
         message: "",
         received_messages: [],
     }
@@ -363,18 +364,22 @@ export default {
     
   },
   watch:{
-    getDataURLObtained(obtained){
-        try{
-          if(obtained){
-            this.connect();	
-          } else{
-            console.log('disconnecting: ');
-          }
+    // getDataURLObtained(obtained){
+    //     try{
+    //       if(obtained){
+    //         this.connect();	
+    //       } else{
+    //         console.log('disconnecting: ');
+    //       }
 				
-			} catch(e){
-				console.log(e);
-			}
-		},
+		// 	} catch(e){
+		// 		console.log(e);
+		// 	}
+		// },
+     getDataURL(newUrl){
+      if (newUrl) this.connect();
+      else this.disconnect();
+    },
     getConfigJSON(config){
 			if(config.name != undefined){
 				try{
@@ -398,6 +403,10 @@ export default {
   mounted(){
       window.addEventListener('keydown', this.hotkey, false);
 
+  },
+  beforeUnmount(){                  
+    this.disconnect();
+    window.removeEventListener('keydown', this.hotkey, false);
   },
   methods: {
     ...mapActions([
@@ -441,29 +450,44 @@ export default {
       clearMessage(){
         this.message = ''
       },
+      disconnect(){
+        const ws = this.dataSocket;
+        this.dataSocket = null;
+        if (!ws) return;
+
+        ws.onopen = null;
+        ws.onmessage = null;
+        ws.onclose = null;
+        ws.onerror = null;
+
+        try { ws.close(); } catch(e) { /* already closing */ }
+      },
       connect(){
+          // if a previous data websocket exists then need to disconnect first
+          this.disconnect();
+          //now connect to the new dataUrl
           let _this = this;
           this.dataSocket = new WebSocket(this.getDataURL);
           this.$store.dispatch('setDataSocket', this.dataSocket);
           this.dataSocket.onopen = () =>  {
             setTimeout(() => {
-              console.log('0. stopping');
+              //console.log('0. stopping');
               _this.sendCommandStop();
             }, 100);
 
             setTimeout(() => {
-              console.log('1. setting default driving frequency');
+              //console.log('1. setting default driving frequency');
               _this.sendCommandUpdateDrivingFrequency(_this.getDrivingFrequency);
             }, 200);
 
             setTimeout(() => {
-              console.log('2. setting default amplitude');
+              //console.log('2. setting default amplitude');
               _this.updateAmplitude(_this.getConfigJSON.parameters.ui.defaultAmplitude);
               _this.sendCommandUpdateAmplitude(_this.getAmplitude);
             }, 300);
 
             setTimeout(() => {
-              console.log('3. setting default brightness');
+              //console.log('3. setting default brightness');
               _this.sendCommandUpdateBrightness(_this.getBrightness);
             }, 400);
              
@@ -509,6 +533,7 @@ export default {
               }
           }
       },
+
   }
 }
 </script>

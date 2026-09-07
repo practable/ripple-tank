@@ -63,7 +63,7 @@ export default {
 		}
 	},
 	watch:{
-		streamOK: function(is) {
+		streamOK: function(is, was) {
 			if (is) {
 				this.accessVideo();
 			} else{

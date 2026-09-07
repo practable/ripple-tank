@@ -39,6 +39,9 @@ export default {
 		},
 		
 	},
+	beforeUnmount() { 
+		document.removeEventListener("streams:dropped", this.reconnect);
+	},
 	mounted(){
 		var _this = this;
 		var reconnect = function () {

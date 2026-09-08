@@ -9,46 +9,7 @@
           <workspace :protractorAdded="protractorAdded" :rulerAdded="rulerAdded"/>
         </div>
 
-        <!-- <div v-if='!isMobile' class='row' id='component-grid'>
-
-          <div class='d-flex' id='first-row'>
-            <div class='drop-area drop-area-two-fifths' id='drop_0_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><webcam-stream id='webcam-stream' /></div>
-            <div class='drop-area drop-area-three-fifths' id='drop_0_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><image-capture id='image-capture' /></div>
-          </div>
-
-          <div class='d-flex' id='second-row'>
-            <div class='drop-area drop-area-full' id='drop_1_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><control-panel id="control-panel" /></div>
-          </div>
-
-          <div class='d-flex' id='third-row'>
-            <div class='drop-area drop-area-half' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><snapshot-recorder id="snapshot-recorder" :headings="['Frequency \n[Hz]', 'Wavelength\n[cm]', 'Wave speed\n[cm/s]']"/></div>
-            <div class='drop-area drop-area-half' id='drop_2_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><graph id="graph"/></div>
-          </div>
-
-          <div class='d-flex' id='fourth-row'>
-            <div class='drop-area drop-area-half' id='drop_3_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><video-capture id='video-capture' /></div>
-            <div class='drop-area drop-area-half' id='drop_3_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
-          </div>
-
-          <div class='d-flex' id='fifth-row'>
-            <div class='drop-area drop-area-half' id='drop_4_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
-            <div class='drop-area drop-area-half' id='drop_4_1' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
-          </div>
-
-
-        </div>
-
-        <div v-else class='d-flex flex-column' id='component-grid'>
-            <div class='drop-area drop-area-mobile' id='drop_0_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><webcam-stream id='webcam-stream' /></div>
-            <div class='drop-area drop-area-mobile' id='drop_1_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><control-panel id="control-panel" /></div>
-            <div class='drop-area drop-area-mobile' id='drop_2_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><video-capture id='video-capture' /></div>
-            <div class='drop-area drop-area-mobile' id='drop_3_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"><image-capture id='image-capture' /></div>
-            <div class='drop-area drop-area-mobile' id='drop_4_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
-            <div class='drop-area drop-area-mobile' id='drop_5_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
-            <div class='drop-area drop-area-mobile' id='drop_6_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
-            <div class='drop-area drop-area-mobile' id='drop_7_0' :draggable='getDraggable' @dragstart="dragComponent" @drop='dropComponent' @dragover.prevent @dragenter='dragEnter' @dragleave="dragLeave"></div>
-        </div> -->
-
+      
         <div :class="isMobile ? 'd-flex flex-column' : 'row'" id='component-grid'>
         <!-- first-row etc only exist as styles when large screen -->
             <div :class="isMobile ? '' : 'd-flex'" id='first-row'>
@@ -130,6 +91,17 @@ export default {
       'getUsesLocalStorage',
       'isMobile'
     ]),
+  },
+  watch: {
+    isMobile() {
+      this.$nextTick(() => {
+        document.querySelectorAll('#component-grid > div, .drop-area')
+        .forEach((el) => {
+          el.style.width = '';
+          el.style.height = '';
+        });
+      });
+    },
   },
   methods:{
     ...mapActions([

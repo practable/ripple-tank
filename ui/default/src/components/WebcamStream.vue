@@ -5,13 +5,6 @@
 </template>
 
 <script>
-//import * as pendulum from "../pendulum";
-//import { eventBus } from "../main";
-//import { JSMpeg } from "../../public/js/jsmpeg.min.js";
-//import JSMpeg from "jsmpeg";
-//import JSMpeg from '@cycjimmy/jsmpeg-player';
-//playerUrl = scheme + host + ':' + port + '/' + stream;
-//let playerUrl = 'ws://video.practable.io:8080/out/dpr/video0';
 import axios from "axios";
 import VideoElement from "./VideoElement.vue";
 

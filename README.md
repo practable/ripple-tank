@@ -17,5 +17,6 @@ Example activities can be found [here](./docs/RippleTank_ActivityBooklet_v2.pdf)
 
 # Versions
 
+- v1.1.1: updated responsiveness of video component and cleaned up reconnection logic to stop video flickering bug
 - v1.0.0: end of project production release
 

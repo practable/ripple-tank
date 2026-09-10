@@ -36,14 +36,17 @@ export default {
 		document.removeEventListener("streams:dropped", this.reconnect);
 	},
 	mounted(){
-		var _this = this;
-		var reconnect = function () {
-			_this.accessVideo();
-		};
+		// var _this = this;
+		// var reconnect = function () {
+		// 	_this.accessVideo();
+		// };
 		//make second and subsequent connections
-		document.addEventListener("streams:dropped", reconnect);
+		document.addEventListener("streams:dropped", this.reconnect);
 	},
 	methods:{
+		reconnect(){
+			this.accessVideo();
+		},
 		accessVideo(){
 			this.stream = this.$store.getters.getStream("video");
 				var accessURL = this.stream.url;
